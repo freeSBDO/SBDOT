@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_ISDOMINATED returns true for dominated rows
+
+ CALL: ISDOM = stk_isdominated (A, B)
+
+    returns a vector ISDOM of logicals, where ISDOM(i) is true if A(i, :)
+    is dominated by one of the rows of B. A row B(j, :) is said to
+    dominate A(i, :) if
+
+       B(j, k) <= A(i, k)    for all k in {1, 2, ..., d}
+
+    and
+
+       B(j, k) < A(i, k)     for at least one such k,
+
+    where d is the number of columns.  In other words: smaller is better.
+
+ CALL: ISDOM = stk_isdominated (A, B, DO_SORTROWS)
+
+    does the same but, if DO_SORTROWS == false, assumes that the rows of
+    B are already sorted in ascending lexical order.
+
+ CALL: [ISDOM, DPOS] = stk_isdominated (A, B, DO_SORTROWS)
+
+    also returns a vector DPOS such that DPOS(i) = 0 if A(i, :) is non-
+    dominated, and DPOS(i) gives the index of a row in B that dominates
+    A(i, :) otherwise.
+
+ See also: sortrows, stk_paretofind, stk_dominatedhv
+</pre>
+
+</div>
+</body>
+</html>

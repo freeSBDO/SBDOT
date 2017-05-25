@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_MATERNCOV_ANISO computes the anisotropic Matern covariance
+
+ CALL: K = stk_materncov_aniso (PARAM, X, Y)
+
+   computes the covariance matrix K between the sets of locations X and Y,
+   using the anisotropic Matern covariance kernel with parameters PARAM.
+   The output matrix K has size NX x NY, where NX is the number of rows in
+   X and NY the number of rows in Y. The vector of parameters must have
+   DIM + 1 elements, where DIM is the common number of columns of X and Y:
+
+    * PARAM(1) = log (SIGMA ^ 2), where SIGMA is the standard deviation,
+
+    * PARAM(2) = log(NU), where NU is the regularity parameter,
+
+    * PARAM(2+i) = - log (RHO(i)), where RHO(i) is the range parameter for
+      the ith dimension.
+
+ CALL: dK = stk_materncov_aniso (PARAM, X, Y, DIFF)
+
+   computes the derivative of the covariance matrix with respect to
+   PARAM(DIFF) if DIFF~= -1, or the covariance matrix itself if DIFF is
+   equal to -1 (in which case this is equivalent to stk_materncov_aniso
+   (PARAM, X, Y)).
+
+ CALL: K = stk_materncov_aniso (PARAM, X, Y, DIFF, PAIRWISE)
+
+   computes the covariance vector (or a derivative of it if DIFF > 0)
+   between the sets of locations X and Y. The output K is a vector of
+   length N, where N is the common number of rows of X and Y.
+</pre>
+
+</div>
+</body>
+</html>

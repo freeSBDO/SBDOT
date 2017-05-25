@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_SAMPLING_SOBOL generates points from a Sobol sequence
+
+ CALL: X = stk_sampling_sobol (N, D)
+ CALL: X = stk_sampling_sobol (N, D, FALSE)
+
+    computes the first N terms of a D-dimensional Sobol sequence (with
+    N < 2^32 and D <= 1111).  The sequence is generated using the algorithm
+    of Bratley and Fox [1], as modified by Joe and Kuo [3].
+
+ CALL: X = stk_sampling_sobol (N, D, TRUE)
+
+    skips an initial segment of the sequence.  More precisely, according to
+    the recommendation of [2] and [3], a number of points equal to the largest
+    power of 2 smaller than n is skipped.
+
+ NOTE: Implementation
+
+    The C implementation under the hood is due to Steven G. Johnson, and
+    was borrowed from the NLopt toolbox [4] (version 2.4.2).
+
+ REFERENCE
+
+    [1] Paul Bratley and Bennett L. Fox, "Algorithm 659: Implementing Sobol's
+        quasirandom sequence generator",  ACM Transactions on Mathematical
+        Software, 14(1):88-100, 1988.
+
+    [2] Peter Acworth, Mark Broadie and Paul Glasserman, "A Comparison of Some
+        Monte Carlo and Quasi Monte Carlo Techniques for Option Pricing", in
+        Monte Carlo and Quasi-Monte Carlo Methods 1996, Lecture Notes in
+        Statistics 27:1-18, Springer, 1998.
+
+    [3] Stephen Joe and Frances Y. Kuo, "Remark on Algorithm 659: Implementing
+        Sobol's Quasirandom Sequence Generator', ACM Transactions on
+        Mathematical Software, 29(1):49-57, 2003.
+
+    [4] Steven G. Johnson, The NLopt nonlinear-optimization package,
+        http://ab-initio.mit.edu/nlopt.
+
+ SEE ALSO: stk_sampling_halton_rr2
+</pre>
+
+</div>
+</body>
+</html>

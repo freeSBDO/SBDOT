@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_MODEL generates a model with default covariance parameters
+
+ CALL: MODEL = stk_model ()
+
+   returns a structure MODEL (see below for a description of the fields in such
+   a structure) corresponding to one-dimensional Gaussian process prior with a
+   constant but unknown mean ("ordinary" kriging) and a stationary Matern
+   covariance function.
+
+ CALL: MODEL = stk_model (COVARIANCE_TYPE)
+
+   uses the user-supplied COVARIANCE_TYPE instead of the default.
+
+ CALL: MODEL = stk_model (COVARIANCE_TYPE, DIM)
+
+   creates a DIM-dimensional model. Note that, for DIM > 1, anisotropic
+   covariance functions are provided with default parameters that make them
+   isotropic.
+
+ In STK, a Gaussian process model is described by a 'model' structure,
+ which has mandatory fields and optional fields.
+
+   MANDATORY FIELDS: covariance_type, param, lm, lognoisevariance
+   OPTIONAL FIELD: param_prior, noise_prior, response_name
+
+ See also stk_materncov_iso, stk_materncov_aniso, ...
+</pre>
+
+</div>
+</body>
+</html>

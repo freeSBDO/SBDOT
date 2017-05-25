@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_MAKE_MATCOV computes a covariance matrix (and a design matrix)
+
+ CALL: [K, P] = stk_make_matcov (MODEL, X0)
+
+    computes the covariance matrix K and the design matrix P for the model
+    MODEL at the set of points X0, which is expected to be an N x DIM
+    array. As a result, a matrix K of size N x N and a matrix P of size
+    N x L are obtained, where L is the number of regression functions in
+    the linear part of the model.
+
+ CALL: K = stk_make_matcov (MODEL, X0, X1)
+
+    computes the covariance matrix K for the model MODEL between the sets
+    of points X0 and X1. The resulting K matrix is of size N0 x N1, where
+    N0 is the number of rows of XO and N1 the number of rows of X1.
+
+ BE CAREFUL:
+
+    stk_make_matcov (MODEL, X0) and stk_makematcov (MODEL, X0, X0) are NOT
+    equivalent if model.lognoisevariance > - inf  (in the first case, the
+    noise variance is added on the diagonal of the covariance matrix).
+</pre>
+
+</div>
+</body>
+</html>

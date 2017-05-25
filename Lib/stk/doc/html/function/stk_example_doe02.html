@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_EXAMPLE_DOE02  "Sequential Maximin" design
+
+ In this example, a two-dimensional space-filling design is progressively
+ enriched with new points using a "sequential maximin" approach. More
+ precisely, the k-th point X(k, :) is selected to maximize the distance to the
+ set of all previously selected points X(1, :), X(2, :), ..., X(k-1, :).
+
+ NOTES:
+
+  * The resulting design is NOT optimal with respect to the maximin criterion
+    (separation distance).
+
+  * This procedure is not truly a *sequential* design procedure, since the
+    choice of the k-th point X(k, :) does NOT depend on the response at the
+    previously selected locations X(i, :), i < k.
+
+ REFERENCE
+
+  [1] Emmanuel Vazquez and Julien Bect, "Sequential search based on kriging:
+      convergence analysis of some algorithms", In: ISI - 58th World
+      Statistics Congress of the International Statistical Institute (ISI'11),
+      Dublin, Ireland, August 21-26, 2011.
+</pre>
+
+</div>
+</body>
+</html>

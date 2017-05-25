@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/stk.css" />
+<link rel="shortcut icon" href="../../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../../index.html">
+        <img src="../../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_HRECT creates an hyper-rectangle object
+
+ CALL: B = stk_hrect (D)
+ CALL: B = stk_hrect (D, COLNAMES)
+
+   creates an object representing a D-dimensional unit hypercube, [0; 1] ^ D.
+
+   The second (optional) argument can be used to provide variable names.
+
+ CALL: B = stk_hrect (X)
+ CALL: B = stk_hrect (X, COLNAMES)
+
+   creates an object representing a D-dimensional hyperrectangle with lower
+   bounds X(1, :) and upper bounds X(2, :). The input X must be a 2xD
+   numerical array.
+
+ NOTE: class hierarchy
+
+   An stk_hrect object is two-row stk_dataframe object, with row names
+   'lower_bounds' and 'upper_bounds'.
+
+ See also: stk_dataframe, stk_boundingbox
+</pre>
+
+</div>
+</body>
+</html>

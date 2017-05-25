@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_PLOT1D is a convenient plot function for 1D kriging predictions
+
+ CALL: stk_plot1d (XI, ZI, XT, ZT, ZP)
+
+    plots the evaluation points (XI, ZI), the "true function" with values
+    ZT on the grid XT, and a representation of the prediction ZP on the
+    same grid XT: the kriging prediction (posterior mean) surrounded by a
+    shaded area corresponding to 95% pointwise confidence intervals.
+
+    It is possible to omit plotting either the observations (XI, ZI) or
+    the true function ZT by providing empty matrices.
+
+ CALL: stk_plot1d (XI, ZI, XT, ZT, ZP, ZSIM)
+
+    also plots a set ZSIM of samplepaths.
+
+ CALL: stk_plot1d (H_AXES, ...)
+
+    plots into existing axes with axis handle H_AXES.
+</pre>
+
+</div>
+</body>
+</html>

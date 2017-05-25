@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_GENERATE_SAMPLEPATHS generates sample paths of a Gaussian process
+
+ CALL: ZSIM = stk_generate_samplepaths (MODEL, XT)
+
+    generates one sample path ZSIM of the Gaussian process MODEL discretized on
+    the evaluation points XT.  The input argument XT can be either a numerical
+    matrix or a dataframe.  The output argument ZSIM has the same number of
+    rows as XT.  More precisely, on a factor space of dimension DIM,
+
+     * XT must have size NS x DIM,
+     * ZSIM will have size NS x 1,
+
+    where NS is the number of simulation points.
+
+    Note that, in the case where MODEL is a model for noisy observations, this
+    function simulates sample paths of the underlying (latent) Gaussian
+    process, i.e., noiseless observations.
+
+ CALL: ZSIM = stk_generate_samplepaths (MODEL, XT, NB_PATHS)
+
+    generates NB_PATHS sample paths at once.  In this case, the output argument
+    ZSIM has size NS x NB_PATHS.
+
+ CALL: ZSIM = stk_generate_samplepaths (MODEL, XI, ZI, XT)
+
+    generates one sample path ZSIM, using the kriging model MODEL and the
+    evaluation points XT, conditional on the evaluations (XI, ZI).
+
+ CALL: ZSIM = stk_generate_samplepaths (MODEL, XI, ZI, XT, NB_PATHS)
+
+    generates NB_PATHS conditional sample paths at once.
+
+ NOTE: Sample size limitation
+
+    This function generates (discretized) sample paths using a Cholesky
+    factorization of the covariance matrix, and is therefore restricted to
+    moderate values of the number of evaluation points.
+
+ NOTE: Output type
+
+    The output argument ZSIM will be an stk_dataframe if at least one of the
+    following conditions is met:
+
+      a) the MODEL structure has a non-empty char field named 'response_name';
+
+      b) one of the input arguments XT, XI or ZI is an stk_dataframe object.
+
+    If both MODEL.response_name and ZI.colnames exist and are non-empty, they
+    must be equal (if they are not, ZSIM.colnames is empty).
+
+ EXAMPLES: see stk_example_kb05, stk_example_kb07
+
+ See also stk_conditioning, stk_cholcov
+</pre>
+
+</div>
+</body>
+</html>

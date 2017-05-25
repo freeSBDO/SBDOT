@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_SAMPLING_MAXIMINLHS generates a "maximin" LHS design
+
+ CALL: X = stk_sampling_maximinlhs (N, DIM)
+
+   generates a "maximin" Latin Hypercube Sample of size N in the
+   DIM-dimensional hypercube [0; 1]^DIM. More precisely, NITER = 1000
+   independent random LHS are generated, and the one with the biggest
+   separation distance is returned.
+
+ CALL: X = stk_sampling_maximinlhs (N, DIM, BOX)
+
+   does the same thing in the DIM-dimensional hyperrectangle specified by the
+   argument BOX, which is a 2 x DIM matrix where BOX(1, j) and BOX(2, j) are
+   the lower- and upper-bound of the interval on the j^th coordinate.
+
+ CALL: X = stk_sampling_maximinlhs (N, DIM, BOX, NITER)
+
+   allows to change the number of independent random LHS that are used.
+
+ See also: stk_mindist, stk_sampling_randomlhs
+</pre>
+
+</div>
+</body>
+</html>

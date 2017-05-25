@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_PREDICT_LEAVEONEOUT computes LOO predictions and residuals
+
+ CALL: LOO_PRED = stk_predict_leaveoneout (M_prior, xi, zi)
+
+    computes LOO predictions for (xi, zi) using the prior model M_prior.  The
+    result is a dataframe with n rows and two columns, where n is the number of
+    rows of xi and zi.  The first column is named 'mean' and contains LOO
+    prediction means.  The second column is named 'var' and contains LOO
+    prediction variances.
+
+ CALL: [LOO_PRED, LOO_RES] = stk_predict_leaveoneout (M_prior, xi, zi)
+
+    also returns LOO residuals.  The result LOO_RES is a dataframe with n rows
+    and two columns.  The first column is named 'residuals' and contains raw
+    (i.e., unnormalized) residuals.  The second column is named 'norm_res' and
+    contains normalized residuals.
+
+ CALL: [LOO_PRED, LOO_RES] = stk_predict_leaveoneout (M_post)
+
+    does the same as above using a posterior model object directly.
+
+ REMARK
+
+    This function actually computes pseudo-LOO prediction and residuals,
+    where the same parameter vector is used for all data points.
+
+ See also stk_example_kb10
+</pre>
+
+</div>
+</body>
+</html>

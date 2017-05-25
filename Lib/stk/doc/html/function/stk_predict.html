@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_PREDICT performs a kriging prediction from data
+
+ CALL: ZP = stk_predict (MODEL, XI, ZI, XP)
+
+    performs a kriging prediction at the points XP, given the observations
+    (XI, ZI) and the prior MODEL. The input arguments XI, ZI, and XP can be
+    either numerical matrices or dataframes. More precisely, on a factor space
+    of dimension DIM,
+
+     * XI must have size NI x DIM,
+     * ZI must have size NI x 1,
+     * XP must have size NP x DIM,
+
+    where NI is the number of observations and NP the number of prediction
+    points. The output ZP is a dataframe of size NP x 2, with:
+
+     * the kriging predictor in the first column (ZP.mean), and
+     * the kriging variance in the second column (ZP.var).
+
+    From a Bayesian point of view, ZP.mean and ZP.var are respectively the
+    posterior mean and variance of the Gaussian process prior MODEL given the
+    data (XI, ZI).  Note that, in the case of noisy data, ZP.var is the
+    (posterior) variance of the latent Gaussian process, not the variance of a
+    future noisy observation at location XP.
+
+ CALL: [ZP, LAMBDA, MU] = stk_predict (MODEL, XI, ZI, XP)
+
+    also returns the matrix of kriging weights LAMBDA and the matrix of
+    Lagrange multipliers MU.
+
+ CALL: [ZP, LAMBDA, MU, K] = stk_predict (MODEL, XI, ZI, XP)
+
+    also returns the posterior covariance matrix K at the locations XP (this is
+    an NP x NP covariance matrix). From a frequentist point of view, K can be
+    seen as the covariance matrix of the prediction errors.
+
+ SPECIAL CASE
+
+    If ZI is empty, everything but ZP.mean is computed. Indeed, neither the
+    kriging variance ZP.var nor the matrices LAMBDA and MU actually depend on
+    the observed values.
+</pre>
+
+</div>
+</body>
+</html>

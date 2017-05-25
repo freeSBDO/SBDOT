@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_PARAM_INIT provides a starting point for stk_param_estim
+
+ CALL: PARAM = stk_param_init (MODEL, XI, YI)
+
+   provides a quick and dirty estimate of the parameters of MODEL based on the
+   data (XI, YI), that can be used as a starting point for stk_param_estim. It
+   selects the maximizer of the ReML criterion out of a list of possible values
+   given data (XI, YI). This syntax is appropriate for noiseless observations
+   and for noisy observations with known noise variance (i.e., when the
+   'lognoisevariance' field in MODEL is either -Inf or has a finite value).
+
+ CALL: [PARAM, LNV] = stk_param_init (MODEL, XI, YI)
+
+   also returns a value for the 'lognoisevariance' field. In the case of
+   noiseless observations or noisy observations with known noise variance, this
+   is simply the value that was provided by the user in MODEL.lognoisevariance.
+   In the case where MODEL.lognoisevariance is NaN (noisy observation with
+   unknown noise variance), LNV is estimated by stk_param_init together with
+   PARAM.
+
+ CALL: [PARAM, LNV] = stk_param_init (MODEL, XI, YI, BOX)
+
+   takes into account the (hyper-rectangular) domain on which the model is
+   going to be used. It is used in the heuristics that determines the list of
+   parameter values mentioned above. BOX should be a 2 x DIM matrix with BOX(1,
+   j) and BOX(2, j) being the lower- and upper-bound of the interval on the
+   j^th coordinate, with DIM being the dimension of XI, DIM = size(XI,2). If
+   provided,  If missing or empty, the BOX argument defaults to [min(XI);
+   max(XI)].
+
+ CALL: [PARAM, LNV] = stk_param_init (MODEL, XI, YI, BOX, DO_ESTIM_LNV)
+
+   with DO_ESTIM_LNV = TRUE forces the estimation of the variance of the noise,
+   regardless of the value of MODEL.lognoisevariance. If FALSE, it prevents
+   estimation of the variance of the noise, which is only possible if the
+   'lognoisevariance' field in MODEL is either -Inf or has a finite value.
+
+ See also stk_example_kb02, stk_example_kb03, stk_example_misc03
+</pre>
+
+</div>
+</body>
+</html>

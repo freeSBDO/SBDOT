@@ -1,0 +1,495 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="css/stk.css" />
+<link rel="shortcut icon" href="../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="index.html">
+        <img src="images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<table>
+<tr><td rowspan="2" class="box_table">
+<div class="package_box">
+  <div class="package_box_header"></div>
+  <div class="package_box_contents">
+    <table>
+      <tr><td class="package_table">Package Version:</td><td>2.4.2</td></tr>
+      <tr><td class="package_table">Last Release Date:</td><td>20-May-2017</td></tr>
+      <tr><td class="package_table">Package Authors:</td><td>See AUTHORS file</td></tr>
+      <tr><td class="package_table">Package Maintainers:</td><td>Julien BECT   and Emmanuel VAZQUEZ </td></tr>
+      <tr><td class="package_table">License:</td><td><a href="COPYING.html">GNU Public Licence v3</a></td></tr>
+    </table>
+  </div>
+</div>
+</td>
+<td>
+  <div class="smallLinkBox" id="DownloadBox">
+  <table><tr>
+    <td class="icon">
+      <img src="images/download.png"/>
+    </td>
+    <td class="download_link">
+      <a href="http://sourceforge.net/projects/kriging/files/stk/" class="download_link">
+      Download STK</a>
+    </td>
+  </tr></table>
+</div>
+</td></tr>
+<tr><td>
+<div class="smallLinkBox" id="NewsBox">
+  <table><tr>
+    <td class="icon"><img src="images/news.png"/></td>
+    <td><a href="NEWS.html" class="news_file">
+      What's new ?
+    </a></td>
+  </tr></table>
+</div>
+</td></tr>
+</table>  <div class="package_description">
+    The STK is a (not so) <b>S</b>mall <b>T</b>oolbox for <b>K</b>riging. Its primary  focus is on the interpolation/regression technique known as kriging, which  is very closely related to Splines and Radial Basis Functions, and can be  interpreted as a non-parametric Bayesian method using a Gaussian Process  (GP) prior. The STK also provides tools for the sequential and  non-sequential design of experiments. Even though it is, currently, mostly  geared towards the Design and Analysis of Computer Experiments (DACE), the  STK can be useful for other applications areas (such as Geostatistics,  Machine Learning, Non-parametric Regression, etc.).
+  </div>
+
+<p>Select category:  <select name="cat" onchange="location = this.options[this.selectedIndex].value;">
+    <option value="#Core_STK_functions">Core STK functions</option>
+    <option value="#Parameter_estimation">Parameter estimation</option>
+    <option value="#Posterior_model_objects">Posterior model objects</option>
+    <option value="#Model_components__Covariance_functions">Model components: Covariance functions</option>
+    <option value="#Model_components__Radial_basis_functions">Model components: Radial basis functions</option>
+    <option value="#Model_components__Linear_model_objects">Model components: Linear model objects</option>
+    <option value="#Design_of_experiments__non_sequential___sampling">Design of experiments (non-sequential): sampling</option>
+    <option value="#Design_of_experiments__non_sequential___criterions">Design of experiments (non-sequential): criterions</option>
+    <option value="#Design_of_experiments__sequential___criterions">Design of experiments (sequential): criterions</option>
+    <option value="#Examples__kriging_basics">Examples: kriging basics</option>
+    <option value="#Examples__design_of_experiments">Examples: design of experiments</option>
+    <option value="#Examples__miscellaneous">Examples: miscellaneous</option>
+    <option value="#Examples__test_functions__datasets__etc_">Examples: test functions, datasets, etc.</option>
+    <option value="#Miscellaneous__arrays">Miscellaneous: arrays</option>
+    <option value="#Miscellaneous__Pareto_optimality">Miscellaneous: Pareto optimality</option>
+    <option value="#Miscellaneous__options__plots___">Miscellaneous: options, plots...</option>
+  </select></p>
+
+  <h3 class="category"><a name="Core_STK_functions">Core STK functions</a></h3>
+
+    <div class="func"><b><a href="function/stk_model.html">stk_model</a></b></div>
+    <div class="ftext"> STK_MODEL generates a model with default covariance parameters</div>
+
+    <div class="func"><b><a href="function/stk_model_update.html">stk_model_update</a></b></div>
+    <div class="ftext"> STK_MODEL_UPDATE updates a model with new data</div>
+
+    <div class="func"><b><a href="function/stk_make_matcov.html">stk_make_matcov</a></b></div>
+    <div class="ftext"> STK_MAKE_MATCOV computes a covariance matrix (and a design matrix)</div>
+
+    <div class="func"><b><a href="function/stk_predict.html">stk_predict</a></b></div>
+    <div class="ftext"> STK_PREDICT performs a kriging prediction from data</div>
+
+    <div class="func"><b><a href="function/stk_predict_leaveoneout.html">stk_predict_leaveoneout</a></b></div>
+    <div class="ftext"> STK_PREDICT_LEAVEONEOUT computes LOO predictions and residuals</div>
+
+    <div class="func"><b><a href="function/stk_pmisclass.html">stk_pmisclass</a></b></div>
+    <div class="ftext"> STK_PMISCLASS computes the (expected) probability of misclassification</div>
+
+    <div class="func"><b><a href="function/stk_conditioning.html">stk_conditioning</a></b></div>
+    <div class="ftext"> STK_CONDITIONING produces conditioned sample paths</div>
+
+    <div class="func"><b><a href="function/stk_generate_samplepaths.html">stk_generate_samplepaths</a></b></div>
+    <div class="ftext"> STK_GENERATE_SAMPLEPATHS generates sample paths of a Gaussian process</div>
+
+    <div class="func"><b><a href="function/stk_isnoisy.html">stk_isnoisy</a></b></div>
+    <div class="ftext"> STK_ISNOISY returns false for noiseless models</div>
+
+  <h3 class="category"><a name="Parameter_estimation">Parameter estimation</a></h3>
+
+    <div class="func"><b><a href="function/stk_param_estim.html">stk_param_estim</a></b></div>
+    <div class="ftext"> STK_PARAM_ESTIM estimates the parameters of a covariance function</div>
+
+    <div class="func"><b><a href="function/stk_param_gls.html">stk_param_gls</a></b></div>
+    <div class="ftext"> STK_PARAM_GLS computes a generalised least squares estimate</div>
+
+    <div class="func"><b><a href="function/stk_param_init.html">stk_param_init</a></b></div>
+    <div class="ftext"> STK_PARAM_INIT provides a starting point for stk_param_estim</div>
+
+    <div class="func"><b><a href="function/stk_param_init_lnv.html">stk_param_init_lnv</a></b></div>
+    <div class="ftext"> STK_PARAM_INIT_LNV provides a rough estimate of the variance of the noise</div>
+
+    <div class="func"><b><a href="function/stk_param_relik.html">stk_param_relik</a></b></div>
+    <div class="ftext"> STK_PARAM_RELIK computes the restricted likelihood of a model given data</div>
+
+  <h3 class="category"><a name="Posterior_model_objects">Posterior model objects</a></h3>
+
+    <div class="func"><b><a href="function/@stk_model_gpposterior/stk_model_gpposterior.html">@stk_model_gpposterior/stk_model_gpposterior</a></b></div>
+    <div class="ftext"> STK_MODEL_GPPOSTERIOR constructs a posterior model </div>
+
+    <div class="func"><b><a href="function/@stk_model_gpposterior/stk_predict.html">@stk_model_gpposterior/stk_predict</a></b></div>
+    <div class="ftext"> STK_PREDICT [overload STK function] </div>
+
+    <div class="func"><b><a href="function/@stk_model_gpposterior/stk_predict_leaveoneout.html">@stk_model_gpposterior/stk_predict_leaveoneout</a></b></div>
+    <div class="ftext"> STK_PREDICT_LEAVEONEOUT [overload STK function] </div>
+
+    <div class="func"><b><a href="function/@stk_model_gpposterior/stk_model_update.html">@stk_model_gpposterior/stk_model_update</a></b></div>
+    <div class="ftext"> STK_MODEL_UPDATE [overload STK function] </div>
+
+    <div class="func"><b><a href="function/@stk_model_gpposterior/get_input_data.html">@stk_model_gpposterior/get_input_data</a></b></div>
+    <div class="ftext"> GET_INTPUT_DATA returns the input data of the model </div>
+
+    <div class="func"><b><a href="function/@stk_model_gpposterior/get_output_data.html">@stk_model_gpposterior/get_output_data</a></b></div>
+    <div class="ftext"> GET_OUTPUT_DATA returns the output data of the model </div>
+
+    <div class="func"><b><a href="function/@stk_model_gpposterior/get_prior_model.html">@stk_model_gpposterior/get_prior_model</a></b></div>
+    <div class="ftext"> GET_PRIOR_MODEL returns the prior_model structure </div>
+
+  <h3 class="category"><a name="Model_components__Covariance_functions">Model components: Covariance functions</a></h3>
+
+    <div class="func"><b><a href="function/stk_expcov_aniso.html">stk_expcov_aniso</a></b></div>
+    <div class="ftext"> STK_EXPCOV_ANISO computes the anisotropic exponential covariance function</div>
+
+    <div class="func"><b><a href="function/stk_expcov_iso.html">stk_expcov_iso</a></b></div>
+    <div class="ftext"> STK_EXPCOV_ISO computes the isotropic exponential covariance function</div>
+
+    <div class="func"><b><a href="function/stk_gausscov_aniso.html">stk_gausscov_aniso</a></b></div>
+    <div class="ftext"> STK_GAUSSCOV_ANISO computes the anisotropic Gaussian covariance function</div>
+
+    <div class="func"><b><a href="function/stk_gausscov_iso.html">stk_gausscov_iso</a></b></div>
+    <div class="ftext"> STK_GAUSSCOV_ISO computes the isotropic Gaussian covariance function</div>
+
+    <div class="func"><b><a href="function/stk_materncov32_aniso.html">stk_materncov32_aniso</a></b></div>
+    <div class="ftext"> STK_MATERNCOV32_ANISO computes the anisotropic Matern covariance with nu=3/2</div>
+
+    <div class="func"><b><a href="function/stk_materncov32_iso.html">stk_materncov32_iso</a></b></div>
+    <div class="ftext"> STK_MATERNCOV32_ISO computes the isotropic Matern covariance with nu=3/2</div>
+
+    <div class="func"><b><a href="function/stk_materncov52_aniso.html">stk_materncov52_aniso</a></b></div>
+    <div class="ftext"> STK_MATERNCOV52_ANISO computes the anisotropic Matern covariance with nu=5/2</div>
+
+    <div class="func"><b><a href="function/stk_materncov52_iso.html">stk_materncov52_iso</a></b></div>
+    <div class="ftext"> STK_MATERNCOV52_ISO computes the isotropic Matern covariance</div>
+
+    <div class="func"><b><a href="function/stk_materncov_aniso.html">stk_materncov_aniso</a></b></div>
+    <div class="ftext"> STK_MATERNCOV_ANISO computes the anisotropic Matern covariance</div>
+
+    <div class="func"><b><a href="function/stk_materncov_iso.html">stk_materncov_iso</a></b></div>
+    <div class="ftext"> STK_MATERNCOV_ISO computes the isotropic Matern covariance</div>
+
+    <div class="func"><b><a href="function/stk_sphcov_aniso.html">stk_sphcov_aniso</a></b></div>
+    <div class="ftext"> STK_SPHCOV_ANISO computes the anisotropic spherical covariance function</div>
+
+    <div class="func"><b><a href="function/stk_sphcov_iso.html">stk_sphcov_iso</a></b></div>
+    <div class="ftext"> STK_SPHCOV_ISO computes the isotropic spherical covariance function</div>
+
+    <div class="func"><b><a href="function/stk_noisecov.html">stk_noisecov</a></b></div>
+    <div class="ftext"> STK_NOISECOV computes a noise covariance </div>
+
+    <div class="func"><b><a href="function/stk_discretecov.html">stk_discretecov</a></b></div>
+    <div class="ftext"> STK_DISCRETECOV computes a covariance matrix for a discrete model</div>
+
+  <h3 class="category"><a name="Model_components__Radial_basis_functions">Model components: Radial basis functions</a></h3>
+
+    <div class="func"><b><a href="function/stk_rbf_exponential.html">stk_rbf_exponential</a></b></div>
+    <div class="ftext"> STK_RBF_EXPONENTIAL computes the exponential correlation function</div>
+
+    <div class="func"><b><a href="function/stk_rbf_gauss.html">stk_rbf_gauss</a></b></div>
+    <div class="ftext"> STK_RBF_GAUSS computes the Gaussian correlation function</div>
+
+    <div class="func"><b><a href="function/stk_rbf_matern.html">stk_rbf_matern</a></b></div>
+    <div class="ftext"> STK_RBF_MATERN computes the Matern correlation function.</div>
+
+    <div class="func"><b><a href="function/stk_rbf_matern32.html">stk_rbf_matern32</a></b></div>
+    <div class="ftext"> STK_RBF_MATERN32 computes the Matern correlation function of order 3/2.</div>
+
+    <div class="func"><b><a href="function/stk_rbf_matern52.html">stk_rbf_matern52</a></b></div>
+    <div class="ftext"> STK_RBF_MATERN52 computes the Matern correlation function of order 5/2.</div>
+
+    <div class="func"><b><a href="function/stk_rbf_spherical.html">stk_rbf_spherical</a></b></div>
+    <div class="ftext"> STK_RBF_SPHERICAL computes the spherical correlation function</div>
+
+  <h3 class="category"><a name="Model_components__Linear_model_objects">Model components: Linear model objects</a></h3>
+
+    <div class="func"><b><a href="function/@stk_lm_affine/stk_lm_affine.html">@stk_lm_affine/stk_lm_affine</a></b></div>
+    <div class="ftext"> STK_LM_AFFINE creates an affine linear model object</div>
+
+    <div class="func"><b><a href="function/@stk_lm_constant/stk_lm_constant.html">@stk_lm_constant/stk_lm_constant</a></b></div>
+    <div class="ftext"> STK_LM_CONSTANT creates a constant linear model object</div>
+
+    <div class="func"><b><a href="function/@stk_lm_cubic/stk_lm_cubic.html">@stk_lm_cubic/stk_lm_cubic</a></b></div>
+    <div class="ftext"> STK_LM_CUBIC creates a cubic linear model object</div>
+
+    <div class="func"><b><a href="function/@stk_lm_matrix/stk_lm_matrix.html">@stk_lm_matrix/stk_lm_matrix</a></b></div>
+    <div class="ftext"> STK_LM_MATRIX creates a linear model object defined on a finite space</div>
+
+    <div class="func"><b><a href="function/@stk_lm_null/stk_lm_null.html">@stk_lm_null/stk_lm_null</a></b></div>
+    <div class="ftext"> STK_LM_NULL creates a null linear model object</div>
+
+    <div class="func"><b><a href="function/@stk_lm_quadratic/stk_lm_quadratic.html">@stk_lm_quadratic/stk_lm_quadratic</a></b></div>
+    <div class="ftext"> STK_LM_QUADRATIC creates a quadratic linear model object</div>
+
+    <div class="func"><b><a href="function/stk_lm_polynomial.html">stk_lm_polynomial</a></b></div>
+    <div class="ftext"> STK_LM_POLYNOMIAL creates a polynomial linear model object</div>
+
+  <h3 class="category"><a name="Design_of_experiments__non_sequential___sampling">Design of experiments (non-sequential): sampling</a></h3>
+
+    <div class="func"><b><a href="function/stk_sampling_halton_rr2.html">stk_sampling_halton_rr2</a></b></div>
+    <div class="ftext"> STK_SAMPLING_HALTON_RR2 generates points from the Halton/RR2 sequence</div>
+
+    <div class="func"><b><a href="function/stk_sampling_sobol.html">stk_sampling_sobol</a></b></div>
+    <div class="ftext"> STK_SAMPLING_SOBOL generates points from a Sobol sequence</div>
+
+    <div class="func"><b><a href="function/stk_sampling_maximinlhs.html">stk_sampling_maximinlhs</a></b></div>
+    <div class="ftext"> STK_SAMPLING_MAXIMINLHS generates a "maximin" LHS design</div>
+
+    <div class="func"><b><a href="function/stk_sampling_olhs.html">stk_sampling_olhs</a></b></div>
+    <div class="ftext"> STK_SAMPLING_OLHS generates a random Orthogonal Latin Hypercube (OLH) sample</div>
+
+    <div class="func"><b><a href="function/stk_sampling_randomlhs.html">stk_sampling_randomlhs</a></b></div>
+    <div class="ftext"> STK_SAMPLING_RANDOMLHS generates a random LHS design</div>
+
+    <div class="func"><b><a href="function/stk_sampling_randunif.html">stk_sampling_randunif</a></b></div>
+    <div class="ftext"> STK_SAMPLING_RANDUNIF generates uniformly distributed points</div>
+
+    <div class="func"><b><a href="function/stk_sampling_regulargrid.html">stk_sampling_regulargrid</a></b></div>
+    <div class="ftext"> STK_SAMPLING_REGULARGRID builds a regular grid</div>
+
+    <div class="func"><b><a href="function/stk_sampling_vdc_rr2.html">stk_sampling_vdc_rr2</a></b></div>
+    <div class="ftext"> STK_SAMPLING_VDC_RR2 generates points from the "RR2" van der Corput sequence</div>
+
+  <h3 class="category"><a name="Design_of_experiments__non_sequential___criterions">Design of experiments (non-sequential): criterions</a></h3>
+
+    <div class="func"><b><a href="function/stk_filldist.html">stk_filldist</a></b></div>
+    <div class="ftext"> STK_FILLDIST computes the fill distance of a set of points</div>
+
+    <div class="func"><b><a href="function/stk_maxabscorr.html">stk_maxabscorr</a></b></div>
+    <div class="ftext"> STK_MAXABSCORR computes the maximal absolute correlation for a set of points</div>
+
+    <div class="func"><b><a href="function/stk_mindist.html">stk_mindist</a></b></div>
+    <div class="ftext"> STK_MINDIST computes the separation distance of a set of points</div>
+
+    <div class="func"><b><a href="function/stk_phipcrit.html">stk_phipcrit</a></b></div>
+    <div class="ftext"> STK_PHIPCRIT computes the "phi_p" criterion of Morris & Mitchell</div>
+
+  <h3 class="category"><a name="Design_of_experiments__sequential___criterions">Design of experiments (sequential): criterions</a></h3>
+
+    <div class="func"><b><a href="function/stk_sampcrit_ei_eval.html">stk_sampcrit_ei_eval</a></b></div>
+    <div class="ftext"> STK_SAMPCRIT_EI_EVAL computes the EI criterion</div>
+
+    <div class="func"><b><a href="function/stk_sampcrit_ehvi_eval.html">stk_sampcrit_ehvi_eval</a></b></div>
+    <div class="ftext"> STK_SAMPCRIT_EHVI_EVAL computes the EHVI criterion</div>
+
+    <div class="func"><b><a href="function/stk_sampcrit_emmi_eval.html">stk_sampcrit_emmi_eval</a></b></div>
+    <div class="ftext"> STK_SAMPCRIT_EMMI_EVAL computes the EMMI criterion</div>
+
+    <div class="func"><b><a href="function/stk_distrib_normal_ei.html">stk_distrib_normal_ei</a></b></div>
+    <div class="ftext"> STK_DISTRIB_NORMAL_EI computes the normal (Gaussian) expected improvement</div>
+
+    <div class="func"><b><a href="function/stk_distrib_student_ei.html">stk_distrib_student_ei</a></b></div>
+    <div class="ftext"> STK_DISTRIB_STUDENT_EI computes the Student expected improvement</div>
+
+  <h3 class="category"><a name="Examples__kriging_basics">Examples: kriging basics</a></h3>
+
+    <div class="func"><b><a href="function/stk_example_kb01.html">stk_example_kb01</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB01  Ordinary kriging in 1D, with noiseless data</div>
+
+    <div class="func"><b><a href="function/stk_example_kb01n.html">stk_example_kb01n</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB01N  Ordinary kriging in 1D, with noisy data</div>
+
+    <div class="func"><b><a href="function/stk_example_kb02.html">stk_example_kb02</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB02  Ordinary kriging in 1D with parameter estimation</div>
+
+    <div class="func"><b><a href="function/stk_example_kb02n.html">stk_example_kb02n</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB02N  Noisy ordinary kriging in 1D with parameter estimation</div>
+
+    <div class="func"><b><a href="function/stk_example_kb03.html">stk_example_kb03</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB03  Ordinary kriging in 2D</div>
+
+    <div class="func"><b><a href="function/stk_example_kb05.html">stk_example_kb05</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB05  Generation of conditioned sample paths</div>
+
+    <div class="func"><b><a href="function/stk_example_kb06.html">stk_example_kb06</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB06  Ordinary kriging VS kriging with a linear trend</div>
+
+    <div class="func"><b><a href="function/stk_example_kb07.html">stk_example_kb07</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB07  Simulation of sample paths from a Matern process </div>
+
+    <div class="func"><b><a href="function/stk_example_kb08.html">stk_example_kb08</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB08  Generation of conditioned sample paths made easy</div>
+
+    <div class="func"><b><a href="function/stk_example_kb09.html">stk_example_kb09</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB09  Generation of sample paths conditioned on noisy observations</div>
+
+    <div class="func"><b><a href="function/stk_example_kb10.html">stk_example_kb10</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_KB10  Leave-one-out (LOO) cross validation</div>
+
+  <h3 class="category"><a name="Examples__design_of_experiments">Examples: design of experiments</a></h3>
+
+    <div class="func"><b><a href="function/stk_example_doe01.html">stk_example_doe01</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_DOE01  Examples of two-dimensional designs</div>
+
+    <div class="func"><b><a href="function/stk_example_doe02.html">stk_example_doe02</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_DOE02  "Sequential Maximin" design</div>
+
+    <div class="func"><b><a href="function/stk_example_doe03.html">stk_example_doe03</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_DOE03  A simple illustration of 1D Bayesian optimization</div>
+
+    <div class="func"><b><a href="function/stk_example_doe04.html">stk_example_doe04</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_DOE04  Probability of misclassification</div>
+
+  <h3 class="category"><a name="Examples__miscellaneous">Examples: miscellaneous</a></h3>
+
+    <div class="func"><b><a href="function/stk_example_misc01.html">stk_example_misc01</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_MISC01  Several correlation functions from the Matern family</div>
+
+    <div class="func"><b><a href="function/stk_example_misc02.html">stk_example_misc02</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_MISC02  How to use priors on the covariance parameters</div>
+
+    <div class="func"><b><a href="function/stk_example_misc03.html">stk_example_misc03</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_MISC03  How to deal with (known) seasonality </div>
+
+    <div class="func"><b><a href="function/stk_example_misc04.html">stk_example_misc04</a></b></div>
+    <div class="ftext"> STK_EXAMPLE_MISC04  Pareto front simulation</div>
+
+  <h3 class="category"><a name="Examples__test_functions__datasets__etc_">Examples: test functions, datasets, etc.</a></h3>
+
+    <div class="func"><b><a href="function/stk_dataset_twobumps.html">stk_dataset_twobumps</a></b></div>
+    <div class="ftext"> STK_DATASET_TWOBUMPS defines datasets based on the TwoBumps response function </div>
+
+    <div class="func"><b><a href="function/stk_testfun_borehole.html">stk_testfun_borehole</a></b></div>
+    <div class="ftext"> STK_TESTFUN_BOREHOLE computes the "borehole model" response function</div>
+
+    <div class="func"><b><a href="function/stk_testfun_braninhoo.html">stk_testfun_braninhoo</a></b></div>
+    <div class="ftext"> STK_TESTFUN_BRANINHOO computes the Branin-Hoo function.</div>
+
+    <div class="func"><b><a href="function/stk_testfun_goldsteinprice.html">stk_testfun_goldsteinprice</a></b></div>
+    <div class="ftext"> STK_TESTFUN_GOLDSTEINPRICE computes the Goldstein-Price function</div>
+
+    <div class="func"><b><a href="function/stk_testfun_twobumps.html">stk_testfun_twobumps</a></b></div>
+    <div class="ftext"> STK_TESTFUN_TWOBUMPS computes the TwoBumps response function</div>
+
+  <h3 class="category"><a name="Miscellaneous__arrays">Miscellaneous: arrays</a></h3>
+
+    <div class="func"><b><a href="function/stk_boundingbox.html">stk_boundingbox</a></b></div>
+    <div class="ftext"> STK_BOUNDINGBOX constructs the bounding box for a set of points</div>
+
+    <div class="func"><b><a href="function/stk_feval.html">stk_feval</a></b></div>
+    <div class="ftext"> STK_FEVAL evaluates a function at given evaluation points</div>
+
+    <div class="func"><b><a href="function/stk_length.html">stk_length</a></b></div>
+    <div class="ftext"> STK_LENGTH return the "length" of an array</div>
+
+    <div class="func"><b><a href="function/stk_normalize.html">stk_normalize</a></b></div>
+    <div class="ftext"> STK_NORMALIZE normalizes a dataset to [0; 1] ^ DIM </div>
+
+    <div class="func"><b><a href="function/stk_rescale.html">stk_rescale</a></b></div>
+    <div class="ftext"> STK_RESCALE rescales a dataset from one box to another </div>
+
+    <div class="func"><b><a href="function/@stk_dataframe/stk_dataframe.html">@stk_dataframe/stk_dataframe</a></b></div>
+    <div class="ftext"> STK_DATAFRAME constructs a dataframe object</div>
+
+    <div class="func"><b><a href="function/@stk_factorialdesign/stk_factorialdesign.html">@stk_factorialdesign/stk_factorialdesign</a></b></div>
+    <div class="ftext"> STK_FACTORIALDESIGN constructs a "full factorial design" array </div>
+
+    <div class="func"><b><a href="function/@stk_factorialdesign/ndgrid.html">@stk_factorialdesign/ndgrid</a></b></div>
+    <div class="ftext"> NDGRID produces ndgrid-style coordinate arrays</div>
+
+    <div class="func"><b><a href="function/@stk_hrect/stk_hrect.html">@stk_hrect/stk_hrect</a></b></div>
+    <div class="ftext"> STK_HRECT creates an hyper-rectangle object</div>
+
+  <h3 class="category"><a name="Miscellaneous__Pareto_optimality">Miscellaneous: Pareto optimality</a></h3>
+
+    <div class="func"><b><a href="function/stk_dominatedhv.html">stk_dominatedhv</a></b></div>
+    <div class="ftext"> STK_DOMINATEHV computes the hypervolume dominated by a set of points</div>
+
+    <div class="func"><b><a href="function/stk_isdominated.html">stk_isdominated</a></b></div>
+    <div class="ftext"> STK_ISDOMINATED returns true for dominated rows</div>
+
+    <div class="func"><b><a href="function/stk_paretofind.html">stk_paretofind</a></b></div>
+    <div class="ftext"> STK_PARETOFIND finds non-dominated rows in an array</div>
+
+    <div class="func"><b><a href="function/stk_minimize_boxconstrained.html">stk_minimize_boxconstrained</a></b></div>
+    <div class="ftext"> STK_MINIMIZE_BOXCONSTRAINED performs box-constrained minimization</div>
+
+    <div class="func"><b><a href="function/stk_minimize_unconstrained.html">stk_minimize_unconstrained</a></b></div>
+    <div class="ftext"> STK_MINIMIZE_UNCONSTRAINED performs unconstrained minimization</div>
+
+    <div class="func"><b><a href="function/stk_optim_isavailable.html">stk_optim_isavailable</a></b></div>
+    <div class="ftext"> STK_OPTIM_ISAVAILABLE checks if a given optimizer is available</div>
+
+    <div class="func"><b><a href="function/@stk_optim_fmincon/stk_optim_fmincon.html">@stk_optim_fmincon/stk_optim_fmincon</a></b></div>
+    <div class="ftext"> STK_OPTIM_FMINCON constructs an object of class 'stk_optim_fmincon'.</div>
+
+    <div class="func"><b><a href="function/@stk_optim_fminsearch/stk_optim_fminsearch.html">@stk_optim_fminsearch/stk_optim_fminsearch</a></b></div>
+    <div class="ftext"> STK_OPTIM_FMINSEARCH constructs an object of class 'stk_optim_fminsearch'.</div>
+
+    <div class="func"><b><a href="function/@stk_optim_octavesqp/stk_optim_octavesqp.html">@stk_optim_octavesqp/stk_optim_octavesqp</a></b></div>
+    <div class="ftext"> STK_OPTIM_OCTAVESQP constructs an object of class 'stk_optim_octavesqp'.</div>
+
+  <h3 class="category"><a name="Miscellaneous__options__plots___">Miscellaneous: options, plots...</a></h3>
+
+    <div class="func"><b><a href="function/stk_dist.html">stk_dist</a></b></div>
+    <div class="ftext"> STK_DIST computes a matrix of (Euclidean) distances</div>
+
+    <div class="func"><b><a href="function/stk_init.html">stk_init</a></b></div>
+    <div class="ftext"> STK_INIT initializes the STK</div>
+
+    <div class="func"><b><a href="function/stk_options_get.html">stk_options_get</a></b></div>
+    <div class="ftext"> STK_OPTIONS_GET returns the value of one or all STK options </div>
+
+    <div class="func"><b><a href="function/stk_options_set.html">stk_options_set</a></b></div>
+    <div class="ftext"> STK_OPTIONS_SET sets the value of one or all STK options </div>
+
+    <div class="func"><b><a href="function/stk_plot1d.html">stk_plot1d</a></b></div>
+    <div class="ftext"> STK_PLOT1D is a convenient plot function for 1D kriging predictions</div>
+
+    <div class="func"><b><a href="function/stk_plot_histnormres.html">stk_plot_histnormres</a></b></div>
+    <div class="ftext"> STK_PLOT_HISTNORMRES plots an histogram for normalized residuals</div>
+
+    <div class="func"><b><a href="function/stk_plot_predvsobs.html">stk_plot_predvsobs</a></b></div>
+    <div class="ftext"> STK_PLOT_PREDVSOBS plots predictions against observations</div>
+
+    <div class="func"><b><a href="function/stk_runtests.html">stk_runtests</a></b></div>
+    <div class="ftext"> STK_RUNTESTS runs all tests in a given directory (or in STK's searchpath).</div>
+
+    <div class="func"><b><a href="function/stk_version.html">stk_version</a></b></div>
+    <div class="ftext"> STK_VERSION returns STK's version number </div>
+
+
+</div>
+</body>
+</html>
+

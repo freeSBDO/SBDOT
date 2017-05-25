@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta http-equiv="content-type"
+ content="text/html; charset=utf-8" />
+
+<meta name="date"
+ content="20-May-2017"/>
+
+<meta name="author"
+ content="Julien Bect and Emmanuel Vazquez" />
+
+<meta name="description"
+ content="Function reference for STK: a Small (Matlab/Octave) Toolbox for Kriging." />
+
+<meta name="keywords" lang="en"
+ content="kriging, Gaussian processes, Matérn covariance,  design and analysis of computer experiments" />
+
+<title>STK: a Small (Matlab/Octave) Toolbox for Kriging</title>
+
+<link rel="stylesheet" type="text/css" href="../css/stk.css" />
+<link rel="shortcut icon" href="../../favicon.ico" />
+
+</head>
+
+<body>
+
+<div class="header">
+  <table><tr>
+    <td id="logo">
+      <a class="linkToIndex" href ="../index.html">
+        <img src="../images/stk_logo.png" alt="Octave logo" />
+      </a>
+    </td>
+    <td id="title">
+      <a class="linkToIndex" href ="../index.html">
+        <b>STK</b>: a <b>S</b>mall (Matlab/Octave)
+        <b>T</b>oolbox for <b>K</b>riging
+      </a>
+    </td>
+  </tr></table>
+</div>
+
+<div id="doccontent">
+
+<pre> STK_TESTFUN_BOREHOLE computes the "borehole model" response function
+
+ CALL: Y = stk_testfun_borehole (X)
+
+    computes the responses Y(i, :) of the "borehole model" [1-3] for the
+    input vectors X(i, :).
+
+    The output Y is the water flow rate through the borehole (m3/yr).
+
+    The input variables (columns of X) are:
+
+       X(:, 1) = rw   radius of borehole (m),
+       X(:, 2) = r    radius of influence (m),
+       X(:, 3) = Tu   transmissivity of upper aquifer (m2/yr),
+       X(:, 4) = Hu   potentiometric head of upper aquifer (m),
+       X(:, 5) = Tl   transmissivity of lower aquifer (m2/yr),
+       X(:, 6) = Hl   potentiometric head of lower aquifer (m),
+       X(:, 7) = L    length of borehole (m),
+       X(:, 8) = Kw   hydraulic conductivity of borehole (m/yr),
+
+    and their usual domain of variation is:
+
+       input_domain = stk_hrect ([                                  ...
+           0.05    100   63070    990   63.1    700  1120   9855;   ...
+           0.15  50000  115600   1110  116.0    820  1680  12045],  ...
+          {'rw',  'r',    'Tu',  'Hu',  'Tl',  'Hl',  'L',  'Kw'})
+
+ REFERENCES
+
+  [1] Harper, W. V. & Gupta, S. K. (1983).  Sensitivity/uncertainty analysis
+      of a borehole scenario comparing Latin Hypercube Sampling and determinis-
+      tic sensitivity approaches.  Technical report BMI/ONWI-516,  Battelle
+      Memorial Inst., Office of Nuclear Waste Isolation, Columbus, OH (USA).
+
+  [2] Morris, M. D., Mitchell, T. J. & Ylvisaker, D. (1993).  Bayesian design
+      and analysis of computer experiments: use of derivatives in surface
+      prediction.  Technometrics, 35(3):243-255.
+
+  [3] Surjanovic, S. & Bingham, D.  Virtual Library of Simulation Experiments:
+      Test Functions and Datasets.  Retrieved February 1, 2016, from
+      http://www.sfu.ca/~ssurjano/borehole.html. 
+</pre>
+
+</div>
+</body>
+</html>
