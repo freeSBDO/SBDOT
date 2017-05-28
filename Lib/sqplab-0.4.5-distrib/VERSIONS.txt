@@ -1,0 +1,53 @@
+Version 0.5 (in development)
+^^^^^^^^^^^
+- Trust regions for equality constrained problems.
+
+
+Version 0.4.5 (December 2011)
+^^^^^^^^^^^^^
+- The hanging_chain example in the 'example' directory has been
+  corrected.
+
+Version 0.4.4 (February 2009)
+^^^^^^^^^^^^^
+- Bugs corrected: the unconstrained quasi-Newton version with Wolfe
+  linesearch was not terminated (Thanks to Xiaohan Ma, for having
+  recalled me this!).
+- Cosmetic improvements.
+
+Version 0.4.3 (December 2008)
+^^^^^^^^^^^^^
+- The Hanging Chain example has been added.
+
+Version 0.4.2 (December 2008)
+^^^^^^^^^^^^^
+- Bugs corrected.
+- Cosmetic improvements.
+
+Version 0.4.1 (October 2007)
+^^^^^^^^^^^^^
+- Cosmetic changes.
+
+Version 0.4 (June 2007)
+^^^^^^^^^^^
+- Unconstrained problems can now be solved by a quasi-Newton algorithm
+  using Wolfe linesearch and the inverse BFGS update formula.
+- Important restructuration of the software.
+
+
+Version 0.3 (March 2007)
+^^^^^^^^^^^
+- State constraints are accepted, provided there is no inequality
+  constraints and the Newton version of the algorithm is used.
+
+
+Version 0.2 (February 2007)
+^^^^^^^^^^^
+- Globalization by linesearch, using a merit function.
+- Quasi-Newton (BFGS) approximation of the Hessian of the Lagrangian.
+
+
+Version 0.1 (December 2006)
+^^^^^^^^^^^
+- The local algorithms (equality and inequality constraints) using
+  second derivatives.

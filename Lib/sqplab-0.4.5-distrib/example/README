@@ -1,0 +1,27 @@
+Hanging chain example
+^^^^^^^^^^^^^^^^^^^^^
+The example 'hanging_chain' is provided to show how 'sqplab' can be
+used to solve an equality and inequality constrained problem. The
+problem consists in finding the static equilibrium position of a chain
+made of rigid bars. This problem is further explained and discussed in
+the book whose reference is given below.
+
+To run the example:
+- launch matlab
+- enter 'hanging_chain' in the execution window.
+
+The output of SQPlab should then be close to that in
+'hanging_chain.res' and the generated figure should be close to the one
+in 'hanging_chain.eps'.
+
+Reference
+^^^^^^^^^
+@book{bonnans-gilbert-lemarechal-sagastizabal-2006,
+author={J.F. Bonnans and J.Ch. Gilbert and C. Lemar\'echal and C.
+   Sagastiz\'abal},
+title={Numerical Optimization -- Theoretical and Practical Aspects} #
+   seconde_edition,
+series={Universitext},
+publisher={Springer Verlag, Berlin},
+year=2006
+}
