@@ -4,3 +4,12 @@
 
 # Data files MATLAB
 *.dat
+
+# PDF
+*.pdf
+
+# Image
+*.eps
+*.png
+*.jpg
+*.jpeg
