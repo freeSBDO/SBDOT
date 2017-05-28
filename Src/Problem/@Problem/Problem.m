@@ -35,7 +35,7 @@ classdef Problem < handle
             % Initialized a problem object with mandatory inputs :
             % 	obj=Problem(function_name,m_x,m_y,m_g,lb,ub)
             %
-            % Initialized a problem object with mandatory inputs :
+            % Initialized a problem object with optionnal inputs :
             % 	obj=Problem(function_name,m_x,m_y,m_g,lb,ub,varargin)
             %   obj=Problem(function_name,m_x,m_y,m_g,lb,ub,'parallel',true)
             %
@@ -48,7 +48,7 @@ classdef Problem < handle
             
             % Parser for input validation
             p = inputParser;
-            p.KeepUnmatched=true;
+            p.KeepUnmatched = true;
             p.PartialMatching=false;
             p.addRequired('function_name',@(x)validateattributes(x,{'function_handle','char'},{'nonempty'}))
             p.addRequired('m_x',@(x)validateattributes(x,{'numeric'},{'nonempty','scalar','integer','positive'}))
@@ -62,33 +62,33 @@ classdef Problem < handle
             p.addOptional('round_range',[],@isnumeric);
             p.addOptional('Tol_eval',1e-4,@isnumeric);
             p.parse(function_name,m_x,m_y,m_g,lb,ub,varargin{:})
-            in=p.Results;
+            in = p.Results;
             
             % Checks
-            unmatched_params=fieldnames(p.Unmatched);            
+            unmatched_params = fieldnames(p.Unmatched);            
             for i=1:length(unmatched_params)
                 warning('SBDOT:Problem:unmatched', ... 
                     ['Options ''' unmatched_params{i} ''' was not recognized']);
             end
-            assert(size(lb,2)==in.m_x,...
+            assert( size(lb,2) == in.m_x,...
                 'SBDOT:Problem:lb_argument',...
                 'lb must be a row vector of size 1 by m_x');
-            assert(size(ub,2)==in.m_x,...
+            assert( size(ub,2) == in.m_x,...
                 'SBDOT:Problem:ub_argument',...
                 'ub must be a row vector of size 1 by m_x');
             
             % Store            
-            obj.function_name=in.function_name;
-            obj.m_x=in.m_x;
-            obj.m_y=in.m_y;
-            obj.m_g=in.m_g;
-            obj.lb=in.lb;
-            obj.ub=in.ub;
-            obj.parallel=in.parallel;
-            obj.display=in.display;
-            obj.round=in.round;
-            obj.round_range=in.round_range;
-            obj.Tol_eval=in.Tol_eval;
+            obj.function_name = in.function_name;
+            obj.m_x = in.m_x;
+            obj.m_y = in.m_y;
+            obj.m_g = in.m_g;
+            obj.lb = in.lb;
+            obj.ub = in.ub;
+            obj.parallel = in.parallel;
+            obj.display = in.display;
+            obj.round = in.round;
+            obj.round_range = in.round_range;
+            obj.Tol_eval = in.Tol_eval;
             
             % Display
             if obj.display
