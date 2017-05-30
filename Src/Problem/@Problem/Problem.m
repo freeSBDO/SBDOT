@@ -30,7 +30,7 @@ classdef Problem < handle
     
     methods ( Access = public )
         
-        function obj=Problem(function_name,m_x,m_y,m_g,lb,ub,varargin)
+        function obj = Problem( function_name, m_x, m_y, m_g, lb, ub, varargin )
             % Problem constructor
             % Initialized a problem object with mandatory inputs :
             % 	obj=Problem(function_name,m_x,m_y,m_g,lb,ub)
@@ -76,6 +76,9 @@ classdef Problem < handle
             assert( size(ub,2) == in.m_x,...
                 'SBDOT:Problem:ub_argument',...
                 'ub must be a row vector of size 1 by m_x');
+            assert( all( lb < ub , 2),...
+                'SBDOT:Problem:bounds',...
+                'lb must be lower than ub');
             
             % Store            
             obj.function_name = in.function_name;

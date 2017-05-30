@@ -6,17 +6,22 @@ classdef Problem_multifi < handle
     properties
         
         % Mandatory inputs
-        prob_HF
-        prob_LF
+        prob_HF     % High fidelity model Problem object
+        prob_LF     % Low fidelity model Problem object
         
         % Constructed inputs
-        display
+        display     % Logical, displaying information (true = allowed)
+        m_x         % Dimension of the input space
+        m_y         % Number of objectives
+        m_g         % Number of contraints                
+        lb          % Lower bound of input space (row vector 1 by m_x)
+        ub          % Upper bound of input space (row vector 1 by m_x)
         
     end
     
     methods
         
-        function obj=Problem_multifi( prob_LF, prob_HF )
+        function obj = Problem_multifi( prob_LF, prob_HF )
             % Problem_multifi constructor
             % Initialized a Problem_multifi object with mandatory inputs :
             % 	obj=Problem( prob_LF, prob_HF)
@@ -42,9 +47,9 @@ classdef Problem_multifi < handle
             % Display
             if obj.display
                 fprintf(['\nMultifidelity Problem object successfully constructed with: \n',...
-                    num2str(obj.prob_HF.m_x),' design variable(s), ',...
-                    num2str(obj.prob_HF.m_y),' objective(s) and ',...
-                    num2str(obj.prob_HF.m_g),' constraint(s).\n\n'])
+                    num2str(obj.m_x),' design variable(s), ',...
+                    num2str(obj.m_y),' objective(s) and ',...
+                    num2str(obj.m_g),' constraint(s).\n\n'])
             end
             
         end
