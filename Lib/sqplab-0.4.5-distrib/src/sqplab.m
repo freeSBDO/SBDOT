@@ -231,7 +231,7 @@ function [x,lm,info] = sqplab (simul,x0,lm0,lb,ub,options)
   if nargin < 5; ub  = []; else ub = ub(:); end
   if nargin < 6;
     options.fout    = 1;
-    options.verbose = 1;
+    options.verbose = 0;
   end
 
 % Prelimnaries:

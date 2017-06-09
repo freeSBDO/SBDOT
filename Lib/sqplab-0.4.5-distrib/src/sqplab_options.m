@@ -87,7 +87,7 @@ function [info,options,values] = sqplab_options (info,options)
       options.verbose = 1;
     end
   else
-    options.verbose = 1;
+    options.verbose = 0;
   end
 
   if isfield(options,'algo_method')

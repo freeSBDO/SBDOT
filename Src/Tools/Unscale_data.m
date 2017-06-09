@@ -13,8 +13,8 @@ function [ x ] = Unscale_data( x_scaled, lb, ub )
     p.KeepUnmatched=true;
     p.PartialMatching=false;
     p.addRequired('x_scaled',@(x)validateattributes(x,{'numeric'},{'nonempty'}));
-    p.addOptional('lb',min(x),@(x)validateattributes(x,{'numeric'},{'nonempty','row'}));
-    p.addOptional('ub',max(x),@(x)validateattributes(x,{'numeric'},{'nonempty','row'}));
+    p.addOptional('lb',min(x_scaled),@(x)validateattributes(x,{'numeric'},{'nonempty','row'}));
+    p.addOptional('ub',max(x_scaled),@(x)validateattributes(x,{'numeric'},{'nonempty','row'}));
     p.parse(x_scaled,lb,ub);
     in=p.Results;
 

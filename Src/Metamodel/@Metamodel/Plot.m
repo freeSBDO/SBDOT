@@ -35,7 +35,7 @@ function [] = Plot( obj, inputs_ind, cut_values )
                 
                 X_cut = bsxfun(@times, ones( 200, length(cut_values) ), ...
                     cut_values );
-                X_test( :, inputs ) = X_plot;
+                X_test( :, inputs_ind ) = X_plot;
                 X_test( :, setdiff( 1:obj.prob.m_x, inputs_ind ) ) = X_cut;
                 
             else

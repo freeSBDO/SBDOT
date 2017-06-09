@@ -18,7 +18,8 @@ classdef Problem < handle
         display       % Logical, displaying information (true = allowed)
         round         % Logical, rounding input values before evaluation (true = to round)
         round_range   % Rounding range for input values (only if round is true)
-        Tol_eval      % Tolerance value on distance between already evaluated points and new one.
+        tol_eval      % Tolerance value on distance between already evaluated points and new one.
+        save_file     % Filename for .mat save of evaluations
 
         % Computed variables
         n_x = 0      % Number of points        
@@ -44,7 +45,8 @@ classdef Problem < handle
             %	'display'     [true]
             %	'round'       [false]
             %	'round_range' []
-            %   'Tol_eval'    [1e-4]
+            %   'tol_eval'    [1e-4]
+            %   'save_file'    []
             
             % Parser for input validation
             p = inputParser;
@@ -60,7 +62,8 @@ classdef Problem < handle
             p.addOptional('display',true,@islogical);
             p.addOptional('round',false,@islogical);
             p.addOptional('round_range',[],@isnumeric);
-            p.addOptional('Tol_eval',1e-4,@isnumeric);
+            p.addOptional('tol_eval',1e-4,@isnumeric);
+            p.addOptional('save_file',[],@ischar);
             p.parse(function_name,m_x,m_y,m_g,lb,ub,varargin{:})
             in = p.Results;
             
@@ -91,7 +94,8 @@ classdef Problem < handle
             obj.display = in.display;
             obj.round = in.round;
             obj.round_range = in.round_range;
-            obj.Tol_eval = in.Tol_eval;
+            obj.tol_eval = in.tol_eval;
+            obj.save_file = in.save_file;
             
             % Display
             if obj.display

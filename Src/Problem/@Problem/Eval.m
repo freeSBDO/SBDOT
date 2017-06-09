@@ -1,4 +1,4 @@
-function [ y_eval, g_eval ] = Eval( obj, x_eval )
+function [ y_eval, g_eval, x_eval ] = Eval( obj, x_eval )
     % EVAL Evaluates the problem function at x_eval
     %   *x_eval is a n_eval by m_x matrix
     %   *y_eval is objectives evaluated at x_eval
@@ -12,7 +12,7 @@ function [ y_eval, g_eval ] = Eval( obj, x_eval )
 
     % Evaluation
     if obj.round
-        x_eval = round_SBDO( x_eval, obj.round_range ); %round x_eval
+        x_eval = Round_data( x_eval, obj.round_range ); %round x_eval
     end
 
     if obj.display, fprintf('Evaluation '); end
@@ -29,14 +29,16 @@ function [ y_eval, g_eval ] = Eval( obj, x_eval )
                 g_eval = [];
             end
         catch ME
-            obj.eval_error_handling( ME, 'unknow because parallel evaluation' )
-        end   
+            obj.Eval_error_handling( ME, 'unknow because parallel evaluation' )
+        end
+        
+        if ~isempty(obj.save_file)
+            
+            save( obj.save_file, 'x_eval', 'y_eval', 'g_eval' )
+            
+        end
 
         if obj.display, fprintf( repmat('\b',1,7) ); end   
-
-        if isempty( obj.n_x )
-            obj.output_assert( y_eval, g_eval );
-        end   
 
     else % Parallel evaluation is not allowed    
 
@@ -59,13 +61,15 @@ function [ y_eval, g_eval ] = Eval( obj, x_eval )
                 end
             catch ME
                 obj.Eval_error_handling( ME, x_eval(i,:) )
-            end       
+            end 
+            
+            if ~isempty(obj.save_file)
+                
+                save( obj.save_file, 'x_eval', 'y_eval', 'g_eval' )
+                
+            end
 
-            if obj.display,fprintf( format_display2 ); end   
-
-            if isempty(obj.n_x)
-                obj.output_assert(y_eval,g_eval);
-            end        
+            if obj.display,fprintf( format_display2 ); end         
 
         end
 

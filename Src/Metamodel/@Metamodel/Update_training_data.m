@@ -35,12 +35,7 @@ function [] = Update_training_data( obj )
                     + obj.shift_output(2);
                 obj.f_train{2} = obj.f_train{2} .* obj.shift_output(1)...
                     + obj.shift_output(2);
-            end
-            
-        otherwise
-            
-            error( 'SBDOT:Metamodel:update_training_data',...
-                'The class of obj.prob is not recognized')
+            end            
 
     end
 

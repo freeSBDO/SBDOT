@@ -40,7 +40,7 @@ classdef Metamodel < handle
             p.addRequired('prob', @(x)isa(x,'Problem') || @(x)isa(x,'Problem_multifi'));
             p.addRequired('y_ind', @(x)isnumeric(x) && (isscalar(x) || isempty(x)))
             p.addRequired('g_ind', @(x)isnumeric(x) && (isscalar(x) || isempty(x)))
-            p.addOptional('shift_output', []);
+            p.addOptional('shift_output', [], @(x)isnumeric(x) && (isempty(x) || isrow(x)));
             p.parse( prob, y_ind, g_ind, varargin{:} )
             in = p.Results;
                         
@@ -56,6 +56,12 @@ classdef Metamodel < handle
             assert(~(~isempty(y_ind)&& ~isempty(g_ind)),....
                 'SBDOT:Metamodel:lab_nonempty',...
                 'y_ind ou g_ind could not be both nonempty');
+            if ~isempty(in.shift_output)
+                assert( size(in.shift_output, 2) == 2,....
+                'SBDOT:Metamodel:shift_output_size',...
+                ['shift_output is a numeric vector of size 1-by-2. ',...
+                '[product factor , sum factor]']);
+            end
             
             % Store
             obj.prob = in.prob; 

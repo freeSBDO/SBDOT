@@ -26,18 +26,7 @@ function [ ] = Sampling( obj, num_x, type )
             if obj.display
                 fprintf( ['\n LH maximin sampling of ',num2str(num_x),...
                     ' points created with stk toolbox.\n'] );
-            end
-
-        case 'OLHS' % Orthogonal Latin Hypercube
-            % OLHS from Lib/stk toolbox is used
-
-            x_temp = stk_sampling_olhs( num_x, obj.m_x, [obj.lb; obj.ub] );
-            x_sampling = x_temp.data;
-            
-            if obj.display
-                fprintf( ['\n OLH sampling of ',num2str(num_x),...
-                    ' points created with stk toolbox.\n'] );
-            end          
+            end         
 
         case 'Sobol' % Sobol sequence
             % Sobol from Lib/stk toolbox is used
@@ -53,8 +42,9 @@ function [ ] = Sampling( obj, num_x, type )
         case 'Halton' % Halton sequence
             % Halton from Lib/stk toolbox is used
 
-            x_temp = stk_sampling_halton_rr2( num_x, obj.m_x, [obj.lb; obj.ub], true );
+            x_temp = stk_sampling_halton_rr2( num_x, obj.m_x );
             x_sampling = x_temp.data;
+            x_sampling = Unscale_data( x_sampling, obj.lb, obj.ub);
             
             if obj.display
                 fprintf( ['\n Halton sampling of ',num2str(num_x),...

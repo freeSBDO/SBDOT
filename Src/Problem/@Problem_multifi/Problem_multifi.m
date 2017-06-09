@@ -54,10 +54,9 @@ classdef Problem_multifi < handle
             
         end
         
-        %TODO SAMPLING nested LHS
+        [] = Sampling( obj, num_x_LF, num_x_HF, type );
         
-        %TODO Eval (HF, LF or Both)
-        [] = Eval( obj, x_eval, which_pb )
+        [ y_eval, g_eval, x_eval ] = Eval( obj, x_eval, which_pb );
         
     end
     

@@ -15,7 +15,7 @@ classdef Kriging < Metamodel
         lb_hyp_reg         % Lower bound of regression parameter
         ub_hyp_reg         % Upper bound of regression parameter
         
-        % Build
+        % Computed variables
         k_oodace      % ooDace Kriging object
         hyp_corr0
         hyp_corr_bounds
@@ -81,6 +81,9 @@ classdef Kriging < Metamodel
             obj.Train();  
             
         end
+         
+        [] = Train( obj );
+        varargout = Predict( obj, x_eval);
         
     end
     

@@ -82,7 +82,14 @@ classdef Test_problem_multifi < matlab.unittest.TestCase
             Test_problem.verifyEqual(obj.prob_LF.n_x,20);
             
             Test_problem.verifyError(@()obj.Sampling(20,5,'TRI'),'SBDOT:Sampling_multifi:type');
-                     
+               
+            obj_HF=Problem('Multifi_1D_HF',1,1,0,0,1);
+            obj_LF=Problem('Multifi_1D_LF',1,1,0,0,1);
+            obj=Problem_multifi(obj_LF,obj_HF);
+            obj.Eval(0.5,'ALL');
+            Test_problem.verifyEqual(obj.prob_HF.x,0.5);
+            Test_problem.verifyEqual(obj.prob_LF.x,0.5);
+            
         end
     end
     
