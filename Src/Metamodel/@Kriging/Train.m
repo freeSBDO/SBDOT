@@ -37,6 +37,10 @@ if isempty(obj.hyp_corr)
             'SBDOT:Kriging:HypBounds',...
             'lb_hyp_corr must be lower than ub_hyp_corr');
         
+        obj.ub_hyp_corr = log10( obj.ub_hyp_corr );
+        obj.lb_hyp_corr = log10( obj.lb_hyp_corr );
+        obj.hyp_corr0 = ( obj.lb_hyp_corr + obj.ub_hyp_corr ) ./ 2;
+        
     end
     
 else
