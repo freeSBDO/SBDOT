@@ -1,0 +1,84 @@
+classdef Q_problem < Problem
+    % Q_PROBLEM class
+    % Define complementary features of the qualitative model to later use for metamodeling or
+    % optimization purpose.
+    
+    properties ( Access = public )
+        
+        % Mandatory Inputs
+        m_t           % Vector containing the number of levels for each qualitative variable
+        t             % Cell, containing the values of each qualitative variable
+        
+    end
+    
+    methods ( Access = public )
+
+        function obj=Q_problem(function_name,t,m_x,m_y,m_g,m_t,lb,ub,varargin)
+            % Q_problem constructor
+            % Initialized a qualitative problem object with mandatory inputs :
+            % 	obj=Q_problem(function_name,t,m_x,m_y,m_g,m_t,lb,ub)
+            %
+            % Initialized a problem object with optionnal inputs :
+            % 	obj=Problem(function_name,t,m_x,m_y,m_g,m_t,lb,ub,varargin)
+            %   obj=Problem(function_name,m_x,m_y,m_g,lb,ub,'parallel',true)
+            %
+            % Optionnal inputs [default value] :
+            %	'parallel'    [false]
+            %	'display'     [true]
+            %	'round'       [false]
+            %	'round_range' []
+            %   'tol_eval'    [1e-4]
+            %   'save_file'   []
+            
+            % Parser for input validation            
+            p = inputParser;
+            p.KeepUnmatched=true;
+            p.PartialMatching=false;
+            p.addRequired('t',@(x)validateattributes(t,{'cell'},{'nonempty','row','size',size(m_t)}))
+            p.addRequired('m_t',@(x)validateattributes(x,{'numeric'},{'nonempty','row'}))
+            p.parse(t,m_t)
+            in=p.Results;
+            
+            % Checks
+            unmatched_params = fieldnames(p.Unmatched);            
+            for i=1:length(unmatched_params)
+                warning('SBDOT:Q_problem:unmatched', ... 
+                    ['Options ''' unmatched_params{i} ''' was not recognized']);
+            end
+            
+            arrayfun(@(k) validateattributes(t{k},{'numeric'},{'nonempty','column','size',[m_t(k),1]}),...
+                1:size(m_t,2),'UniformOutput', false);
+        
+            % Store
+            obj@Problem(function_name,m_x,m_y,m_g,lb,ub,varargin{:});
+            obj.t = in.t;
+            obj.m_t = in.m_t;
+            
+            % Display
+            if obj.display
+                fprintf(['\nQualitative Problem object successfully constructed with: \n',...
+                    mat2str(obj.m_t),' qualitative variable(s), \n\n'])
+            end
+            
+        end
+        
+        x_sampling = Sampling( obj, num_x, type );
+        
+        [ y_eval, g_eval, x_eval ] = Eval( obj, num_x, x_eval );
+        
+        [] = Get_design( obj, num_x, type );
+        
+        [] = Add_data( obj, x_add, y_add, g_add, n_add);
+        
+    end
+    
+    methods ( Access = protected )
+        
+        n_eval = Input_assert( obj, x_eval );
+        
+        [] = Eval_error_handling( obj, ME, x_eval);
+        
+    end
+    
+end
+
