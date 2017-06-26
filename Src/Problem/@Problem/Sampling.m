@@ -1,12 +1,13 @@
-function [ ] = Sampling( obj, num_x, type )
-    % SAMPLING Create a sampling plan and evaluates it
+function x_sampling = Sampling( obj, num_x, type )
+    % SAMPLING Create a sampling plan
     %   *num_x is the number of sampling points to create
     %   *type is the type of the sampling. Allowed list :
     %   ['LHS'], 'OLHS', 'Sobol', 'Halton'.
+    %   *x_sampling is the input matrix num_x-by-m_x.
     %
     % Syntax :
-    % obj.LHS_sampling( num_x );
-    % obj.LHS_sampling( num_x, type );
+    % obj.Sampling( num_x );
+    % obj.Sampling( num_x, type );
 
     % Checks
     validateattributes( num_x, {'numeric'}, {'nonempty','scalar','integer','positive'} )
@@ -58,9 +59,6 @@ function [ ] = Sampling( obj, num_x, type )
                 'choose between ''LHS'', ''OLHS'', ''Sobol'' and ''Halton''.'] )
 
     end
-
-    % Sample evaluation
-    obj.Eval( x_sampling );
 
 end
 

@@ -105,13 +105,15 @@ classdef Problem < handle
                     num2str(obj.m_g),' constraint(s).\n\n'])
             end
             
-        end
+        end       
+                
+        x_sampling = Sampling( obj, num_x, type );
         
         [ y_eval, g_eval, x_eval ] = Eval( obj, x_eval );
         
-        [] = Sampling( obj, num_x, type, force_unlicenced );
+        [] = Get_design( obj, num_x, type );
         
-        [] = Add_data(obj,x_add,y_add,g_add);
+        [] = Add_data( obj, x_add, y_add, g_add);
         
     end
     
