@@ -16,7 +16,7 @@ ub = [10 15];
 prob = Problem( 'Branin', n_x, m_y, m_g, lb, ub , 'parallel', true);
 
 % Evaluate the model on 20 points created with LHS
-prob.Sampling( 20 ,'LHS' )
+prob.Get_design( 20 ,'LHS' )
 
 %%
 % Create Kriging
