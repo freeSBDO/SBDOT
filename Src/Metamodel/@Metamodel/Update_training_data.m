@@ -36,6 +36,21 @@ function [] = Update_training_data( obj )
                 obj.f_train{2} = obj.f_train{2} .* obj.shift_output(1)...
                     + obj.shift_output(2);
             end            
+            
+        case 'Q_problem'
+            
+            for i = 1:prod(obj.prob.m_t)
+                obj.x_train{i} = [Scale_data( obj.prob.x{i}(:,1:obj.prob.m_x),...
+                    obj.prob.lb, obj.prob.ub), obj.prob.x{i}(:,(obj.prob.m_x+1):end)];
+                
+                obj.f_train{i} = [obj.prob.y{i}(:,obj.y_ind), obj.prob.g{i}(:,obj.g_ind)];
+                
+                % If a shift is asked :
+                if ~isempty( obj.shift_output )
+                    obj.f_train{i} = obj.f_train{i} .* obj.shift_output(1)...
+                        + obj.shift_output(2);
+                end
+            end
 
     end
 

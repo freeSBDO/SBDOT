@@ -46,6 +46,10 @@ classdef Q_problem < Problem
                     ['Options ''' unmatched_params{i} ''' was not recognized']);
             end
             
+            assert( all ( arrayfun(@(k) k>1, m_t) ),...
+                'SBDOT:Q_problem:insuficient_levels', ...
+                'Qualitative variables shall have at least 2 levels');
+            
             arrayfun(@(k) validateattributes(t{k},{'numeric'},{'nonempty','column','size',[m_t(k),1]}),...
                 1:size(m_t,2),'UniformOutput', false);
         
