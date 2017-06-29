@@ -61,7 +61,7 @@ classdef Kriging < Metamodel
             p.addOptional('ub_hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('lb_hyp_reg',[],@(x)isnumeric(x)&&(isempty(x)||isscalar(x)));
             p.addOptional('ub_hyp_reg',[],@(x)isnumeric(x)&&(isempty(x)||isscalar(x)));
-            p.addOptional('estim_hyp',@marginalLikelihood,@(x)(x == @marginalLikelihood || x == @pseudoLikelihood));
+            p.addOptional('estim_hyp',@marginalLikelihood,@(x)(isequal(x,@marginalLikelihood) || isequal(x,@pseudoLikelihood)));
             p.parse(varargin{:})
             in = p.Results;
             unmatched = p.Unmatched;

@@ -58,6 +58,13 @@ end
 opts = ooDACE.Kriging.getDefaultOptions();
 opts.regressionMaxLevelInteractions = obj.prob.m_x;
 opts.hpLikelihood = obj.estim_hyp;
+if isequal( obj.estim_hyp, @pseudoLikelihood )
+    optimopt.GradObj = 'off';
+    optimopt.MaxIterations = 2000;
+    optimopt.MaxFunctionEvaluations = 2000;
+    optimopt.StepTolerance = 1e-10;
+    opts.hpOptimizer = ooDACE.MatlabOptimizer( 1,1, optimopt );
+end
 
 
 % Regression (if asked)
@@ -67,7 +74,7 @@ if obj.reg
     
     if isempty(obj.hyp_reg)
         
-        opts.lambda0 = 0;
+        opts.lambda0 = log10(10^-8);
         
         if isempty( obj.lb_hyp_reg ) || isempty( obj.ub_hyp_reg )
             
