@@ -14,6 +14,7 @@ classdef Kriging < Metamodel
         ub_hyp_corr        % Upper bound of correlation length
         lb_hyp_reg         % Lower bound of regression parameter
         ub_hyp_reg         % Upper bound of regression parameter
+        estim_hyp          % Method for hyperparameter estimation
         
         % Computed variables
         k_oodace      % ooDace Kriging object
@@ -44,7 +45,8 @@ classdef Kriging < Metamodel
             %   'lb_hyperp' [Auto calibrate with training dataset]     
             %   'ub_hyperp' [Auto calibrate with training dataset]          
             %   'lb_reg'    [Auto calibrate with training dataset]           
-            %   'ub_reg'    [Auto calibrate with training dataset]          
+            %   'ub_reg'    [Auto calibrate with training dataset]  
+            %   'estim_hyp' ['@marginalLikelihood'], '@pseudoLikelihood'
             
             % Parser
             p = inputParser;
@@ -59,6 +61,7 @@ classdef Kriging < Metamodel
             p.addOptional('ub_hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('lb_hyp_reg',[],@(x)isnumeric(x)&&(isempty(x)||isscalar(x)));
             p.addOptional('ub_hyp_reg',[],@(x)isnumeric(x)&&(isempty(x)||isscalar(x)));
+            p.addOptional('estim_hyp',@marginalLikelihood,@(x)(x == @marginalLikelihood || x == @pseudoLikelihood));
             p.parse(varargin{:})
             in = p.Results;
             unmatched = p.Unmatched;
@@ -75,7 +78,8 @@ classdef Kriging < Metamodel
             obj.lb_hyp_corr = in.lb_hyp_corr;
             obj.ub_hyp_corr = in.ub_hyp_corr;
             obj.lb_hyp_reg = in.lb_hyp_reg;
-            obj.ub_hyp_reg = in.ub_hyp_reg;                        
+            obj.ub_hyp_reg = in.ub_hyp_reg;  
+            obj.estim_hyp = in.estim_hyp; 
             
             % Training
             obj.Train();  

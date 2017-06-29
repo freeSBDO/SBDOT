@@ -511,7 +511,7 @@ classdef BasicGaussianProcess
     end % methods protected
 
     %% PRIVATE
-	methods( Access = private )
+	methods( Access = public )
 		
 		% ======================================================================
         %> @brief Likelihood function

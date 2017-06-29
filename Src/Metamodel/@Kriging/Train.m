@@ -57,6 +57,8 @@ end
 
 opts = ooDACE.Kriging.getDefaultOptions();
 opts.regressionMaxLevelInteractions = obj.prob.m_x;
+opts.hpLikelihood = obj.estim_hyp;
+
 
 % Regression (if asked)
 if obj.reg
