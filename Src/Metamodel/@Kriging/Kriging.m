@@ -10,6 +10,7 @@ classdef Kriging < Metamodel
         reg                % Boolean to activate regression
         hyp_corr           % Correlation length parameter
         hyp_reg            % Kriging regression parameter
+        hyp_corr0          % Initial correlation length for optimization
         lb_hyp_corr        % Lower bound of correlation length
         ub_hyp_corr        % Upper bound of correlation length
         lb_hyp_reg         % Lower bound of regression parameter
@@ -18,7 +19,6 @@ classdef Kriging < Metamodel
         
         % Computed variables
         k_oodace      % ooDace Kriging object
-        hyp_corr0
         hyp_corr_bounds
         hyp_reg_bounds
         
@@ -41,7 +41,8 @@ classdef Kriging < Metamodel
             %   'corr'      ['corrmatern52'], 'correxp', 'corrgauss', 'corrmatern32'
             %   'reg'       [false]
             %   'hyp_corr'  []       
-            %   'hyp_reg'   []     
+            %   'hyp_reg'   []   
+            %   'hyp_corr0' [Auto calibrate with training dataset]
             %   'lb_hyperp' [Auto calibrate with training dataset]     
             %   'ub_hyperp' [Auto calibrate with training dataset]          
             %   'lb_reg'    [Auto calibrate with training dataset]           
@@ -57,6 +58,7 @@ classdef Kriging < Metamodel
             p.addOptional('reg',false,@(x)islogical(x));
             p.addOptional('hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('hyp_reg',[],@(x)isnumeric(x)&&(isempty(x)||isscalar(x)));
+            p.addOptional('hyp_corr0',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('lb_hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('ub_hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('lb_hyp_reg',[],@(x)isnumeric(x)&&(isempty(x)||isscalar(x)));
@@ -75,6 +77,7 @@ classdef Kriging < Metamodel
             obj.reg = in.reg;
             obj.hyp_corr = in.hyp_corr;            
             obj.hyp_reg = in.hyp_reg;
+            obj.hyp_corr0 = in.hyp_corr0;
             obj.lb_hyp_corr = in.lb_hyp_corr;
             obj.ub_hyp_corr = in.ub_hyp_corr;
             obj.lb_hyp_reg = in.lb_hyp_reg;

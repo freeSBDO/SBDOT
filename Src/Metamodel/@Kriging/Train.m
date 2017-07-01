@@ -19,10 +19,24 @@ if isempty(obj.hyp_corr)
         end
         
         % Bounds based on inter-distances of training points
-        [ hyp_corr0_temp, lb_hyperp_temp, ub_hyperp_temp ] = Theta_bound( obj.x_train );
-        obj.lb_hyp_corr = log10( ( 1./(2*ub_hyperp_temp) ).^2 ) * ones(1,obj.prob.m_x);
-        obj.ub_hyp_corr = log10( ( 1./(2*lb_hyperp_temp) ).^2 ) * ones(1,obj.prob.m_x);
-        obj.hyp_corr0 = log10( ( 1./(2*hyp_corr0_temp) ).^2 ) * ones(1,obj.prob.m_x);
+        [ hyp_corr0_temp, lb_hyperp_temp, ub_hyperp_temp ] = Theta_bound_normal( obj.x_train );
+        obj.lb_hyp_corr = log10( ( 1./(sqrt(2)*ub_hyperp_temp) ).^2 );
+        obj.ub_hyp_corr = log10( ( 1./(sqrt(2)*lb_hyperp_temp) ).^2 );
+        
+        if isempty(obj.hyp_corr0)
+            
+            obj.hyp_corr0 = log10( ( 1./(sqrt(2)*hyp_corr0_temp) ).^2 );
+        
+        else
+            
+            assert( size(obj.hyp_corr0,2) == obj.prob.m_x ,...
+            'SBDOT:Kriging:Hyp0_size',...
+            'hyp_corr0 must be of size 1-by-m_x');
+            
+            obj.hyp_corr0 = log10( obj.hyp_corr0 );
+            
+        end
+        
     else
         
         assert( size(obj.lb_hyp_corr,2) == obj.prob.m_x ,...
@@ -72,9 +86,7 @@ if obj.reg
     
     if obj.prob.display, fprintf('\nRegression activated\n');end
     
-    if isempty(obj.hyp_reg)
-        
-        opts.lambda0 = log10(10^-8);
+    if isempty(obj.hyp_reg)            
         
         if isempty( obj.lb_hyp_reg ) || isempty( obj.ub_hyp_reg )
             
@@ -94,6 +106,7 @@ if obj.reg
         
         opts.reinterpolation = true;
         
+        opts.lambda0 = log10( (obj.lb_hyp_reg + obj.ub_hyp_reg) / 2 );
         
         opts.lambdaBounds = log10([obj.lb_hyp_reg ; obj.ub_hyp_reg]);
         
@@ -120,7 +133,6 @@ obj.hyp_reg = hyp_reg_temp(1,1);
 
 obj.hyp_corr_bounds = 10.^[min(obj.lb_hyp_corr) , max(obj.ub_hyp_corr)];
 obj.hyp_reg_bounds = [obj.lb_hyp_reg , obj.ub_hyp_reg];
-obj.hyp_corr0 = 10.^ obj.hyp_corr0(1);
 
 end
 

@@ -9,7 +9,6 @@ obj.Train@Metamodel();
 
 if obj.prob.display, fprintf('\nTraining starting...');end
 
-
 if isempty(obj.hyp_corr)
     
     % Default bounds
@@ -21,9 +20,9 @@ if isempty(obj.hyp_corr)
         
         % Bounds based on inter-distances of training points
         [ hyp_corr0_temp, lb_hyperp_temp, ub_hyperp_temp ] = Theta_bound( obj.x_train );
-        obj.lb_hyp_corr = log10( ( 1./(2*ub_hyperp_temp) ).^2 ) * ones(1,obj.prob.m_x);
-        obj.ub_hyp_corr = log10( ( 1./(2*lb_hyperp_temp) ).^2 ) * ones(1,obj.prob.m_x);
-        obj.hyp_corr0 = log10( ( 1./(2*hyp_corr0_temp) ).^2 ) * ones(1,obj.prob.m_x);
+        obj.lb_hyp_corr = log10( ( 1./(sqrt(2)*ub_hyperp_temp) ).^2 ) * ones(1,obj.prob.m_x);
+        obj.ub_hyp_corr = log10( ( 1./(sqrt(2)*lb_hyperp_temp) ).^2 ) * ones(1,obj.prob.m_x);
+        obj.hyp_corr0 = log10( ( 1./(sqrt(2)*hyp_corr0_temp) ).^2 ) * ones(1,obj.prob.m_x);
     else
         
         assert( size(obj.lb_hyp_corr,2) == obj.prob.m_x ,...
@@ -38,18 +37,22 @@ if isempty(obj.hyp_corr)
             'SBDOT:RBF:HypBounds',...
             'lb_hyp_corr must be lower than ub_hyp_corr');
         
+        obj.ub_hyp_corr = log10( obj.ub_hyp_corr );
+        obj.lb_hyp_corr = log10( obj.lb_hyp_corr );
+        obj.hyp_corr0 = ( obj.lb_hyp_corr + obj.ub_hyp_corr ) ./ 2;
+        
     end
     
 else
     
     assert( size(obj.hyp_corr,2) == obj.prob.m_x ,...
-        'SBDOT:RBF:Hyp_val_size',...
-        'hyp_corr0 must be of size 1-by-m_x');
-    
+            'SBDOT:RBF:Hyp_val_size',...
+            'hyp_corr0 must be of size 1-by-m_x');
+        
     obj.hyp_corr0 = log10(obj.hyp_corr);
     obj.lb_hyp_corr = log10(obj.hyp_corr);
     obj.ub_hyp_corr = log10(obj.hyp_corr);
-    
+        
 end
 
 

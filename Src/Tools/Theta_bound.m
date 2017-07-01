@@ -1,17 +1,11 @@
 function [ mean_theta, lb_theta, ub_theta ] = Theta_bound( x )
-% THETA_BOUND bound and start value for correlation parameter estimation
+% THETA_BOUN
+% Bound and start value for correlation parameter estimation
 %
 %   x (n by m matrix) is the input matrix of the dataset
 %
 % Syntax :
-% [mean_theta,lb_theta,ub_theta]=Theta_bound(x);
-
-
-%% Normalize x
-n = size( x, 1);
-inputAvg = mean( x );
-inputStd = std( x );
-x = (x - inputAvg(ones(n,1),:)) ./ inputStd(ones(n,1),:);
+% [mean_theta,lb_theta,ub_theta]=Theta_bound_normal(x);
 
 % Manhattan Distance between input points calculation
 x_2 = permute(x',[3 1 2]);
