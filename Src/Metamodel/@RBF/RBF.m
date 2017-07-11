@@ -6,10 +6,11 @@ classdef RBF < Metamodel
         
         % Optional inputs (varargin) 
         corr        % Correlation function of RBF
-        hyp_corr    % Correlation length paramete
+        hyp_corr    % Correlation length paramete (log scale)
         lb_hyp_corr % Lower bound of correlation length
         ub_hyp_corr % Upper bound of correlation length
         estimator   % Method for estimating parameters
+        optimizer   % Optimization method for hyperparameters
         
         % Computed variables
         hyp_corr0         % Initial hyp_corr value before optimization 
@@ -18,7 +19,8 @@ classdef RBF < Metamodel
         beta              % RBF coefficient estimated
         f_mat             % Regression matrix
         corr_mat          % Correlation matrix
-        diff_man          % Matrix of manhattan distance between points
+        zero_mat          % Zero matrix 
+        diff_squared      % Matrix of squared manhattan distance between points
         diff              % Matrix of square difference bewteen points        
         
     end
@@ -38,7 +40,8 @@ classdef RBF < Metamodel
             % Optionnal inputs [default value] :
             %   'corr'        ['corrmatern52'], 'corrgauss', 'corrlinear' , 'corrthinplatespline' , 'corrmultiquadric' , 'corrcubic'
             %   'estimator'   ['LOO'] , 'MLE'  
-            %   'hyp_corr'    []       
+            %   'hyp_corr'    []
+            %   'optimizer'   ['CMAES'] , 'fmincon'
             %   'lb_hyp_corr' [Auto calibrate with training dataset]     
             %   'ub_hyp_corr' [Auto calibrate with training dataset]          
             
@@ -46,11 +49,12 @@ classdef RBF < Metamodel
             p = inputParser;
             p.KeepUnmatched = true;
             p.PartialMatching = false;
-            p.addOptional('corr','corrmatern52',@(x)(isa(x,'char'))&&(strcmpi(x,'corrgauss')||strcmpi(x,'corrmatern52')||strcmpi(x,'corrlinear')||strcmpi(x,'corrthinplatespline')||strcmpi(x,'corrmultiquadric')||strcmpi(x,'corrcubic')));
-            p.addOptional('estimator','LOO',@(x)(isa(x,'char'))&&(strcmpi(x,'LOO')||strcmpi(x,'MLE')));
+            p.addOptional('corr','Corrmatern52',@(x)(isa(x,'char'))&&(strcmpi(x,'Corrgauss')||strcmpi(x,'Corrmatern32')||strcmpi(x,'Corrmatern52')||strcmpi(x,'Corrlinear')||strcmpi(x,'Corrthinplatespline')||strcmpi(x,'Corrinvmultiquadric')||strcmpi(x,'Corrmultiquadric')||strcmpi(x,'Corrcubic')));
+            p.addOptional('estimator','LOO',@(x)(isa(x,'char'))&&(strcmpi(x,'LOO')||strcmpi(x,'CV')));
             p.addOptional('hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('lb_hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('ub_hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
+            p.addOptional('optimizer','CMAES',@(x)(isa(x,'char'))&&(strcmpi(x,'CMAES')||strcmpi(x,'fmincon')));
             p.parse(varargin{:})
             in = p.Results;
             unmatched = p.Unmatched;
@@ -63,12 +67,29 @@ classdef RBF < Metamodel
             obj.estimator = in.estimator; 
             obj.hyp_corr = in.hyp_corr;            
             obj.lb_hyp_corr = in.lb_hyp_corr;
-            obj.ub_hyp_corr = in.ub_hyp_corr;                     
+            obj.ub_hyp_corr = in.ub_hyp_corr;   
+            obj.optimizer = in.optimizer; 
             
             % Training
             obj.Train();  
             
         end
+        
+        [] = Train( obj );
+        [y_pred, power] = Predict( obj, x_eval );
+        
+        LOO = Loo_error( obj, theta )
+        dist_theta = Norm_theta( obj, diff_mat, theta);
+        
+        [corr_mat, f_mat, zero_mat] = Corrlinear( obj, diff_mat, theta);
+        [corr_mat, f_mat, zero_mat] = Corrcubic( obj, diff_mat, theta);
+        [corr_mat, f_mat, zero_mat] = Corrthinplatespline( obj, diff_mat, theta);
+        [corr_mat, f_mat, zero_mat] = Corrmultiquadric( obj, diff_mat, theta);
+        [corr_mat, f_mat, zero_mat] = Corrinvmultiquadric( obj, diff_mat, theta);
+        [corr_mat, f_mat, zero_mat] = Corrgauss( obj, diff_mat, theta);
+        [corr_mat, f_mat, zero_mat] = Corrmatern32( obj, diff_mat, theta);
+        [corr_mat, f_mat, zero_mat] = Corrmatern52( obj, diff_mat, theta);
+        
         
     end
     

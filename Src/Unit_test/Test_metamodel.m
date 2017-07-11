@@ -57,11 +57,12 @@ classdef Test_metamodel < matlab.unittest.TestCase
             Test_metamodel.verifyError(@()Kriging(obj,[],[],'ub_hyp_reg',[1;2]),'MATLAB:InputParser:ArgumentFailedValidation');
 
             % Wrong Optional input
-            obj.Sampling(20);
+            obj.Get_design(20);
             Test_metamodel.verifyWarning(@()Kriging(obj,1,[],'bob',true),'SBDOT:Metamodel:unmatched')
             
             % Error on construction
             krig=Kriging(obj,1,[]);
+            obj.Get_design(20);
             Test_metamodel.verifyTrue(isa(krig,'Kriging'));
             Test_metamodel.verifyEqual(krig.y_ind,1);
             
@@ -69,7 +70,7 @@ classdef Test_metamodel < matlab.unittest.TestCase
             % Training test
             obj=Problem('Branin',2,1,1,[-5 0],[10 15],'parallel',true);   
             Test_metamodel.verifyError(@()Kriging(obj,1,[]),'SBDOT:Metamodel:EmptyTrain');
-            obj.Sampling(20);
+            obj.Get_design(20);
             Test_metamodel.verifyWarning(@()Kriging(obj,1,[],'ub_hyp_corr',[1,2]),'SBDOT:Kriging:HypBounds_miss');
             Test_metamodel.verifyWarning(@()Kriging(obj,1,[],'lb_hyp_corr',[1,2]),'SBDOT:Kriging:HypBounds_miss');
             Test_metamodel.verifyError(@()Kriging(obj,1,[],'lb_hyp_corr',[2 2],'ub_hyp_corr',[1 1]),'SBDOT:Kriging:HypBounds');
@@ -79,8 +80,8 @@ classdef Test_metamodel < matlab.unittest.TestCase
             Test_metamodel.verifyWarning(@()Kriging(obj,1,[],'reg',true,'ub_hyp_reg',1),'SBDOT:Kriging:RegBounds_miss');
             Test_metamodel.verifyWarning(@()Kriging(obj,1,[],'reg',true,'lb_hyp_reg',1),'SBDOT:Kriging:RegBounds_miss');
             Test_metamodel.verifyError(@()Kriging(obj,1,[],'reg',true,'ub_hyp_reg',0,'lb_hyp_reg',1),'SBDOT:Kriging:RegBounds');
-            Kriging(obj,1,[],'reg',true,'hyp_reg',1e-5)
-            Kriging(obj,1,[],'reg',true,'hyp_corr',[0.2 0.2])
+            Kriging(obj,1,[],'reg',true,'hyp_reg',1e-5);
+            Kriging(obj,1,[],'reg',true,'hyp_corr',[0.2 0.2]);
             
             % Predict test
             krig=Kriging(obj,1,[]);
@@ -89,6 +90,78 @@ classdef Test_metamodel < matlab.unittest.TestCase
             [a,b]=krig.Predict([1 2]);
             [a,b,c]=krig.Predict([1 2]);
             [a,b,c,d]=krig.Predict([1 2]);
+        end
+        
+        function testErrorRBF(Test_metamodel)
+            
+            obj=Problem('Branin',2,1,1,[-5 0],[10 15],'parallel',true);   
+            % Error on Optional inputs during parsing
+            Test_metamodel.verifyError(@()RBF(obj,[],[],'corr','bobi'),'MATLAB:InputParser:ArgumentFailedValidation');
+            Test_metamodel.verifyError(@()RBF(obj,[],[],'estimator','bob'),'MATLAB:InputParser:ArgumentFailedValidation');
+            Test_metamodel.verifyError(@()RBF(obj,[],[],'hyp_corr',false),'MATLAB:InputParser:ArgumentFailedValidation');
+            Test_metamodel.verifyError(@()RBF(obj,[],[],'hyp_corr',[1;2]),'MATLAB:InputParser:ArgumentFailedValidation');
+            Test_metamodel.verifyError(@()RBF(obj,[],[],'lb_hyp_corr',true),'MATLAB:InputParser:ArgumentFailedValidation');
+            Test_metamodel.verifyError(@()RBF(obj,[],[],'lb_hyp_corr',[1;2]),'MATLAB:InputParser:ArgumentFailedValidation');
+            Test_metamodel.verifyError(@()RBF(obj,[],[],'ub_hyp_corr',true),'MATLAB:InputParser:ArgumentFailedValidation');
+            Test_metamodel.verifyError(@()RBF(obj,[],[],'ub_hyp_corr',[1;2]),'MATLAB:InputParser:ArgumentFailedValidation');
+
+            % Wrong Optional input
+            obj.Get_design(20);
+            Test_metamodel.verifyWarning(@()RBF(obj,1,[],'bob',true),'SBDOT:Metamodel:unmatched')
+            
+            % Error on construction
+            rbf=RBF(obj,1,[]);
+            Test_metamodel.verifyTrue(isa(rbf,'RBF'));
+            Test_metamodel.verifyEqual(rbf.y_ind,1);
+            
+            
+            % Training test
+            obj=Problem('Branin',2,1,1,[-5 0],[10 15],'parallel',true);   
+            obj.Get_design(20);
+            
+            % corr
+            rbf = RBF( obj , 1 , [] , 'corr', 'Corrcubic');
+            Test_metamodel.verifyEqual(rbf.corr,'Corrcubic');
+            rbf = RBF( obj , 1 , [] , 'corr', 'Corrgauss');
+            Test_metamodel.verifyEqual(rbf.corr,'Corrgauss');
+            rbf = RBF( obj , 1 , [] , 'corr', 'Corrinvmultiquadric');
+            Test_metamodel.verifyEqual(rbf.corr,'Corrinvmultiquadric');
+            rbf = RBF( obj , 1 , [] , 'corr', 'Corrlinear');
+            Test_metamodel.verifyEqual(rbf.corr,'Corrlinear');
+            rbf = RBF( obj , 1 , [] , 'corr', 'Corrmatern32');
+            Test_metamodel.verifyEqual(rbf.corr,'Corrmatern32');
+            rbf = RBF( obj , 1 , [] , 'corr', 'Corrmatern52');
+            Test_metamodel.verifyEqual(rbf.corr,'Corrmatern52');
+            rbf = RBF( obj , 1 , [] , 'corr', 'Corrmultiquadric');
+            Test_metamodel.verifyEqual(rbf.corr,'Corrmultiquadric');
+            rbf = RBF( obj , 1 , [] , 'corr', 'Corrthinplatespline');
+            Test_metamodel.verifyEqual(rbf.corr,'Corrthinplatespline');
+            % estimator
+            rbf = RBF( obj , 1 , [] , 'estimator', 'LOO');
+            Test_metamodel.verifyEqual(rbf.estimator,'LOO');
+            rbf = RBF( obj , 1 , [] , 'estimator', 'CV');
+            Test_metamodel.verifyEqual(rbf.estimator,'CV');
+            % hyp_corr
+            rbf = RBF( obj , 1 , [] , 'hyp_corr', [0.5 0.5]);
+            Test_metamodel.verifyEqual(rbf.hyp_corr,log10([0.5 0.5]));
+            % lb_hyp_corr ub_hyp_corr
+            rbf = RBF( obj , 1 , [] , 'lb_hyp_corr', [0.5 0.5], 'ub_hyp_corr', [1 1]);
+            Test_metamodel.verifyEqual(rbf.hyp_corr_bounds,[0.5 1]);
+            Test_metamodel.verifyEqual(rbf.lb_hyp_corr,log10([0.5 0.5]));
+            Test_metamodel.verifyEqual(rbf.ub_hyp_corr,log10([1 1]));
+            % optimizer
+            rbf = RBF( obj , 1 , [] , 'optimizer', 'CMAES' );
+            Test_metamodel.verifyEqual(rbf.optimizer,'CMAES');
+            rbf = RBF( obj , 1 , [] , 'optimizer', 'fmincon' );
+            Test_metamodel.verifyEqual(rbf.optimizer,'fmincon')
+            
+            rbf = RBF( obj , 1 , []);
+            
+            % Predict test
+            Test_metamodel.verifyError(@()rbf.Predict([1 2 3 4]),'SBDOT:Metamodel:dimension_input');
+            [a]=rbf.Predict([1 2]);
+            [a,b]=rbf.Predict([1 2]);
+            
         end
         
     end

@@ -8,6 +8,10 @@ function [] = Get_design( obj, num_x, type )
     % obj.Get_design( num_x );
     % obj.Get_design( num_x, type );
     
+    if nargin <= 2
+        type = 'LHS';
+    end
+    
     % Sampling
     x_sampling = obj.Sampling( num_x, type );
     

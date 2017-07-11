@@ -125,7 +125,6 @@ obj.k_oodace = obj.k_oodace.fit(obj.x_train,obj.f_train);
 
 if obj.prob.display, corr_name=func2str(obj.corr); fprintf(['\nKriging with ',corr_name(22:end),' correlation function is created.\n\n']);end
 
-
 obj.hyp_corr = 10.^obj.k_oodace.getHyperparameters;
 
 hyp_reg_temp = obj.k_oodace.getSigma;

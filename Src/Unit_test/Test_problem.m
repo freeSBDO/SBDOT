@@ -101,16 +101,16 @@ classdef Test_problem < matlab.unittest.TestCase
             
             % Failure with sampling
             obj=Problem('Branin',2,1,1,[-5 0],[10 15]);
-            obj.Sampling(20);
+            obj.Get_design(20);
             Test_problem.verifyEqual(obj.n_x,20);
             obj=Problem('Branin',2,1,1,[-5 0],[10 15]);
-            obj.Sampling(20,'LHS');
+            obj.Get_design(20,'LHS');
             Test_problem.verifyEqual(obj.n_x,20);
             obj=Problem('Branin',2,1,1,[-5 0],[10 15]);
-            obj.Sampling(20,'Sobol');
+            obj.Get_design(20,'Sobol');
             Test_problem.verifyEqual(obj.n_x,20);
             obj=Problem('Branin',2,1,1,[-5 0],[10 15]);
-            obj.Sampling(20,'Halton');
+            obj.Get_design(20,'Halton');
             Test_problem.verifyEqual(obj.n_x,20);
             Test_problem.verifyError(@()obj.Sampling(20,'TRI'),'SBDOT:Sampling:type');
                      

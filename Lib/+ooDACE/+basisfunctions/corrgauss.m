@@ -39,17 +39,17 @@ end
 [n m] = size(d);
 theta = 10.^theta(:).';
 
-inner = bsxfun( @times, -abs(d).^2, theta(ones(n,1),:).^2 );
+inner = bsxfun( @times, -abs(d).^2, theta(ones(n,1),:) );
 corr = exp(sum(inner, 2));
 
 % Derivatives
 if  nargout > 1
   % to the individual x_i's AND to all x_1,...,x_n
-  dx = -2.* (theta(ones(n,1),:).^2) .* d .* corr(:,ones(1,m)); % individual (D columns)
+  dx = -2.* (theta(ones(n,1),:)) .* d .* corr(:,ones(1,m)); % individual (D columns)
   %dx = [dx -2.*theta(ones(n,1),:) .* corr(:,ones(1,m))]; % to all (1 column)
   
   % to theta
-  dtheta = -2.*theta(ones(n,1),:) .* (d.^2) .* corr(:,ones(1,m));
+  dtheta = -2.*sqrt(theta(ones(n,1),:)) .* (d.^2) .* corr(:,ones(1,m));
 end
 
 % Rho
