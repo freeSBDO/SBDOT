@@ -43,7 +43,13 @@ function [] = Update_training_data( obj )
                 obj.x_train{i} = [Scale_data( obj.prob.x{i}(:,1:obj.prob.m_x),...
                     obj.prob.lb, obj.prob.ub), obj.prob.x{i}(:,(obj.prob.m_x+1):end)];
                 
-                obj.f_train{i} = [obj.prob.y{i}(:,obj.y_ind), obj.prob.g{i}(:,obj.g_ind)];
+                if obj.prob.m_g == 0
+                    obj.f_train{i} = obj.prob.y{i}(:,obj.y_ind);
+                elseif obj.prob.m_y == 0
+                    obj.f_train{i} = obj.prob.g{i}(:,obj.g_ind);
+                else
+                    obj.f_train{i} = [obj.prob.y{i}(:,obj.y_ind), obj.prob.g{i}(:,obj.g_ind)];
+                end
                 
                 % If a shift is asked :
                 if ~isempty( obj.shift_output )

@@ -1,4 +1,4 @@
-function  corr = Q_Matern3_2(theta, d, tau, m_t)
+function [ corr, dx ] = Q_Matern3_2(theta, d, tau, m_t)
     % Q_MATERN3_2 is the matern 3/2 kernel (definite-positive function)
     %
     %   Inputs:
@@ -9,13 +9,26 @@ function  corr = Q_Matern3_2(theta, d, tau, m_t)
     %
     %   Output:
     %       corr is the vector corresponding to the lower-half of the symmetric correlation matrix
+    %       dx is the matrix of derivatives concerning quantitative variables
     %
     % Syntax :
-    %   corr = Q_Matern3_2(theta, d, tau, m_t);
+    %   [ corr, dx ] = Q_Matern3_2(theta, d, tau, m_t);
     
     theta = 10.^theta(:).';
-    n = prod(m_t);
+    [l, m] = size(d);
     inner = sum(bsxfun( @times, abs(d).^2, theta),2);
-    corr = tau.*((1+sqrt(3*inner)).^n).*exp(-n*sqrt(3*inner));
+    corr = tau.*((1+sqrt(3*inner))).*exp(-sqrt(3*inner));
 
+    if nargout > 1
+        
+        inner( inner == 0 ) = eps;
+        t = sqrt(3*inner);
+        right = exp( -t );
+        f = tau.*(1 + t);
+        df = tau;
+        dtx = sqrt(3) .* d .* theta(ones(l,1),:) ./ sqrt(inner(:,ones(1,m)));
+        dx = (df - f(:,ones(1,m))) .* dtx .* right(:,ones(1,m));
+        
+    end
+    
 end

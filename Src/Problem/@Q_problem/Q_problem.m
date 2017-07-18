@@ -34,9 +34,9 @@ classdef Q_problem < Problem
             p = inputParser;
             p.KeepUnmatched=true;
             p.PartialMatching=false;
-            p.addRequired('t',@(x)validateattributes(t,{'cell'},{'nonempty','row','size',size(m_t)}))
             p.addRequired('m_t',@(x)validateattributes(x,{'numeric'},{'nonempty','row'}))
-            p.parse(t,m_t)
+            p.addRequired('t',@(x)validateattributes(t,{'cell'},{'nonempty','row','size',size(m_t)}))
+            p.parse(m_t,t)
             in=p.Results;
             
             % Checks

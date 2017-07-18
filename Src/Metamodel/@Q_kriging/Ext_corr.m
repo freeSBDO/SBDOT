@@ -1,12 +1,11 @@
-function psi = Ext_corr ( obj, points1,  q1, points2, q2 )
+function [psi, dpsi] = Ext_corr ( obj, points1,  q1, points2, q2 )
     % EXT_CORR computes the extrinsic correlation
     %
     %   Inputs:
     %       obj is an object of class Q_kriging
-    %       points1 extrinsic points (DEFAULT DoE
+    %       points1 extrinsic points (default DoE)
     %       q1 points1 qualitative values
-    %       points2 desired points to compute correlation with (default
-    %       DoE)
+    %       points2 desired points to compute correlation with (default DoE)
     %       q2 points2 qualitative values
     %
     %   Output:
@@ -17,7 +16,7 @@ function psi = Ext_corr ( obj, points1,  q1, points2, q2 )
     % psi = obj.Ext_corr(points1, q1);
     % psi = obj.Ext_corr(points1, q1, points2, q2);
     
-    if exist( 'points1', 'var' );
+    if exist( 'points1', 'var' )
         
         P2 = true;
         
@@ -51,20 +50,38 @@ function psi = Ext_corr ( obj, points1,  q1, points2, q2 )
         if P2
             
             q1 = q1(dist_idx_psi(:,1),:); q2 = q2(dist_idx_psi(:,2),:);
-            p_tau = obj.Preproc_tau( dist_idx_psi, obj.prob.m_t, [], obj.hyp_tau', q1, q2, obj.tau_type, obj.D_chol );
+            p_tau = obj.Preproc_tau( dist_idx_psi, obj.prob.m_t, [], obj.hyp_tau', q1, q2, obj.tau_type, obj.hyp_dchol );
             
         else
             
             q1 = q1(dist_idx_psi(:,1),:);
-            p_tau = obj.Preproc_tau( dist_idx_psi, obj.prob.m_t, [], obj.hyp_tau', q1, [], obj.tau_type, obj.D_chol );
+            p_tau = obj.Preproc_tau( dist_idx_psi, obj.prob.m_t, obj.prob.n_x, obj.hyp_tau', q1, [], obj.tau_type, obj.hyp_dchol );
             
         end
         
-        psi = reshape( obj.corr( obj.hyp_corr, dist, p_tau, obj.prob.m_t ), n2, n1 )';
+        if nargout > 1
+            
+            [psi, dpsi] = obj.corr( obj.hyp_corr, dist, p_tau );
+            
+        else
+            
+            psi = obj.corr( obj.hyp_corr, dist, p_tau );            
+            
+        end
+        
+        psi = reshape(psi, n2, n1 )';
         
     else
 
-        psi = obj.corr( obj.hyp_corr, obj.dist, obj.p_tau, obj.prob.m_t );
+        if nargout > 1
+            
+            [psi, dpsi] = obj.corr( obj.hyp_corr, obj.dist, obj.p_tau );            
+            
+        else
+            
+            psi = obj.corr( obj.hyp_corr, obj.dist, obj.p_tau );
+            
+        end
 
         if ~strcmp(obj.tau_type,'heteroskedastic')
 

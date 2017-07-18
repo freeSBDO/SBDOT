@@ -54,7 +54,6 @@ classdef Q_kriging < Metamodel
         p_tau = [];                % Tau preprocessed to be used in Kernel
         dist = [];                 % Input data manhattan inter-distance
         dist_idx_psi = [];         % Dist Index
-        preprocess_tau = [];       % Intra-modality correlation coefficients preprocessed
         optim_idx = [];            % Logical index for hyper-param optimization
         optim_nr_parameters = [];  % Number of optimization parameter(s)
         alpha = [];                % Regression coefficients
@@ -111,7 +110,7 @@ classdef Q_kriging < Metamodel
             %   'reinterpolation'               [false], true
             %   'tau_type'                      ['cholesk'], 'isotropic', 'heteroskedastic'
             %   'marginal_likelihood'           ['Marginal_likelihood']
-            %   'optim_method'                  ['active-set'], 'interior-point', 'sqp', 'cmaes'
+            %   'optim_method'                  ['interior-point'], 'active-set', 'sqp', 'cmaes'
             
             % Parser
             p = inputParser;
@@ -122,14 +121,14 @@ classdef Q_kriging < Metamodel
             hyp_row = @(x) isnumeric(x) && ( isempty(x)||isrow(x) );
             
             % Char
-            p.addOptional('marginal_likelihood','Marginal_likelihood',@(x)isa(x,'char'));
+            p.addOptional('marginal_likelihood','Marginal_likelihood',@(x) validate_attributes(x, {'char'}));
             % Positive Integer
             p.addOptional('reg_max_level_interactions',2,@(x)(isscalar(x)&&isinteger(x)&&x>=0));
             % Multiple choice char
-            p.addOptional('regpoly','regpoly0',@(x)(isa(x,'char'))&&(strcmpi(x,'regpoly0')||strcmpi(x,'regpoly1')||strcmpi(x,'regpoly2')||strcmpi(x,'')));
-            p.addOptional('corr','Q_Matern5_2',@(x)(isa(x,'char'))&&(strcmpi(x,'Q_Matern5_2')||strcmpi(x,'Q_Matern3_2')||strcmpi(x,'Q_Gauss')));
-            p.addOptional('tau_type','choleski',@(x)(isa(x,'char'))&&(strcmpi(x,'isotropic')||strcmpi(x,'heteroskedastic')));
-            p.addOptional('optim_method','active-set',@(x)(isa(x,'char'))&&(strcmpi(x,'interior-point')||strcmpi(x,'sqp')||strcmpi(x,'cmaes')));
+            p.addOptional('regpoly','regpoly0',@(x) any(validatestring(x, {'regpoly0','regpoly1','regpoly2'})));
+            p.addOptional('corr','Q_Matern5_2',@(x) any(validatestring(x, {'Q_Matern5_2','Q_Matern3_2','Q_Gauss'})));
+            p.addOptional('tau_type','choleski',@(x) any(validatestring(x, {'choleski','isotropic','heteroskedastic'})));
+            p.addOptional('optim_method','interior-point',@(x) any(validatestring(x, {'interior-point','active-set','sqp','cmaes'})));
             % Boolean
             p.addOptional('reg'             ,false,@(x)islogical(x));
             p.addOptional('var_opti'        ,false,@(x)islogical(x));
@@ -202,7 +201,7 @@ classdef Q_kriging < Metamodel
         
         obj = Train( obj );
         
-%         varargout = Predict( obj, x_eval);
+        varargout = Predict( obj, x_eval, q_eval ); % Comments to be added
         
         Tau = Init_tau_id( obj );
         
@@ -224,17 +223,23 @@ classdef Q_kriging < Metamodel
         
         Tau = Tau_wrap( obj, Tau_0, m_t, type, D_chol);
         
-        psi = Ext_corr ( obj, points1,  q1, points2, q2 )
+        [psi, dpsi] = Ext_corr ( obj, points1,  q1, points2, q2 ); % Comments to be changed
         
         Sigma = Int_cov ( obj );
         
-        [obj, err] = Update_reg( obj, F, hp ); %Comments to be added
+        [obj, err] = Update_reg( obj, F, hp );
         
-        out = Marginal_likelihood( obj ); %Comments to be added
+        out = Marginal_likelihood( obj );
         
-        obj = Update_model( obj, F, hp ); %Comments to be added
+        obj = Update_model( obj, F, hp );
         
-        Tau = Build_tau( obj, HS_Coord, m, type, D_chol )
+        Tau = Build_tau( obj, HS_Coord, m, type, D_chol );
+        
+        [mean, variance] = Predict_comp( obj, x_eval, q_eval ); % Comments to be added
+        
+        [grad_mean, grad_variance] = Predict_deriv( obj, x_eval, q_eval ); % Comments to be added
+        
+        [] = Plot( obj, inputs_ind, cut_values, comb_ind );
         
     end
     

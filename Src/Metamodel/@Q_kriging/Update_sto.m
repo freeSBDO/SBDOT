@@ -19,8 +19,6 @@ function [obj, err] = Update_sto ( obj, hp )
 
     if obj.optim_idx(:,obj.REG)
         obj.hyp_reg = hp{:,obj.REG};
-    else
-        obj.hyp_reg = 1; % Sigma is covariance matrix
     end
     
     if obj.optim_idx(:,obj.SIGMA2)

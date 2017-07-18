@@ -18,6 +18,16 @@ function [obj, optimHp, perf] = Tune_parameters( obj, F )
 
     allParam = {obj.hyp_reg_0, obj.hyp_sigma2_0, obj.hyp_corr_0, obj.hyp_tau_0, obj.hyp_dchol_0};
     
+    for i = 1:length(allParam)
+        
+        if size(allParam{i},2)>1
+            
+            allParam{i} = allParam{i}';
+            
+        end
+        
+    end
+    
     allBounds = {[obj.lb_hyp_reg;obj.ub_hyp_reg],...
                  [obj.lb_hyp_sigma2;obj.ub_hyp_sigma2],...
                  [obj.lb_hyp_corr;obj.ub_hyp_corr],...
@@ -39,7 +49,7 @@ function [obj, optimHp, perf] = Tune_parameters( obj, F )
     else
         
         options = optimoptions('fmincon','Display','none','Algorithm',obj.optim_method);
-        [optimHp, perf] = fmincon(func, initialPopulation', [], [], [], [], opts.LBounds', opts.UBounds',[],options);
+        [optimHp, perf] = fmincon(func, initialPopulation', [], [], [], [], opts.LBounds', opts.UBounds', [], options);
         
     end
 

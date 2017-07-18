@@ -43,8 +43,8 @@ function Tau = Build_tau( ~, HS_Coord, m, type, D_chol )
             L = [[1, zeros(1,m-1)]; [cos(HS_Coord(1)), sin(HS_Coord(1)), zeros(1,m-2)]; cell2mat(l)'];
             
             if strcmp(type,'heteroskedastic')
-                
-                Tau = L*diag(D_chol)*L';
+              
+              Tau = L*diag(D_chol)*L';
                 
             else
                 

@@ -26,13 +26,13 @@ classdef Test_q_problem < matlab.unittest.TestCase
             Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', 't', 2, 1, 0, [2,3,2,3], [0, 0], [1, 1]),'MATLAB:invalidType');
             Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', {['s';'t'],[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]},...
                 2, 1, 0, [2,3,2,3], [0, 0], [1, 1]),'MATLAB:invalidType');
-            Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', {[1;2]',[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]},...
+            Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', {[1,2],[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]},...
                 2, 1, 0, [2,3,2,3], [0, 0], [1, 1]),'MATLAB:expectedColumn');
             Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', {[1;2;3],[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]},...
                 2, 1, 0, [2,3,2,3], [0, 0], [1, 1]),'MATLAB:incorrectSize');
             Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', {[1;2],[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]},...
                 2, 1, 0, 'm_t', [0, 0], [1, 1]),'MATLAB:invalidType');
-            Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', {[1],[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]},...
+            Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', {1,[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]},...
                 2, 1, 0, [1,3,2,3], [0, 0], [1, 1]),'SBDOT:Q_problem:insuficient_levels');
             Test_q_problem.verifyError(@()Q_problem('Q_sin_cos', {[1;2],[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]},...
                 2, 1, 0, [2,3,2,3]', [0, 0], [1, 1]),'MATLAB:expectedRow');
@@ -51,13 +51,13 @@ classdef Test_q_problem < matlab.unittest.TestCase
             
             % Error on Eval inputs during parsing
             obj=Q_problem('Q_sin_cos', {[1;2],[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]}, 2, 1, 0, [2,3,2,3], [0, 0], [1, 1]);          
-            Test_q_problem.verifyError(@()obj.Eval([16, 18, 1, 0.5, 0.6, 0.7]),'SBDOT:Q_problem:eval_bound');
+            Test_q_problem.verifyError(@()obj.Eval([1,zeros(1,35)],{[16,18,1,0.5,0.6,0.7]}),'SBDOT:Q_problem:eval_bound');
             Test_q_problem.verifyError(@()obj.Eval([1,zeros(1,35)],{[0.5,0.5,3,0.5,0.6,0.7]}),'SBDOT:Q_problem:wrong_q_levels');
             Test_q_problem.verifyError(@()obj.Eval([1,zeros(1,34)],{[0.5,0.5,2,0.5,0.6,0.7]}),'SBDOT:Q_problem:sample_size_specifications');
-            Test_q_problem.verifyError(@()obj.Eval([1,zeros(1,35)]',{[0.5,0.5,2,0.5,0.6,0.7]}),'SBDOT:Q_problem:expectedRow');
-            Test_q_problem.verifyError(@()obj.Eval([],{[0.5,0.5,2,0.5,0.6,0.7]}),'SBDOT:Q_problem:expectedNonempty');
-            Test_q_problem.verifyError(@()obj.Eval([-1,zeros(1,35)],{[0.5,0.5,2,0.5,0.6,0.7]}),'SBDOT:Q_problem:expectedNonnegative');
-            Test_q_problem.verifyError(@()obj.Eval('s',{[0.5,0.5,2,0.5,0.6,0.7]}),'SBDOT:Q_problem:invalidType');
+            Test_q_problem.verifyError(@()obj.Eval([1,zeros(1,35)]',{[0.5,0.5,2,0.5,0.6,0.7]}),'MATLAB:expectedRow');
+            Test_q_problem.verifyError(@()obj.Eval([],{[0.5,0.5,2,0.5,0.6,0.7]}),'MATLAB:expectedNonempty');
+            Test_q_problem.verifyError(@()obj.Eval([-1,zeros(1,35)],{[0.5,0.5,2,0.5,0.6,0.7]}),'MATLAB:expectedNonnegative');
+            Test_q_problem.verifyError(@()obj.Eval('s',{[0.5,0.5,2,0.5,0.6,0.7]}),'MATLAB:invalidType');
             
             % Evaluate same point twice error
             obj.Eval([1,zeros(1,35)],{[0.6,0.7,1,0.5,0.6,0.7]});

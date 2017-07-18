@@ -26,13 +26,13 @@ function [F, dF] = Regression_matrix( obj, points )
     if nargout > 1
         assert( n == 1, 'Derivative of the regression matrix supports only one point at a time.' );
         
-        dF = zeros(dim,size(obj.regpoly,1));
-        for i=1:dim
+        dF = zeros(obj.prob.m_x,size(obj.regpoly,1));
+        for i=1:obj.prob.m_x
             % derive i'th variable
             dRegressionFcn = obj.regpoly;
             dRegressionFcn(:,i) = max( dRegressionFcn(:,i) - 1, 0 );
             
-            dF(i,:) = ooDACE.buildVandermondeMatrix( points, dRegressionFcn, ooDACE.cfix( @ooDACE.powerBase, dim ) );
+            dF(i,:) = ooDACE.tools.buildVandermondeMatrix( points, dRegressionFcn, ooDACE.tools.cfix( @ooDACE.tools.powerBase, dim ) );
             
             % multiply by their powers (if power == 0 then result is zero as expected)
             dF(i,:) = dF(i,:) .* obj.regpoly(:,i).';

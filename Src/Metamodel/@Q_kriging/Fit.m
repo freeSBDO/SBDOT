@@ -77,8 +77,8 @@ function obj = Fit( obj, samples, values )
 
             obj.hyp_sigma2_0 = log10(var(temp));
                 
-            obj.hyp_lb_sigma2 = log10(1e-8);
-            obj.hyp_ub_sigma2 = log10(abs(min(temp)-max(temp)));
+            obj.lb_hyp_sigma2 = log10(1e-8);
+            obj.ub_hyp_sigma2 = log10(abs(min(temp)-max(temp)));
 
         else
 
@@ -88,17 +88,25 @@ function obj = Fit( obj, samples, values )
         
             assert( all (obj.lb_hyp_sigma2 > 0 ),...
             'SBDOT:Q_kriging:Sigma2_Lower_Bound',...
-            'lb_hyp_tau must be strictly positive');
+            'lb_hyp_sigma2 must be strictly positive');
 
+            obj.lb_hyp_sigma2 = log10(obj.lb_hyp_sigma2);
+            obj.ub_hyp_sigma2 = log10(obj.ub_hyp_sigma2);
+            
             if isempty(obj.hyp_sigma2_0)
-                obj.hyp_sigma2_0 = log10(var(temp));
+                
+                obj.hyp_sigma2_0 = log10( var(temp) );
+                
             else
                 
-                assert( all( and(obj.hyp_sigma2_0<obj.ub_hyp_sigma2,obj.hyp_sigma2_0>obj.lb_hyp_sigma2 ) ), ...
+                assert( all( and(obj.hyp_sigma2_0<10^obj.ub_hyp_sigma2,obj.hyp_sigma2_0>10^obj.lb_hyp_sigma2 ) ), ...
                 'SBOT:Q_kriging:hyp_sigma2_0_OutBounds', ...
                 'hyp_sigma2_0 must be within the range defined by HypBounds');
             
+                obj.hyp_sigma2_0 = log10(obj.hyp_sigma2_0);
+            
             end
+            
             
         end
         
@@ -135,10 +143,14 @@ function obj = Fit( obj, samples, values )
 
     hp = {obj.hyp_reg, obj.hyp_sigma2, obj.hyp_corr, obj.hyp_tau, obj.hyp_dchol};
     
-    [obj, optimHp, ~] = obj.Tune_parameters( F );
-    
-    hp(1,obj.optim_idx) = mat2cell( optimHp, 1, obj.optim_nr_parameters );
+    if any(obj.optim_idx)
+        
+        [obj, optimHp, ~] = obj.Tune_parameters( F );
 
+        hp(1,obj.optim_idx) = mat2cell( optimHp, 1, obj.optim_nr_parameters );
+
+    end
+    
     obj.Update_model( F, hp );
     
 end

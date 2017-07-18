@@ -12,6 +12,6 @@ function Ind = sub2indVect( siz, Sub )
     %   Ind = sub2indVect ( siz, Sub );
     
     Sub = num2cell(Sub);
-    Ind = arrayfun(@(i) sub2ind(siz, Sub{i,1:size(Sub,2)}), 1:size(Sub, 1));
+    Ind = arrayfun(@(i) sub2ind(siz, Sub{i,:}), 1:size(Sub, 1));
     
 end
