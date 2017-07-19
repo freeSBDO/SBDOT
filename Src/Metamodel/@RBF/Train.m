@@ -82,7 +82,9 @@ else
         
 end
 
-[obj.corr_mat, obj.f_mat, obj.zero_mat] = feval( obj.corr, obj, obj.diff_squared, obj.hyp_corr);
+[corr_mat_temp, obj.f_mat, obj.zero_mat] = feval( obj.corr, obj, obj.diff_squared, obj.hyp_corr);
+
+obj.corr_mat = corr_mat_temp + eye( size(corr_mat_temp,1) )*10000*eps;
 
 param = [ obj.corr_mat obj.f_mat; obj.f_mat' obj.zero_mat ] \ ...
     [ obj.f_train ; zeros( size( obj.f_mat , 2 ) , 1 ) ];

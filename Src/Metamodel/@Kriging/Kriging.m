@@ -47,7 +47,7 @@ classdef Kriging < Metamodel
             %   'ub_hyperp' [Auto calibrate with training dataset]          
             %   'lb_reg'    [Auto calibrate with training dataset]           
             %   'ub_reg'    [Auto calibrate with training dataset]  
-            %   'estim_hyp' ['@marginalLikelihood'], '@pseudoLikelihood'
+            %   'estim_hyp' [@marginalLikelihood], @pseudoLikelihood
             
             % Parser
             p = inputParser;

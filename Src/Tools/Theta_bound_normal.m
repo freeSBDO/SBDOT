@@ -22,17 +22,19 @@ for i = 1 : m
     
     dist_dim (:,:) = dist(:,i,:);
     dist_dim_triu = triu(dist_dim);
-    dist_final_int = reshape(dist_dim_triu,1,size(x,1)^2);
-    dist_final_int(dist_final_int==0)=[];
-    dist_final( :, i ) = dist_final_int;
+    dist_final_int = reshape(dist_dim_triu,size(x,1)^2,1);
+    dist_final_int(dist_final_int==0,:)=[];
     
+    % Heuristic rule for kriging correlation parameter estimation or gamma for RBF
+    lb_theta(1,i) = min( dist_final_int , [] , 1 );
+    ub_theta(1,i) = max( dist_final_int , [] , 1 );
+    mean_theta(1,i) = mean( dist_final_int , 1 );
+
 end
 
-%% Heuristic rule for kriging correlation parameter estimation or gamma for RBF
 
-lb_theta = min( dist_final , [] , 1 );
-ub_theta = max( dist_final , [] , 1 );
-mean_theta = mean( dist_final , 1 );
+
+
 
 end
 

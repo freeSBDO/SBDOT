@@ -1,4 +1,4 @@
-function [ stat ] = R2( x, y )
+function [ stat ] = R2( obj, x, y )
     % r2 Compute the coefficient of determination for (x,y)
     %   *x is a n_eval by m_x matrix
     %   *y is the output evaluated at x, n_eval by 1 matrix

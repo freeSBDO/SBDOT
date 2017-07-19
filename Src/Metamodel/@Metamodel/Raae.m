@@ -1,4 +1,4 @@
-function [ stat ] = Raae( x, y )
+function [ stat ] = Raae( obj, x, y )
     % RAAE Compute the Relative Average Absolute Error for (x,y)
     %   *x is a n_eval by m_x matrix
     %   *y is the output evaluated at x, n_eval by 1 matrix

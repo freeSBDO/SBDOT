@@ -39,7 +39,7 @@ classdef RBF < Metamodel
             %
             % Optionnal inputs [default value] :
             %   'corr'        ['corrmatern52'], 'corrgauss', 'corrlinear' , 'corrthinplatespline' , 'corrmultiquadric' , 'corrcubic'
-            %   'estimator'   ['LOO'] , 'MLE'  
+            %   'estimator'   ['LOO'] , 'CV'  
             %   'hyp_corr'    []
             %   'optimizer'   ['CMAES'] , 'fmincon'
             %   'lb_hyp_corr' [Auto calibrate with training dataset]     
@@ -48,13 +48,14 @@ classdef RBF < Metamodel
             % Parser
             p = inputParser;
             p.KeepUnmatched = true;
+            p.CaseSensitive = true;
             p.PartialMatching = false;
-            p.addOptional('corr','Corrmatern52',@(x)(isa(x,'char'))&&(strcmpi(x,'Corrgauss')||strcmpi(x,'Corrmatern32')||strcmpi(x,'Corrmatern52')||strcmpi(x,'Corrlinear')||strcmpi(x,'Corrthinplatespline')||strcmpi(x,'Corrinvmultiquadric')||strcmpi(x,'Corrmultiquadric')||strcmpi(x,'Corrcubic')));
-            p.addOptional('estimator','LOO',@(x)(isa(x,'char'))&&(strcmpi(x,'LOO')||strcmpi(x,'CV')));
+            p.addOptional('corr','Corrmatern52',@(x)(isa(x,'char'))&&(strcmp(x,'Corrgauss')||strcmp(x,'Corrmatern32')||strcmp(x,'Corrmatern52')||strcmp(x,'Corrlinear')||strcmp(x,'Corrthinplatespline')||strcmp(x,'Corrinvmultiquadric')||strcmp(x,'Corrmultiquadric')||strcmp(x,'Corrcubic')));
+            p.addOptional('estimator','LOO',@(x)(isa(x,'char'))&&(strcmp(x,'LOO')||strcmp(x,'CV')));
             p.addOptional('hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('lb_hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
             p.addOptional('ub_hyp_corr',[],@(x)isnumeric(x)&&(isempty(x)||isrow(x)));
-            p.addOptional('optimizer','CMAES',@(x)(isa(x,'char'))&&(strcmpi(x,'CMAES')||strcmpi(x,'fmincon')));
+            p.addOptional('optimizer','CMAES',@(x)(isa(x,'char'))&&(strcmp(x,'CMAES')||strcmp(x,'fmincon')));
             p.parse(varargin{:})
             in = p.Results;
             unmatched = p.Unmatched;

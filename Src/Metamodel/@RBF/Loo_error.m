@@ -5,6 +5,8 @@ function LOO = Loo_error( obj, theta )
 
 [corr_mat, f_mat, zero_mat] = feval( obj.corr, obj, obj.diff_squared, theta);
 
+corr_mat = corr_mat + eye( size(corr_mat,1) )*10000*eps;
+
 param = [ corr_mat f_mat; f_mat' zero_mat ] \ ...
     [ obj.f_train ; zeros( size( f_mat , 2 ) , 1 ) ];
 

@@ -1,4 +1,4 @@
-function [ stat ] = mape( x, y )
+function [ stat ] = Mape( obj, x, y )
     % MAPE Compute the Mean Absolute Percentage Error (%) for (x,y)
     %   *x is a n_eval by m_x matrix
     %   *y is the output evaluated at x, n_eval by 1 matrix

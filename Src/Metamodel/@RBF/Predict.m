@@ -47,10 +47,8 @@ if nargout > 1
     power_1 =  [corr_mat_pred' f_mat_pred] * ...
         ([obj.corr_mat obj.f_mat ; obj.f_mat' obj.zero_mat] \...
                 [corr_mat_pred' f_mat_pred]');
-            
-    power_2 = ((-1).^fake_order ) * obj.beta' * obj.corr_mat * obj.beta;
-    
-    power = power_2 * sqrt( ( (-1).^fake_order ) * (phi_zero - diag(power_1)) );
+                
+    power = sqrt( ( (-1).^fake_order ) * (phi_zero - diag(power_1)) );
     
 end
 
