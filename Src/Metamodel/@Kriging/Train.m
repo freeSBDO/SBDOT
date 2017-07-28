@@ -80,6 +80,15 @@ if isequal( obj.estim_hyp, @pseudoLikelihood )
     opts.hpOptimizer = ooDACE.MatlabOptimizer( 1,1, optimopt );
 end
 
+if obj.go_opt
+    optimopt.TolX = 1e-4;
+    optimopt.Restarts = 0;
+    optimopt.IncPopSize = 1;
+    optimopt.TolFun = 1e-4;
+    optimopt.DispModulo = 0;
+    opts.hpOptimizer = ooDACE.CmaesOptimizer( 1,1, optimopt );
+end
+
 
 % Regression (if asked)
 if obj.reg

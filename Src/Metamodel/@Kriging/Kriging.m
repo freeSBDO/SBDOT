@@ -16,6 +16,7 @@ classdef Kriging < Metamodel
         lb_hyp_reg         % Lower bound of regression parameter
         ub_hyp_reg         % Upper bound of regression parameter
         estim_hyp          % Method for hyperparameter estimation
+        go_opt             % Boolean to activate Global Optimization of hyp
         
         % Computed variables
         k_oodace      % ooDace Kriging object
@@ -48,6 +49,7 @@ classdef Kriging < Metamodel
             %   'lb_reg'    [Auto calibrate with training dataset]           
             %   'ub_reg'    [Auto calibrate with training dataset]  
             %   'estim_hyp' [@marginalLikelihood], @pseudoLikelihood
+            %   'go_opt'    [false], true
             
             % Parser
             p = inputParser;
@@ -64,6 +66,7 @@ classdef Kriging < Metamodel
             p.addOptional('lb_hyp_reg',[],@(x)isnumeric(x)&&(isempty(x)||isscalar(x)));
             p.addOptional('ub_hyp_reg',[],@(x)isnumeric(x)&&(isempty(x)||isscalar(x)));
             p.addOptional('estim_hyp',@marginalLikelihood,@(x)(isequal(x,@marginalLikelihood) || isequal(x,@pseudoLikelihood)));
+            p.addOptional('go_opt',false,@(x)islogical(x));
             p.parse(varargin{:})
             in = p.Results;
             unmatched = p.Unmatched;
@@ -83,6 +86,7 @@ classdef Kriging < Metamodel
             obj.lb_hyp_reg = in.lb_hyp_reg;
             obj.ub_hyp_reg = in.ub_hyp_reg;  
             obj.estim_hyp = in.estim_hyp; 
+            obj.go_opt = in.go_opt; 
             
             % Training
             obj.Train();  

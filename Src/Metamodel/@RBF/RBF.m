@@ -38,7 +38,7 @@ classdef RBF < Metamodel
             %   obj=RBF(prob,y_ind,g_ind,'estimator','LOO')
             %
             % Optionnal inputs [default value] :
-            %   'corr'        ['corrmatern52'], 'corrgauss', 'corrlinear' , 'corrthinplatespline' , 'corrmultiquadric' , 'corrcubic'
+            %   'corr'        ['Corrmatern52'], 'Corrgauss', 'Corrlinear' , 'Corrthinplatespline' , 'Corrmultiquadric' , 'Corrcubic', 'Corrinvmultiquadric', 'Corrmatern32'
             %   'estimator'   ['LOO'] , 'CV'  
             %   'hyp_corr'    []
             %   'optimizer'   ['CMAES'] , 'fmincon'
