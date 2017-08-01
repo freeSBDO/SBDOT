@@ -58,11 +58,74 @@ classdef CoKriging < ooDACE.BasicGaussianProcess
 
 		% CTor
 		function this = CoKriging(varargin)
-            this = this@ooDACE.BasicGaussianProcess(varargin{:});
+            
+            % modif_cdu : constructor of BasicGaussianProcess copied
+            % default CTor
+            if(nargin == 0)
+                %use defaults
+                % copy CTor
+            elseif isa(varargin{1}, 'BasicGaussianProcess')
+                this = varargin{1};
+            else
+                if nargin == 2
+                    this.options = varargin{1};
+                    this.hyperparameters0 = varargin{2};
+                elseif nargin == 3
+                    this.options = varargin{1};
+                    this.hyperparameters0 = varargin{2};
+                    this.regressionFcn = varargin{3};
+                elseif nargin == 4
+                    this.options = varargin{1};
+                    this.hyperparameters0 = varargin{2};
+                    this.regressionFcn = varargin{3};
+                    this.correlationFcn = varargin{4};
+                else
+                    error('Invalid number of parameters given');
+                end
+                
+                % modif_cdu
+                
+            end % end outer if
+            
+            % initialize indices to the optimization parameters
+            % modif_cdu, ones( 1, 4 ) => true( 1, 4 ) :
+            this.optimIdx = true( 1, 4 );
+            
+            % disable the optimization parameters
+            if isinf( this.options.rho0 )
+                this.optimIdx(this.RHO) = false;
+            end
+            %modif cdu , case cell :            
+            if isinf( this.options.lambda0{1} )
+                this.optimIdx(this.LAMBDA) = false;
+            end
+            
+            if isnan( this.options.sigma20 )
+                this.optimIdx(this.SIGMA2) = false;
+            end
+            
+            
+            % apparantly a conversion is needed...
+            % modif_cdu, commented :
+            %this.optimIdx = logical(this.optimIdx);
+            this.optimNrParameters = ones(1,sum(this.optimIdx,2));
+            this.optimNrParameters(end) = size( this.hyperparameters0{1}, 2 );
             
             % warn the user early if something is not possible
             if this.optimIdx(1,this.SIGMA2)
                error('Including sigma2 in the optimization process is not possible with cokriging.'); 
+            end
+                               
+            if this.options.reinterpolation{1} && ~this.optimIdx(1,this.LAMBDA)
+               error('Reinterpolation of the kriging error only makes sense for regression kriging.'); 
+            end
+            
+            if length(this.options.lambda0{1}) > 1 && ~this.optimIdx(1,this.SIGMA2)
+                error('Stochastic kriging only possible by including sigma2 in the hyperparameter optimization.');
+            end
+            
+            if this.options.reinterpolation{1} && this.optimIdx(1,this.SIGMA2)
+                error('Reinterpolation of the predicted variance not possible when sigma2 is included in the hyperparameter optimization (stochastic kriging).');
             end
 		end % constructor
 
@@ -191,6 +254,11 @@ classdef CoKriging < ooDACE.BasicGaussianProcess
             % enable rho for cokriging
             options.rho0 = 5; % initial scaling factor between datasets
             options.rhoBounds = [0.1 ; 5]; % scaling factor optimization bounds
+            options.hpLikelihood = cell(1,2);
+            options.reinterpolation = {false,false};
+            options.lambda0 = {Inf,Inf};
+            options.lambdaBounds = {[0; 5],[0; 5]};
+            options.hpOptimizer = {ooDACE.SQPLabOptimizer( 1, 1 ),ooDACE.SQPLabOptimizer( 1, 1 )};
         end
     end % methods static
 end % classdef

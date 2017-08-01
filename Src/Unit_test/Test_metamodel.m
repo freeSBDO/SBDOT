@@ -19,7 +19,7 @@ classdef Test_metamodel < matlab.unittest.TestCase
         function testErrorMetamodel(Test_metamodel)
             
             % Error on Required inputs during parsing            
-            Test_metamodel.verifyError(@()Kriging('bob',1,[]),'MATLAB:invalidConversion');
+            Test_metamodel.verifyError(@()Kriging('bob',1,[]),'MATLAB:InputParser:ArgumentFailedValidation');
             obj=Problem('Branin',2,1,1,[-5 0],[10 15],'parallel',true); 
             obj.Sampling(20);
             Test_metamodel.verifyError(@()Kriging(obj,true,[]),'MATLAB:InputParser:ArgumentFailedValidation');
@@ -161,6 +161,48 @@ classdef Test_metamodel < matlab.unittest.TestCase
             Test_metamodel.verifyError(@()rbf.Predict([1 2 3 4]),'SBDOT:Metamodel:dimension_input');
             [a]=rbf.Predict([1 2]);
             [a,b]=rbf.Predict([1 2]);
+            
+        end
+        
+        function testErrorCokriging(Test_metamodel)
+            
+            prob_HF=Problem('Multifi_1D_HF',1,1,0,0,1);
+            prob_LF=Problem('Multifi_1D_LF',1,1,0,0,1);
+            prob=Problem_multifi(prob_LF,prob_HF);
+            prob.Eval ([0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1],'LF');
+            prob.Eval ([0;0.4;0.6;1],'HF');
+            
+            % Wrong Optional input
+            Test_metamodel.verifyWarning(@()Cokriging(prob,1,[],'bob',true),'SBDOT:Metamodel:unmatched')
+            
+            % Error on construction
+            cokrig=Cokriging(prob,1,[]);
+            Test_metamodel.verifyTrue(isa(cokrig,'Cokriging'));
+            Test_metamodel.verifyEqual(cokrig.y_ind,1);                        
+            
+            % corr
+            cokrig=Cokriging(prob,1,[], 'corr_LF','corrmatern32', 'corr_HF','corrmatern32');
+            Test_metamodel.verifyEqual(cokrig.corr{1},@ooDACE.basisfunctions.corrmatern32);
+            Test_metamodel.verifyEqual(cokrig.corr{2},@ooDACE.basisfunctions.corrmatern32);            
+            % estimator
+            cokrig=Cokriging(prob,1,[],'estim_hyp_LF',@pseudoLikelihood,'estim_hyp_HF',@marginalLikelihood);
+            Test_metamodel.verifyEqual(cokrig.estim_hyp{1},@pseudoLikelihood);
+            Test_metamodel.verifyEqual(cokrig.estim_hyp{2},@marginalLikelihood);            
+            % hyp_corr
+            cokrig=Cokriging(prob,1,[],'hyp_corr_LF',0.1,'hyp_corr_HF',0.1);
+            Test_metamodel.verifyEqual(cokrig.hyp_corr,[0.1;0.1]);
+            % lb_hyp_corr ub_hyp_corr
+            cokrig=Cokriging(prob,1,[],'lb_hyp_corr_LF',0.1,'ub_hyp_corr_LF',0.5);
+            Test_metamodel.verifyEqual(cokrig.hyp_corr_bounds{1},[0.1 0.5]);            
+            % optimizer
+            cokrig = Cokriging( prob , 1 , [] , 'go_opt_LF',true );
+            Test_metamodel.verifyEqual(cokrig.go_opt{1},true);
+                        
+            % Predict test
+            [a]=cokrig.Predict(0.2);
+            [a,b]=cokrig.Predict(0.2);
+            [a,b,c]=cokrig.Predict(0.2);
+            [a,b,c,d]=cokrig.Predict(0.2);
             
         end
         

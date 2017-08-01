@@ -56,14 +56,27 @@ function [y, sigma2] = predict(this, points)
         
         % Reinterpolation: only use extrinsic correlation matrix.
         % Affected variables: C, sigma2, R and Ft
-        if this.options.reinterpolation
+        % modif_cdu, cell : 
+        if iscell(this.options.reinterpolation)
+            opt_reint_bool = this.options.reinterpolation{1} || this.options.reinterpolation{2};
+        else
+            opt_reint_bool = this.options.reinterpolation;
+        end
+        
+        if opt_reint_bool
             corrt = this.C_reinterp(1:this.rank,1:this.rank) \ corr';
             
             u = this.Ft_reinterp.' * corrt - F.';
             v = this.R_reinterp \ u;
-            tmp = (1 + sum(v.^2,1) - sum(corrt.^2,1))';
-        
-            sigma2 = repmat(this.sigma2_reinterp,nx,1) .* repmat(tmp,1,outDim);
+            % modif_cdu
+            if isa( this , 'ooDACE.CoKriging' )
+                tmp = (sum(v.^2,1) - sum(corrt.^2,1))';
+                sigma2 = repmat(this.sigma2,nx,1) + repmat(tmp, 1, outDim);
+            else
+                tmp = (1 + sum(v.^2,1) - sum(corrt.^2,1))';
+                
+                sigma2 = repmat(this.sigma2_reinterp,nx,1) .* repmat(tmp,1,outDim);
+            end
         else
             corrt = this.C(1:this.rank,1:this.rank) \ corr(:,this.P(1:this.rank))';
 

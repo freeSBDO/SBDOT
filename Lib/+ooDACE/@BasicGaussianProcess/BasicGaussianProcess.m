@@ -134,12 +134,13 @@ classdef BasicGaussianProcess
 
 			% default CTor
 			if(nargin == 0)
-				%use defaults
+                % modif_cdu, return :
+				return
 			% copy CTor
 			elseif isa(varargin{1}, 'BasicGaussianProcess')
 				this = varargin{1};
-			else
-				if nargin == 2
+            else
+                if nargin == 2
 					this.options = varargin{1};
 					this.hyperparameters0 = varargin{2};
 				elseif nargin == 3
@@ -169,8 +170,15 @@ classdef BasicGaussianProcess
             if isinf( this.options.rho0 )
                 this.optimIdx(this.RHO) = false;
             end
-            if isinf( this.options.lambda0 )
+            %modif cdu , case cell :
+            if iscell( this.options.lambda0 )
+                if isinf( this.options.lambda0{1} )
                 this.optimIdx(this.LAMBDA) = false;
+                end
+            else
+                if isinf( this.options.lambda0 )
+                this.optimIdx(this.LAMBDA) = false;
+                end  
             end
             if isnan( this.options.sigma20 )
                 this.optimIdx(this.SIGMA2) = false;
@@ -183,7 +191,8 @@ classdef BasicGaussianProcess
             this.optimNrParameters = ones(1,sum(this.optimIdx,2));
             this.optimNrParameters(end) = size( this.hyperparameters0, 2 );
 			
-             % warn the user early if something is not possible
+             % warn the user early if something is not possible           
+             
             if this.options.reinterpolation && ~this.optimIdx(1,this.LAMBDA)
                error('Reinterpolation of the kriging error only makes sense for regression kriging.'); 
             end

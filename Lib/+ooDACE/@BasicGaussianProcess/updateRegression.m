@@ -85,9 +85,17 @@ function [this, err, dsigma2] = updateRegression( this, F, hp )
         this.sigma2 = sum(residual.^2) ./ size(this.values, 1);
         
         % Reinterpolation of the prediction variance (Forrester2006)
-        if this.options.reinterpolation
-            tmp = (this.C*this.C') - this.Sigma;
-            this.sigma2_reinterp = (residual' * tmp * residual) ./ size(this.values,1);
+        % modif_cdu, cell : 
+        if iscell(this.options.reinterpolation)
+            if this.options.reinterpolation{1} || this.options.reinterpolation{2}
+                tmp = (this.C*this.C') - this.Sigma;
+                this.sigma2_reinterp = (residual' * tmp * residual) ./ size(this.values,1);
+            end
+        else
+            if this.options.reinterpolation
+                tmp = (this.C*this.C') - this.Sigma;
+                this.sigma2_reinterp = (residual' * tmp * residual) ./ size(this.values,1);
+            end
         end
     end
     

@@ -69,6 +69,11 @@ for i=start:t
     options = this.options;
     % modif_cdu, cell for options HL or LF :
     options.hpBounds = this.options.hpBounds{ i };
+    options.hpBounds = this.options.hpBounds{ i };
+    options.hpLikelihood = this.options.hpLikelihood{ i };
+    options.reinterpolation = this.options.reinterpolation{ i };
+    options.lambda0 = this.options.lambda0{ i };
+    options.lambdaBounds = this.options.lambdaBounds{ i };
     
     % use the right Optimizer for this sub-GP (if multiple are given)
     if iscell( options.hpOptimizer )
@@ -90,7 +95,7 @@ for i=start:t
         % d = values{i} - this.rho{i-1} .* yc;
     end
     % modif_cdu, cell for hyperparameters0 :
-    this.GP{i} = ooDACE.BasicGaussianProcess(options, this.hyperparameters0 {i}, this.regressionFcn, this.correlationFcn);
+    this.GP{i} = ooDACE.BasicGaussianProcess(options, this.hyperparameters0 {i}, this.regressionFcn{i}, this.correlationFcn{i});
     this.GP{i} = this.GP{i}.fit(samples{i}, d);
     
     if i > 1

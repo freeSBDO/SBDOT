@@ -44,11 +44,21 @@ function this = updateModel( this, F, hp )
     end
     
     %% reinterpolation (Forrester2006)
-    if this.options.reinterpolation
-       this.C_reinterp = chol( this.C*this.C' - this.Sigma )';
-       
-       this.Ft_reinterp = this.C_reinterp \ F(this.P,:); % T1
-       [~, this.R_reinterp] = qr(this.Ft_reinterp,0);
+    % modif_cdu, cell : 
+    if iscell(this.options.reinterpolation)
+        if this.options.reinterpolation{1} || this.options.reinterpolation{2}
+            this.C_reinterp = chol( this.C*this.C' - this.Sigma )';
+            
+            this.Ft_reinterp = this.C_reinterp \ F(this.P,:); % T1
+            [~, this.R_reinterp] = qr(this.Ft_reinterp,0);
+        end
+    else
+        if this.options.reinterpolation
+            this.C_reinterp = chol( this.C*this.C' - this.Sigma )';
+            
+            this.Ft_reinterp = this.C_reinterp \ F(this.P,:); % T1
+            [~, this.R_reinterp] = qr(this.Ft_reinterp,0);
+        end
     end
 
     %% What is needed for prediction
