@@ -9,8 +9,7 @@ classdef Adaptive_sampling < handle
         prob % object of the whole conception problem        
         y_ind %labels number of problem objectives selected
         g_ind %labels number of problem constraints selected
-        
-        
+                
         % Optional inputs (varargin) 
         iter_max % Maximum number of iterations
         fcall_max % Maximum number of functions calls
@@ -32,12 +31,20 @@ classdef Adaptive_sampling < handle
         
         failed % Logical value for failing mode
         opt_stop % Logical value for stoping flag
+        crit_stop % Logical value for crit stoping flag
         iter_num % Current iteration
         fcall_num % Current number of function calls
         
         error % Structure of error info
         hist % History structure
         unmatched_params % unmatched_params
+        
+    end
+    
+    methods (Abstract)
+       
+        Opt_crit(obj); % Main method (in subclass)
+        Conv_check_crit(obj); % Check convergence
         
     end
     
@@ -82,7 +89,7 @@ classdef Adaptive_sampling < handle
             % Adaptive_sampling display only
             obj.display_temp = obj.prob.display;
             obj.prob.display = false;
-            if class(obj.prob) == 'Problem_multifi'
+            if isa( obj.prob , 'Problem_multifi')
                 obj.prob.prob_HF.display = false;
                 obj.prob.prob_LF.display = false;
             end
@@ -90,6 +97,7 @@ classdef Adaptive_sampling < handle
             % Initialize stoping/failing/iter
             obj.failed = false;
             obj.opt_stop = false;
+            obj.crit_stop = false;
             obj.iter_num = 0;      
             obj.fcall_num = 0; 
             
@@ -105,6 +113,12 @@ classdef Adaptive_sampling < handle
             obj.hist.y_min=[];
             obj.hist.g_min=[]; 
         end
+        
+        [] = Conv_check( obj );
+        [] = Opt( obj );
+        [] = Eval( obj );
+        [] = Restart( obj, iter_sup, fcall_sup );
+        
         
     end
     

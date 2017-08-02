@@ -19,7 +19,7 @@ function [] = Eval( obj )
         end
 
         % Evaluation
-        if class(obj.prob) == 'Problem_multifi'
+        if isa( obj.prob , 'Problem_multifi')
             
             [ y_eval, g_eval, x_eval ] = obj.prob.Eval( obj.x_new, obj.eval_type );
             

@@ -16,9 +16,12 @@ function [] = Opt( obj )
             
             obj.iter_num = obj.iter_num + 1;
             
-            obj.Conv_check(); % Check convergence
-            obj.Opt(); % Main method (in subclass)            
-            obj.Eval(); % Evaluation
+            obj.Opt_crit(); % Main method (in subclass)
+            obj.Conv_check_crit(); % Check convergence
+            if ~obj.crit_stop
+                obj.Eval(); % Evaluation
+                obj.Conv_check(); % Check convergence
+            end            
             
         catch ME
             
@@ -34,7 +37,7 @@ function [] = Opt( obj )
     
     % Display back to its normal value
     obj.prob.display = obj.display_temp;
-    if class(obj.prob) == 'Problem_multifi'
+    if isa( obj.prob , 'Problem_multifi')
         obj.prob.prob_HF.display = obj.display_temp;
         obj.prob.prob_LF.display = obj.display_temp;
     end
