@@ -95,6 +95,7 @@ classdef Kriging < Metamodel
          
         [] = Train( obj );
         varargout = Predict( obj, x_eval);
+        [] = Clean( obj , type )
         
     end
     

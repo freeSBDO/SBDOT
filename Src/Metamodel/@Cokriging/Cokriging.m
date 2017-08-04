@@ -123,7 +123,9 @@ classdef Cokriging < Metamodel
         
         [ mean, variance, grad_mean, grad_variance ] = Predict( obj, x_eval);
         
-        opts = Def_hyp_corr( obj , type, opts )
+        opts = Def_hyp_corr( obj , type, opts );
+        
+        [] = Clean( obj , type );
         
     end
     

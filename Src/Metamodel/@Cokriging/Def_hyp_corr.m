@@ -1,4 +1,4 @@
-function opts = Def_hyp_corr( obj , type, opts )
+function opts = Def_hyp_corr( obj , type, opts , clean )
 % DEF_HYP set the hyperparameter variables before training
 %
 % Syntax :

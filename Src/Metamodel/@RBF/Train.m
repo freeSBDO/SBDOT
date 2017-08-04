@@ -1,4 +1,4 @@
-function [] = Train( obj )
+function [] = Train( obj, clean )
 % TRAIN learn the statistical relationship of the data
 %
 % Syntax :
@@ -8,6 +8,22 @@ function [] = Train( obj )
 obj.Train@Metamodel();
 
 if obj.prob.display, fprintf('\nTraining starting...');end
+
+if nargin>1
+    
+    switch clean
+        
+        case 'corr'
+            
+            obj.hyp_corr = [];
+                      
+        otherwise
+            
+            error('SBDOT:RBF:Train',...
+                'Cleaning type before training is not correct, use corr')
+    end
+    
+end
 
 % Matrix of squared manhattan distance
 obj.diff_squared=abs(bsxfun(@minus,permute(obj.x_train,[3 2 1]),obj.x_train)).^2;

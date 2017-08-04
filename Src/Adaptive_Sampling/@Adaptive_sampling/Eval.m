@@ -30,23 +30,31 @@ function [] = Eval( obj )
         end
         
         obj.x_new = x_eval;
-        y_new = y_eval( :, obj.y_index );
-        g_new = g_eval( :, obj.g_index );
+        y_new = y_eval( :, obj.y_ind );
+        g_new = g_eval( :, obj.g_ind );
 
         % Update objective training dataset, kriging and history
-        for i = 1 : obj.m_y
-            
-            obj.meta_y(i,:).Train();
-            
-        end
         obj.hist.x = [ obj.hist.x ; obj.x_new ];
-        obj.hist.y = [ obj.hist.y ; y_new ];
+        
+        if obj.m_y >= 1
+            
+            for i = 1 : obj.m_y
+                
+                obj.meta_y(i,:).Clean({'all'});
+                obj.meta_y(i,:).Train();
+                
+            end
+            
+            obj.hist.y = [ obj.hist.y ; y_new ];
+            
+        end    
 
         % Update constraint...
         if obj.m_g >= 1
             
             for i = 1 : obj.m_g
                 
+                obj.meta_g(i,:).Clean({'all'});
                 obj.meta_g(i,:).Train();
                 
             end
@@ -55,7 +63,7 @@ function [] = Eval( obj )
             
         end
 
-        obj.fcall_num = obj.fcall + size(x_eval,1);
+        obj.fcall_num = obj.fcall_num + size(x_eval,1);
         
     catch ME
         
@@ -66,9 +74,6 @@ function [] = Eval( obj )
         fprintf(['Optimization failed at iteration ',num2str(obj.iter_num),' !\n\n']);
         
     end
-    
-    % Iteration convergence checking
-    obj.Conv_check;
 
 end
 

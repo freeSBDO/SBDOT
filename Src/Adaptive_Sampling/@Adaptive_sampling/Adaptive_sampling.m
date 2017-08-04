@@ -69,11 +69,17 @@ classdef Adaptive_sampling < handle
             p.addRequired('prob',@(x)isa(x,'Problem') || @(x)isa(x,'Problem_multifi'));
             p.addRequired('y_ind',@(x)isnumeric(x) && isrow(x))
             p.addRequired('g_ind',@(x)isnumeric(x) && (isrow(x) || isempty(x)))
-            p.addOptional('iter_max',50,@(x)isinteger(x)&&(isempty(x)||isscalar(x)));
-            p.addOptional('fcall_max',[],@(x)isinteger(x)&&(isempty(x)||isscalar(x)));
+            p.addOptional('iter_max',50,@(x)(x == floor(x))&&(isempty(x)||isscalar(x)));
+            p.addOptional('fcall_max',[],@(x)(x == floor(x))&&(isempty(x)||isscalar(x)));
             p.parse(prob,y_ind,g_ind,varargin{:})
             in = p.Results;
-            obj.unmatched_params = p.Unmatched; % Save unmatched inputs for further use           
+            unmatched = [fieldnames(p.Unmatched),struct2cell(p.Unmatched)];
+            obj.unmatched_params = unmatched'; % Save unmatched inputs for further use 
+            
+            % Checks  
+            assert(~(~isempty(y_ind)&& ~isempty(g_ind)),...
+                'SBDOT:Adaptive_sampling:lab_nonempty',...
+                'y_ind or g_ind could not be both nonempty matrix');
             
             % Store
             obj.prob = in.prob;
@@ -109,9 +115,11 @@ classdef Adaptive_sampling < handle
             obj.hist.x=[];
             obj.hist.y=[];
             obj.hist.g=[];
+            obj.hist.crit=[];
             obj.hist.x_min=[];
             obj.hist.y_min=[];
             obj.hist.g_min=[]; 
+            
         end
         
         [] = Conv_check( obj );

@@ -78,6 +78,7 @@ classdef RBF < Metamodel
         
         [] = Train( obj );
         [y_pred, power] = Predict( obj, x_eval );
+        [] = Clean( obj , type )
         
         LOO = Loo_error( obj, theta )
         dist_theta = Norm_theta( obj, diff_mat, theta);
