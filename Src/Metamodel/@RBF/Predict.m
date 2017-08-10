@@ -37,18 +37,12 @@ end
 if nargout > 1
     
     phi_zero = feval( obj.corr, obj, 0, obj.hyp_corr);
-    
-    if length(obj.alpha) == 1 
-        fake_order = 1;
-    else
-        fake_order = 2;
-    end
-    
+       
     power_1 =  [corr_mat_pred' f_mat_pred] * ...
         ([obj.corr_mat obj.f_mat ; obj.f_mat' obj.zero_mat] \...
                 [corr_mat_pred' f_mat_pred]');
                 
-    power = sqrt( ( (-1).^fake_order ) * (phi_zero - diag(power_1)) );
+    power = sqrt( abs( phi_zero - diag(power_1) ) );
     
 end
 

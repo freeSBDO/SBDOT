@@ -1,4 +1,4 @@
-function [] = Train( obj, clean )
+function [] = Train( obj )
 % TRAIN learn the statistical relationship of the data
 %
 % Syntax :
@@ -8,22 +8,6 @@ function [] = Train( obj, clean )
 obj.Train@Metamodel();
 
 if obj.prob.display, fprintf('\nTraining starting...');end
-
-if nargin>1
-    
-    switch clean
-        
-        case 'corr'
-            
-            obj.hyp_corr = [];
-                      
-        otherwise
-            
-            error('SBDOT:RBF:Train',...
-                'Cleaning type before training is not correct, use corr')
-    end
-    
-end
 
 % Matrix of squared manhattan distance
 obj.diff_squared=abs(bsxfun(@minus,permute(obj.x_train,[3 2 1]),obj.x_train)).^2;
@@ -92,9 +76,9 @@ else
             'hyp_corr must be of size 1-by-m_x');
         
     obj.hyp_corr = log10(obj.hyp_corr);
-    obj.hyp_corr0 = log10(obj.hyp_corr);
-    obj.lb_hyp_corr = log10(obj.hyp_corr);
-    obj.ub_hyp_corr = log10(obj.hyp_corr);
+    obj.hyp_corr0 = obj.hyp_corr;
+    obj.lb_hyp_corr = obj.hyp_corr;
+    obj.ub_hyp_corr = obj.hyp_corr;
         
 end
 
@@ -112,6 +96,7 @@ obj.alpha = param( obj.prob.n_x+1 : end , 1 );
 if obj.prob.display, fprintf(['\nRBF with ',obj.corr(5:end),' correlation function is created.\n\n']);end
 
 obj.hyp_corr_bounds = 10.^[min(obj.lb_hyp_corr) , max(obj.ub_hyp_corr)];
+obj.hyp_corr = 10.^obj.hyp_corr;
 
 end
 

@@ -22,7 +22,7 @@ prob.Get_design( 20 ,'LHS' )
 options_optim.DispModulo = 0;
 options_optim.Restarts = 0;
 
-obj = Error_prediction(prob, 1, [], @Kriging ,'iter_max',10,'crit_type','MSE','options_optim',options_optim);
+obj = Error_prediction(prob, 1, [], @Kriging ,'iter_max',10,'crit_type','IMSE','options_optim',options_optim);
 
 figure
 hold on

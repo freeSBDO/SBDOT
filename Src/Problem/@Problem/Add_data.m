@@ -17,7 +17,7 @@ function [] = Add_data( obj, x_add, y_add, g_add )
     obj.y = [ obj.y; y_add ];
     obj.g = [ obj.g; g_add ];
 
-    obj.n_x = obj.n_x + n_add;
+    obj.n_x = size(obj.x,1);
 
 end
 
