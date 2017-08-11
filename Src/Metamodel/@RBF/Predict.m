@@ -12,7 +12,7 @@ n_eval = size( x_eval, 1 );
 
 diff_pred_squared=abs(bsxfun(@minus,permute(x_eval_scaled,[3 2 1]),obj.x_train)).^2;
 
-corr_mat_pred = feval( obj.corr, obj, diff_pred_squared, obj.hyp_corr);
+corr_mat_pred = feval( obj.corr, obj, diff_pred_squared, log10(obj.hyp_corr));
 
 switch obj.corr
     
