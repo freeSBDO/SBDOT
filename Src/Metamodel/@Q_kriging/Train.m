@@ -25,9 +25,9 @@ function obj = Train( obj )
             % Bounds based on inter-distances of training points
 
             [ hyp_corr_0_temp, lb_hyperp_temp, ub_hyperp_temp ] = Theta_bound( x_mat );
-            obj.lb_hyp_corr = log10( ( 1./(2*ub_hyperp_temp) ).^2 ) * ones(1,obj.prob.m_x);
-            obj.ub_hyp_corr = log10( ( 1./(2*lb_hyperp_temp) ).^2 ) * ones(1,obj.prob.m_x);
-            obj.hyp_corr_0 = log10( ( 1./(2*hyp_corr_0_temp) ).^2 ) * ones(1,obj.prob.m_x);
+            obj.lb_hyp_corr = log10( ( 1./(2*ub_hyperp_temp) ).^2 );
+            obj.ub_hyp_corr = log10( ( 1./(2*lb_hyperp_temp) ).^2 );
+            obj.hyp_corr_0 = log10( ( 1./(2*hyp_corr_0_temp) ).^2 );
 
         else
 

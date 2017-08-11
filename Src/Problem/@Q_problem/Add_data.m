@@ -6,7 +6,7 @@ function [] = Add_data( obj, x_add, y_add, g_add, n_add )
     %   n_add is the number of input points per qualitative combination
     %
     % Syntax :
-    % obj.Add_data(x_add,y_add,n_add); , as Q_problem is unconstrained
+    % obj.Add_data(x_add,y_add, g_add, n_add); , as Q_problem is unconstrained
 
     % Checks
     obj.Input_assert( x_add );

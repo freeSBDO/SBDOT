@@ -3,9 +3,9 @@ close all
 clc
 
 % Set random seed for reproductibility
-rng(1)
+rng(3)
 
-%% 1D
+% 1D
 % Define problem structure
 t = {[1;2;3]};
 m_t = 3;
@@ -13,14 +13,14 @@ m_x = 1;
 m_g = 1;
 m_y = 2;
 lb = 0; ub = 1;
-n_x = [5,5,5]; n_eval = 1000;
+n_x = [8,8,8]; n_eval = 1000;
 func_str = 'emse_2';
 
 % Create Problem object with optionnal parallel input as true
 prob = Q_problem( func_str, t, m_x, m_y, m_g, m_t, lb, ub , 'parallel', true );
 
 % Evaluate the model on 5 points per level created with LHS
-prob.Get_design( n_x ,'LHS' )
+prob.Get_design( n_x ,'SLHS' )
 
 % Construct kriging metamodel
 q_krig = Q_kriging( prob, 2, [], 'corr', 'Q_Gauss');
@@ -105,16 +105,16 @@ m_t = [2, 3, 2, 3];
 m_x = 2;
 m_g = 0;
 m_y = 1;
-lb = [-1, -1];
-ub = [1, 1];
-n_x = 7;
+lb = -1*ones(1,m_x);
+ub = ones(1,m_x);
+n_x = 15;
 func_str = 'Q_sin_cos';
 
 % Create Problem object with optionnal parallel input as true
 prob = Q_problem( func_str, t, m_x, m_y, m_g, m_t, lb, ub , 'parallel', true );
 
-% Evaluate the model on 7 points per level combinations (here 36 combination, i.e. 252 points) created with LHS
-prob.Get_design( n_x ,'LHS' )
+% Evaluate the model on 7 points per level combinations (here 36 combination, i.e. 252 points) created with SLHS
+prob.Get_design( n_x , 'type', 'SLHS', 'maximin_type', 'Monte_Carlo', 'n_iter', 500);
 
 % Construct kriging metamodel
 q_krig = Q_kriging( prob, 1, [], 'tau_type', 'isotropic', 'optim_method', 'active-set');

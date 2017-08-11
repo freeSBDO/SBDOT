@@ -35,7 +35,7 @@ classdef Q_problem < Problem
             p.KeepUnmatched=true;
             p.PartialMatching=false;
             p.addRequired('m_t',@(x)validateattributes(x,{'numeric'},{'nonempty','row'}))
-            p.addRequired('t',@(x)validateattributes(t,{'cell'},{'nonempty','row','size',size(m_t)}))
+            p.addRequired('t',@(x)validateattributes(x,{'cell'},{'nonempty','row','size',size(m_t)}))
             p.parse(m_t,t)
             in=p.Results;
             
@@ -66,13 +66,15 @@ classdef Q_problem < Problem
             
         end
         
-        x_sampling = Sampling( obj, num_x, type );
+        x_sampling = Sampling( obj, num_x, varargin );
         
         [ y_eval, g_eval, x_eval ] = Eval( obj, num_x, x_eval );
         
-        [] = Get_design( obj, num_x, type );
+        [] = Get_design( obj, num_x, varargin );
         
         [] = Add_data( obj, x_add, y_add, g_add, n_add);
+        
+        x_sampling = SLHS( obj, num_x, varargin );
         
     end
     
