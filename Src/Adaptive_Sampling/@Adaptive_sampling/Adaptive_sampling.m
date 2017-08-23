@@ -75,12 +75,7 @@ classdef Adaptive_sampling < handle
             in = p.Results;
             unmatched = [fieldnames(p.Unmatched),struct2cell(p.Unmatched)];
             obj.unmatched_params = unmatched'; % Save unmatched inputs for further use 
-            
-            % Checks  
-            assert(~(~isempty(y_ind)&& ~isempty(g_ind)),...
-                'SBDOT:Adaptive_sampling:lab_nonempty',...
-                'y_ind or g_ind could not be both nonempty matrix');
-            
+                        
             % Store
             obj.prob = in.prob;
             obj.y_ind = in.y_ind;

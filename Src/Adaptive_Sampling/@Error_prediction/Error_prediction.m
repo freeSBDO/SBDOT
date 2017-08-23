@@ -1,6 +1,5 @@
 classdef Error_prediction < Adaptive_sampling
     %ERROR_PREDICTION Metamodel prediction error reduction algorithm
-    %   Detailed explanation goes here
     
     properties
         
@@ -36,7 +35,7 @@ classdef Error_prediction < Adaptive_sampling
             obj.meta_type = in.meta_type;
             
             % Checks
-            assert(length(y_ind)==1 || length(g_ind)==1,...
+            assert( obj.m_y == 1 || obj.m_g == 1,...
                 'SBDOT:Error_prediction:y_index',...
                 'Only one output can be used in Error_prediction');
             

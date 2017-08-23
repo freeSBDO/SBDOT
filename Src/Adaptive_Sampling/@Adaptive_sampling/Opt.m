@@ -10,7 +10,7 @@ function [] = Opt( obj )
         
     end
     
-    while ~obj.opt_stop && ~obj.failed
+    while ~obj.opt_stop && ~obj.failed && ~obj.crit_stop
         
         try
             
