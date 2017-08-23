@@ -6,7 +6,7 @@ function [ y_eval, g_eval, x_eval ] = Eval( obj, num_x, x_eval )
     % Syntax :
     % [ y_eval, g_eval ]=obj.Eval(x_eval);
     
-    validateattributes( num_x, {'numeric'}, {'nonempty','row','integer','nonnegative'})
+    validateattributes( num_x, {'numeric'}, {'nonempty','row','nonnegative'})
     
     assert( or(size(num_x,2) == 1, size(num_x,2) == prod(obj.m_t)),...
         'SBDOT:Q_problem:sample_size_specifications',...
@@ -16,7 +16,11 @@ function [ y_eval, g_eval, x_eval ] = Eval( obj, num_x, x_eval )
         num_x = num_x*ones(1,prod(obj.m_t));
     end
     
-    x_mat = cell2mat(x_eval');
+    if isa(x_eval,'cell')
+        x_mat = cell2mat(x_eval');
+    else
+        x_mat = x_eval;
+    end
     
     % Checks
     n_eval = obj.Input_assert( x_mat );

@@ -19,15 +19,15 @@ function obj = Fit( obj, samples, values )
     if ~obj.optim_idx(1,obj.REG)
         
         % stochastic kriging
-        if ~isempty( obj.Sigma )
-            obj.Sigma = obj.Sigma;
-        else
+        if isempty(obj.Sigma)
             % add a small number to ease ill-conditioning
             obj.Sigma = (sum(obj.prob.n_x)+10)*eps;
         end
 
-        o = (1:sum(obj.prob.n_x))';               
-        obj.Sigma = sparse( o, o, obj.Sigma);
+        if ~issparse(obj.Sigma)
+            o = (1:sum(obj.prob.n_x))';               
+            obj.Sigma = sparse( o, o, obj.Sigma);
+        end
         
     end
 

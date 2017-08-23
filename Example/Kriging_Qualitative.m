@@ -3,15 +3,15 @@ close all
 clc
 
 % Set random seed for reproductibility
-rng(3)
+rng(1)
 
 % 1D
 % Define problem structure
 t = {[1;2;3]};
 m_t = 3;
 m_x = 1;
-m_g = 1;
-m_y = 2;
+m_g = 0;
+m_y = 1;
 lb = 0; ub = 1;
 n_x = [8,8,8]; n_eval = 1000;
 func_str = 'emse_2';
@@ -20,10 +20,10 @@ func_str = 'emse_2';
 prob = Q_problem( func_str, t, m_x, m_y, m_g, m_t, lb, ub , 'parallel', true );
 
 % Evaluate the model on 5 points per level created with LHS
-prob.Get_design( n_x ,'SLHS' )
+prob.Get_design( n_x ,'SLHS', 'maximin_type', 'Monte_Carlo', 'n_iter', 1000 );
 
 % Construct kriging metamodel
-q_krig = Q_kriging( prob, 2, [], 'corr', 'Q_Gauss');
+q_krig = Q_kriging( prob, 1, [], 'corr', 'Q_Gauss');
 
 % Prediction
 temp = ind2subVect(m_t,1:prod(m_t));
@@ -54,12 +54,12 @@ for i=1:prod(m_t)
     figure();
     hold on;
     temp = fh([x_eval(ind_eval,1),q(ind_eval,:)]);
-    plot(x_eval(ind_eval,1),temp(:,2),'Color','g');
+    plot(x_eval(ind_eval,1),temp(:,1),'Color','g');
     plot(x_eval(ind_eval,1),p_mean(ind_eval)+1.96.*p_variance(ind_eval),':','Color','b');
     plot(x_eval(ind_eval,1),p_mean(ind_eval)-1.96.*p_variance(ind_eval),':','Color','b');
     plot(x_eval(ind_eval,1),p_mean(ind_eval),'--','Color','r');
     temp = fh(x_sample(ind_samp,:));
-    plot(x_sample(ind_samp,1), temp(:,2),'*','MarkerSize',20);
+    plot(x_sample(ind_samp,1), temp(:,1),'*','MarkerSize',20);
     legend('obj. func.', 'upper conf. int.', 'lower conf. int.', 'mean pred.', 'DoE');
     title('Kriging Example');
     xlabel('x');

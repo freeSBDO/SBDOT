@@ -19,7 +19,14 @@ function [] = Eval( obj )
         end
 
         % Evaluation
-        if isa( obj.prob , 'Problem_multifi')
+        if isa( obj.prob , 'Q_problem')
+            
+            q_val = arrayfun(@(k) obj.prob.t{k}(ind2subVect(obj.prob.m_t,obj.x_new(obj.prob.m_x+1))), 1:length(obj.prob.m_t));
+            num_x = zeros(1,prod(obj.prob.m_t));
+            num_x(obj.x_new(obj.prob.m_x+1)) = 1;
+            [ y_eval, g_eval, x_eval ] = obj.prob.Eval( num_x, [obj.x_new(1:obj.prob.m_x), q_val] );
+            
+        elseif isa( obj.prob , 'Problem_multifi')
             
             [ y_eval, g_eval, x_eval ] = obj.prob.Eval( obj.x_new, obj.eval_type );
             

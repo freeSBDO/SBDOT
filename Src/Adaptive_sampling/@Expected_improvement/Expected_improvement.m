@@ -8,7 +8,7 @@ classdef Expected_improvement < Adaptive_sampling
         
         meta_type         
         options_optim  % Structure of user optimization options
-        QV_val         % Value of qualitative variable if needed
+        QV_val = [];   % Value of qualitative variable if needed
         
         EI_val         % Expected improvement value at current iteration
         conv_crit      % Adpative sampling criterion value
@@ -30,7 +30,6 @@ classdef Expected_improvement < Adaptive_sampling
             p.PartialMatching = false;
             p.addRequired('meta_type',@(x)isequal(x,@Kriging)||isequal(x,@Cokriging)||isequal(x,@Q_kriging));
             p.addOptional('options_optim',[],@(x)isstruct(x));
-            p.addOptional('QV_val',[],@(x)isnumeric(x));
             p.parse(meta_type,varargin{:})
             in = p.Results;
             unmatched = [fieldnames(p.Unmatched),struct2cell(p.Unmatched)];
@@ -42,7 +41,6 @@ classdef Expected_improvement < Adaptive_sampling
             % Store
             obj.options_optim = in.options_optim;
             obj.meta_type = in.meta_type;
-            obj.QV_val = in.QV_val;
             
             % Checks
             assert( obj.m_y == 1,...

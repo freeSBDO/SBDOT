@@ -241,6 +241,8 @@ classdef Q_kriging < Metamodel
         
         [] = Plot( obj, inputs_ind, cut_values, comb_ind );
         
+        [] = Clean( obj, type );
+        
     end
     
 end
