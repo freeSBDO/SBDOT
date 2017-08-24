@@ -121,7 +121,7 @@ classdef Adaptive_sampling < handle
         [] = Opt( obj );
         [] = Eval( obj );
         [] = Restart( obj, iter_sup, fcall_sup );
-        
+        [X_filter] = K_filtering( obj, x_new );
         
     end
     
