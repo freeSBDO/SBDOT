@@ -41,10 +41,67 @@ if isa(obj.meta_y,'Kriging')
         end
         
     end
-    
+
     X_filter = Unscale_data( X_filter, obj.prob.lb, obj.prob.ub);
+
+elseif isa(obj.meta_y,'Q_kriging')
+    
+    mse_pred_temp = zeros(size(x_new,1),prod(obj.prob.m_t));
+    
+    for i = 1 : prod(obj.prob.m_t)
+        
+        [ ~, mse_pred_temp(:,i) ] = obj.meta_y.Predict( x_new, repmat(i,size(x_new,1),1) );
+        
+    end
+    
+    mse_pred_init = sum( mse_pred_temp, 2 );
+    [ ~, mod_init ] = max(mse_pred_temp(1,:));
+    
+    krig_upt = copy(obj.meta_y);
+    krig_upt.Clean({'all'})
+    num_x = zeros(1,prod(obj.prob.m_t));
+    num_x(mod_init) = 1;
+    q_val = obj.prob.t{1}(ind2subVect(obj.prob.m_t,mod_init));
+    
+    krig_upt.prob.Eval( num_x, [x_new(1,:), q_val] );
+    krig_upt.Train();
+    
+    X_filter = [x_new(1,:), q_val];
+    
+    for j = 2 : size(x_new,1)
+        
+        mse_current = zeros(1,prod(obj.prob.m_t));
+        
+        for i = 1 : prod(obj.prob.m_t)
+            
+            [ ~, mse_current(i) ] = krig_upt.Predict( x_new(j,:), i );
+            
+        end
+        
+        sum_mse_current = sum( mse_current, 2 );
+        
+        if ( sum_mse_current / mse_pred_init(j) ) > 0.1
+            
+            [ ~, mod_current ] = max(mse_current);
+            
+            q_val = obj.prob.t{1}(ind2subVect(obj.prob.m_t,mod_current));
+            num_x = zeros(1,prod(obj.prob.m_t));
+            num_x(mod_current) = 1;
+            
+            krig_upt.Clean({'all'})
+            krig_upt.prob.Eval( num_x, [x_new(j,:), q_val] );
+            krig_upt.Train();
+            
+            X_filter = [ X_filter; [x_new(j,:),q_val] ];
+            
+        end
+        
+    end
     
 else
-    error('SBDO:Adaptive_sampling:k_filtering','Filtering method is only for Kriging')
+    
+    error('SBDO:Adaptive_sampling:k_filtering','Filtering method is only for Kriging and Q_kriging')
+    
 end
+
 end

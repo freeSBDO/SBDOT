@@ -47,20 +47,29 @@ classdef Multi_obj_EI_MGDA < Adaptive_sampling
             
             
             % Checks
-            assert( obj.m_y > 1, ...
+            assert( obj.m_y > 1 || ( isequal(meta_type,@Q_kriging) && obj.m_y == 1 && obj.m_g == 0), ...
                 'SBDOT:Multi_obj_EI_MGDA:y_ind', ...
-                'y_ind must be composed of at least 2 elements (multi-objective optimization)');
+                horzcat('y_ind must be composed of at least 2 elements (multi-objective optimization)',...
+                ' or prob must be a qualitative problem with 1 objective and no constraint (multi-modality optimization)'));
             
             % Set optimization options
             obj.Set_options_optim( obj.options_optim );
             
             % Train metamodel
-            for i=1:obj.m_y
-                metamodel_int_y(i,:) = ...
-                    obj.meta_type(obj.prob, obj.y_ind(i), [], obj.unmatched_params{:});
+            if isequal(meta_type,@Q_kriging)
+                
+                obj.meta_y = obj.meta_type(obj.prob, obj.y_ind, [], obj.unmatched_params{:});
+                
+            else
+                
+                for i=1:obj.m_y
+                    metamodel_int_y(i,:) = ...
+                        obj.meta_type(obj.prob, obj.y_ind(i), [], obj.unmatched_params{:});
+                end
+                
+                obj.meta_y = metamodel_int_y;
+                
             end
-            
-            obj.meta_y = metamodel_int_y;
             
             % Launch optimization sequence
             obj.in_a_row = 0;

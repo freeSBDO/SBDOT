@@ -21,10 +21,40 @@ function [] = Eval( obj )
         % Evaluation
         if isa( obj.prob , 'Q_problem')
             
-            q_val = arrayfun(@(k) obj.prob.t{k}(ind2subVect(obj.prob.m_t,obj.x_new(obj.prob.m_x+1))), 1:length(obj.prob.m_t));
-            num_x = zeros(1,prod(obj.prob.m_t));
-            num_x(obj.x_new(obj.prob.m_x+1)) = 1;
-            [ y_eval, g_eval, x_eval ] = obj.prob.Eval( num_x, [obj.x_new(1:obj.prob.m_x), q_val] );
+            if size( obj.x_new, 1 ) > 1
+                
+                q_val = cell2mat(arrayfun(@(k) obj.prob.t{k}(ind2subVect(obj.prob.m_t,obj.x_new(:,obj.prob.m_x+k))), 1:length(obj.prob.m_t), 'UniformOutput', false));
+                
+                num_x = zeros(1,prod(obj.prob.m_t));
+                
+                for i = 1:prod(obj.prob.m_t)
+                    
+                    if length(obj.prob.m_t) > 1
+                        num_x(i) = sum(sub2indVect(obj.prob.m_t,obj.x_new(:,obj.prob.m_x+1:end)) == i);
+                    else
+                        num_x(i) = sum(obj.x_new(:,obj.prob.m_x+1) == i);
+                    end
+                    
+                end
+                
+                if length(obj.prob.m_t) > 1
+                    [~,ord] = sort(sub2indVect(obj.x_new(:,obj.prob.m_x+1:end)));
+                else
+                    [~,ord] = sort(obj.x_new(:,obj.prob.m_x+1));
+                end
+                
+                x_add = [obj.x_new(ord,1:obj.prob.m_x), q_val(ord)];
+                
+            else
+
+                q_val = arrayfun(@(k) obj.prob.t{k}(ind2subVect(obj.prob.m_t,obj.x_new(obj.prob.m_x+k))), 1:length(obj.prob.m_t));
+                num_x = zeros(1,prod(obj.prob.m_t));
+                num_x(obj.x_new(obj.prob.m_x+1)) = 1;
+                x_add = [obj.x_new(:,1:obj.prob.m_x), q_val];
+                
+            end
+            
+            [ y_eval, g_eval, x_eval ] = obj.prob.Eval( num_x, x_add );
             
         elseif isa( obj.prob , 'Problem_multifi')
             
