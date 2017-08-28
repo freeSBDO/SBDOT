@@ -10,8 +10,7 @@ classdef Q_expected_improvement < Expected_improvement
         end
         
         [] = Find_min_value( obj );    
-        [] = Opt( obj );
-        EI_temp = Opt_crit( obj, EI_temp );
+        [] = Opt_crit( obj );
         
     end  
 
