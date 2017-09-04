@@ -26,7 +26,8 @@ function [] = Eval_error_handling( obj, ME, x_eval )
             
             throw(MException('SBDOT:Problem:eval_failed', ...
                 ['Evaluation failed at x = [',num2str(x_eval),']\n', ...
-                ME.message]));
+                ME.message, '\n', ...
+                ME.stack(1).file,'\n', ME.stack(1).name,'\n', num2str(ME.stack(1).line)]));
             
     end
     

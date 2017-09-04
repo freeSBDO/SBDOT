@@ -41,6 +41,9 @@ if isa(obj.meta_y,'Kriging')
         end
         
     end
+    
+    X_filter = Unscale_data( X_filter, obj.prob.lb, obj.prob.ub);
+    
 else
     error('SBDO:Adaptive_sampling:k_filtering','Filtering method is only for Kriging')
 end

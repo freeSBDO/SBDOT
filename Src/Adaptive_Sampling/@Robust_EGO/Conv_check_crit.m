@@ -1,10 +1,11 @@
 function [] = Conv_check_crit( obj )
 % CONV_CHECK_CRIT Checks for convergence criterion
-% 0 points added on Tol_inarow successive iterations
+% EI  / y_min <= Tol_conv on Tol_inarow successive iterations
 
-obj.Find_min_value();
+% Convergence criterion update
+obj.conv_crit = abs( obj.EI_val / obj.y_min );
 
-if obj.conv_crit == 0
+if obj.conv_crit <= obj.Tol_conv
     
     % +1 succesive Tol_conv iterations
     obj.in_a_row = obj.in_a_row + 1 ;
@@ -12,18 +13,13 @@ if obj.conv_crit == 0
     if obj.in_a_row == obj.Tol_inarow
         
         obj.crit_stop = true;
-        fprintf('Optimization completed because no points added.\n\n');
+        fprintf('Optimization completed because EI criterion converged.\n\n');
     else
         % Display
         if obj.display_temp
-            if isempty(obj.x_new)
-                x_new_disp = nan(1,obj.prob.m_x);
-            else
-                x_new_disp = obj.x_new(1,:);
-            end
-            fprintf( [sprintf(['[%3.0i]   %6.2e    %6.2e       (',...
+            fprintf( [sprintf(['[%3.0i]    %6.2e    %6.2e       (',...
                 repmat('%.6g ',1,obj.prob.m_x),'\b)'],...
-                obj.iter_num, obj.y_min, obj.conv_crit, x_new_disp), '\n'] )
+                obj.iter_num, obj.y_min, obj.conv_crit, obj.x_new), '\n'] )
         end
     end
 else
@@ -33,9 +29,9 @@ else
     
     % Display
     if obj.display_temp
-        fprintf( [sprintf(['[%3.0i]   %6.2e    %6.2e       (',...
+        fprintf( [sprintf(['[%3.0i]    %6.2e    %6.2e       (',...
             repmat('%.6g ',1,obj.prob.m_x),'\b)'],...
-            obj.iter_num, obj.y_min, obj.conv_crit, obj.x_new(1,:)), '\n'] )
+            obj.iter_num, obj.y_min, obj.conv_crit, obj.x_new), '\n'] )
     end
 end
 

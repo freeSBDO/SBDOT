@@ -68,6 +68,13 @@ classdef Multi_obj_EI_MGDA < Adaptive_sampling
             
         end
         
+        [] = Conv_check_crit( obj );
+        [] = Find_min_value( obj );
+        [ EI_val, grad_EI ] = Obj_func_EI( obj, x_test );
+        [ y_obj ] = Obj_func_nsga( obj, x_test );
+        [] = Opt_crit( obj );
+        [] = Set_options_optim( obj, user_opt );        
+        
     end
     
 end
