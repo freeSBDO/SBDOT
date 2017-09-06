@@ -1,0 +1,86 @@
+classdef Gutmann_RBF < Adaptive_sampling
+    % GUTMANN_RBF 
+    %
+    
+    properties
+        
+        meta_type
+        options_optim  % Structure of user optimization options
+        cycle_length   % Cycle length for W_n
+        
+        n0             % Number of initial points in the DOE
+        k_n            % Used in min target computation
+        Gutmann_val    % Expected improvement value at current iteration
+        conv_crit      % Adpative sampling criterion value
+        in_a_row       % Number of valid criterion value in a row
+        
+    end
+    
+    methods
+        
+        function obj = Gutmann_RBF(prob, y_ind, g_ind, meta_type ,varargin)
+            p = inputParser;
+            p.KeepUnmatched = true;
+            p.PartialMatching = false;
+            p.addRequired('meta_type',@(x)isequal(x,@RBF)||isequal(x,@CoRBF));
+            p.addOptional('options_optim',[],@(x)isstruct(x));
+            p.addOptional('cycle_length',5,@(x)isnumeric(x));
+            p.parse(meta_type,varargin{:})
+            in = p.Results;
+            unmatched = [fieldnames(p.Unmatched),struct2cell(p.Unmatched)];
+            unmatched = unmatched';
+            
+            % Superclass constructor
+            obj@Adaptive_sampling(prob,y_ind,g_ind,unmatched{:});
+            
+            % Store
+            obj.options_optim = in.options_optim;
+            obj.meta_type = in.meta_type;
+            obj.cycle_length = in.cycle_length;
+            
+            % Checks
+            assert( obj.m_y == 1,...
+                'SBDOT:Error_prediction:y_index',...
+                'Only one objective can be used in Gutmann_RBF');
+            
+            % Set optimization options
+            obj.Set_options_optim( obj.options_optim );
+            if isa( obj.prob, 'Problem' )
+                obj.n0 = obj.prob.n_x;
+            else
+                obj.n0 = obj.prob.prob_HF.n_x;
+            end
+            
+            % Train metamodel
+            metamodel_int_y = ...
+                obj.meta_type(obj.prob, obj.y_ind, [], obj.unmatched_params{:});
+            
+            obj.meta_y = metamodel_int_y;
+            
+            
+            if obj.m_g >= 1
+                for i = 1 : obj.m_g
+                    metamodel_int_g(i,:) = ...
+                        obj.meta_type(obj.prob, [], obj.g_ind(i), obj.unmatched_params{:});
+                end
+                obj.meta_g = metamodel_int_g;
+            end
+            
+            % Launch optimization sequence
+            obj.in_a_row = 0;
+            obj.Opt();
+            
+            
+        end
+        
+        [] = Set_options_optim( obj, user_opt );
+        [] = Conv_check_crit( obj );    
+        [] = Opt_crit( obj );
+        [] = Find_min_value( obj );
+        [ y_pred ] = Prediction( obj, x );
+        [ crit ] = Gutmann_crit( obj, x, min_target );
+        
+    end
+    
+end
+
