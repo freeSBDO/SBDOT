@@ -50,7 +50,7 @@ if obj.m_g > 0
             
         else
             
-            g_rob(:,i) = feval( obj.meas_type_y, obj, g_pred(:,i), nb_points );
+            g_rob(:,i) = feval( obj.meas_type_g, obj, g_pred(:,i), nb_points );
             mse_g_rob(:,i) = feval( @obj.Mean_meas, mse_g_pred(:,i), nb_points );
             
         end

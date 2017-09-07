@@ -85,9 +85,11 @@ classdef Robust_EGO < Adaptive_sampling
             % Build CRN matrix
             obj.Compute_CRN();
             
-            % Train metamodel            
-            metamodel_int_y = ...
-                obj.meta_type(obj.prob, obj.y_ind, [], obj.unmatched_params{:});
+            % Train metamodel
+            for i = 1 : obj.m_y
+                metamodel_int_y(i,:) = ...
+                    obj.meta_type(obj.prob, obj.y_ind(i), [], obj.unmatched_params{:});
+            end
             
             obj.meta_y = metamodel_int_y;
             
