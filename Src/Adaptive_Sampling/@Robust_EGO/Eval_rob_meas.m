@@ -8,25 +8,9 @@ x_CRN = obj.Update_CRN(x_test);
 if isequal(obj.meta_type,@Q_kriging)
     n_test = size(x_test,1);
     [ y_pred, mse_y_pred ] = obj.meta_y.Predict( x_CRN,repmat(obj.QV_val,n_test,1) );
-    %[ ~, mse_y_rob ] = obj.meta_y.Predict( x_test,repmat(obj.QV_val,n_test,1) );
 else
     [ y_pred, mse_y_pred ] = obj.meta_y.Predict( x_CRN );
-    %[ ~, mse_y_rob ] = obj.meta_y.Predict( x_test );
 end
-
-% if isequal( obj.meas_type_y, @Worstcase_meas )
-%     
-%     [ y_rob,id_meas ] = feval( obj.meas_type_y, obj, y_pred, nb_points );
-%     
-%     mse_reshape = reshape( mse_y_pred, obj.CRN_samples, nb_points );
-%     mse_y_rob = diag( mse_reshape(id_meas, 1:nb_points) );
-%     
-% else
-%     
-%     y_rob = feval( obj.meas_type_y, obj, y_pred, nb_points );
-%     mse_y_rob = feval( @obj.Mean_meas, mse_y_pred, nb_points );
-%     
-% end
 
 [ ~, mse_y_rob ] = obj.meta_y.Predict( obj.X_to_rob(x_test) );
 y_rob = feval( obj.meas_type_y, obj, y_pred, nb_points );
