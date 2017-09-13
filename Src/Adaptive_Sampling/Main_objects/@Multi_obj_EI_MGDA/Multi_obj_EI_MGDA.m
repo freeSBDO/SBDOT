@@ -11,6 +11,7 @@ classdef Multi_obj_EI_MGDA < Adaptive_sampling
         
         conv_crit      % Adpative sampling criterion value
         in_a_row       % Number of valid criterion value in a row
+        add_seq        % Boolean allowing sequential addition of points (for qualitative problems only)
         
         y_pareto_temp % Pareto front from problem values
         y_ref_temp    % Reference point for hypervolume computation
@@ -32,6 +33,7 @@ classdef Multi_obj_EI_MGDA < Adaptive_sampling
             p.addRequired('meta_type',@(x)isequal(x,@Kriging)||isequal(x,@Cokriging)||isequal(x,@Q_kriging));
             p.addRequired('N_eval',@(x)isnumeric(x));
             p.addOptional('options_optim',[],@(x)isstruct(x));
+            p.addOptional('add_seq',false,@(x)islogical(x));
             p.parse(meta_type,N_eval,varargin{:})
             in = p.Results;
             unmatched = [fieldnames(p.Unmatched),struct2cell(p.Unmatched)];
@@ -57,6 +59,16 @@ classdef Multi_obj_EI_MGDA < Adaptive_sampling
             
             % Train metamodel
             if isequal(meta_type,@Q_kriging)
+                            
+                obj.add_seq = in.add_seq;
+            
+                if obj.add_seq
+
+                    assert(prob.m_x > 1,...
+                        'SBDOT:Q_multi_obj_EI_MGDA:add_seq', ...
+                        'When add_seq is set to true, prob.m_x shall be at least 2');
+
+                end
                 
                 obj.meta_y = obj.meta_type(obj.prob, obj.y_ind, [], obj.unmatched_params{:});
                 

@@ -5,10 +5,10 @@ classdef Q_multi_obj_EI_MGDA < Multi_obj_EI_MGDA
     methods
         
         function obj = Q_multi_obj_EI_MGDA(varargin)
-            
+     
             % Superclass constructor
             obj@Multi_obj_EI_MGDA(varargin{:});
-             
+           
         end
         
         [] = Opt_crit( obj );

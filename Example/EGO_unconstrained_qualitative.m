@@ -13,7 +13,7 @@ m_x = 1;
 m_g = 0;
 m_y = 1;
 lb = 0.1; ub = 0.99;
-n_x = [3,3,3]; n_eval = 1000;
+n_x = 4; n_eval = 1000;
 func_str = 'test_ego_unconstrained';
 
 % Create Problem object with optionnal parallel input as true

@@ -48,7 +48,7 @@ function Tau = Build_tau( ~, HS_Coord, m, type, D_chol )
               D_mat = D_chol'*D_chol;
               Tau = D_mat.*(L*L');
               
-                
+                  
             else
                 
                 Tau = L*L';

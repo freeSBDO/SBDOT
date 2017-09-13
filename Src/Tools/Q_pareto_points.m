@@ -1,4 +1,4 @@
-function y_pareto = Q_pareto_points( Q_krig )
+function [y_pareto,y_pareto_temp] = Q_pareto_points( Q_krig )
 
     x_pareto = cell2mat(Q_krig.prob.x');
     ind = cumsum(Q_krig.prob.n_x);

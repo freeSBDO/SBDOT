@@ -3,7 +3,7 @@ function [] = Opt_crit( obj )
 % Select the new point to evaluate
 
 % Extract pareto points and reference points
-obj.y_pareto_temp = Q_pareto_points( obj.meta_y );
+[obj.y_pareto_temp, ~] = Q_pareto_points( obj.meta_y );
 obj.y_ref_temp = max( obj.y_pareto_temp, [], 1 ) + 1e-6 ;
 
 % Obtain pareto front from kriging prediction

@@ -59,14 +59,40 @@ elseif isa(obj.meta_y,'Q_kriging')
     
     krig_upt = copy(obj.meta_y);
     krig_upt.Clean({'all'})
-    num_x = zeros(1,prod(obj.prob.m_t));
-    num_x(mod_init) = 1;
-    q_val = obj.prob.t{1}(ind2subVect(obj.prob.m_t,mod_init));
     
-    krig_upt.prob.Eval( num_x, [x_new(1,:), q_val] );
-    krig_upt.Train();
-    
-    X_filter = [x_new(1,:), q_val];
+    if obj.add_seq
+        
+        x_temp = reg_polytopes( x_new(1, :), 10*obj.prob.tol_eval, prod(obj.prob.m_t)-1, obj.prob.m_x);
+        
+        if mod_init == 1
+            x_temp = [ x_new(1, :); x_temp ];
+        elseif mod_init == prod(obj.prob.m_t)
+            x_temp = [ x_temp; x_new(1, :) ];
+        else
+            x_temp = [ x_temp(1:(mod_init-1),:); x_new(1, :); x_temp((mod_init):end,:) ];
+        end
+
+        num_x = ones(1,prod(obj.prob.m_t));
+        q_val = obj.prob.t{1}(ind2subVect(obj.prob.m_t,(1:obj.prob.m_t)));
+        mod_init = (1:obj.prob.m_t)';
+        
+        krig_upt.prob.Eval( num_x, [x_temp, q_val] );
+        krig_upt.Train();
+
+        X_filter = [x_temp, mod_init];
+        
+    else
+        
+        num_x = zeros(1,prod(obj.prob.m_t));
+        num_x(mod_init) = 1;
+        q_val = obj.prob.t{1}(ind2subVect(obj.prob.m_t,mod_init));
+        
+        krig_upt.prob.Eval( num_x, [x_new(1, :), q_val] );
+        krig_upt.Train();
+
+        X_filter = [x_new(1, :), mod_init];
+        
+    end
     
     for j = 2 : size(x_new,1)
         
@@ -82,17 +108,43 @@ elseif isa(obj.meta_y,'Q_kriging')
         
         if ( sum_mse_current / mse_pred_init(j) ) > 0.1
             
+            krig_upt.Clean({'all'})
+            
             [ ~, mod_current ] = max(mse_current);
             
-            q_val = obj.prob.t{1}(ind2subVect(obj.prob.m_t,mod_current));
-            num_x = zeros(1,prod(obj.prob.m_t));
-            num_x(mod_current) = 1;
-            
-            krig_upt.Clean({'all'})
-            krig_upt.prob.Eval( num_x, [x_new(j,:), q_val] );
-            krig_upt.Train();
-            
-            X_filter = [ X_filter; [x_new(j,:),q_val] ];
+            if obj.add_seq
+
+                x_temp = reg_polytopes( x_new(j, :), 10*obj.prob.tol_eval, prod(obj.prob.m_t)-1, obj.prob.m_x);
+
+                if mod_current == 1
+                    x_temp = [ x_new(j, :); x_temp ];
+                elseif mod_current == prod(obj.prob.m_t)
+                    x_temp = [ x_temp; x_new(j, :) ];
+                else
+                    x_temp = [ x_temp(1:(mod_current-1),:); x_new(j, :); x_temp((mod_current):end,:) ];
+                end
+
+                num_x = ones(1,prod(obj.prob.m_t));
+                q_val = obj.prob.t{1}(ind2subVect(obj.prob.m_t,(1:obj.prob.m_t)));
+                mod_current = (1:obj.prob.m_t)';
+
+                krig_upt.prob.Eval( num_x, [x_temp, q_val] );
+                krig_upt.Train();
+
+                X_filter = [ X_filter; [x_temp, mod_current] ];
+
+            else
+
+                num_x = zeros(1,prod(obj.prob.m_t));
+                num_x(mod_current) = 1;
+                q_val = obj.prob.t{1}(ind2subVect(obj.prob.m_t,mod_current));
+
+                krig_upt.prob.Eval( num_x, [x_new(j,:), q_val] );
+                krig_upt.Train();
+
+                X_filter = [ X_filter; [x_new(j,:),mod_current] ];
+
+            end
             
         end
         

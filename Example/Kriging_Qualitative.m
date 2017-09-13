@@ -13,7 +13,7 @@ m_x = 1;
 m_g = 0;
 m_y = 1;
 lb = 0; ub = 1;
-n_x = [8,8,8]; n_eval = 1000;
+n_x = 5; n_eval = 1000;
 func_str = 'emse_2';
 
 % Create Problem object with optionnal parallel input as true
@@ -45,7 +45,7 @@ q_krig.Plot(1,[],1);
 fh = str2func(func_str);
 x_sample = cell2mat(prob.x');
 
-temp_2 = cumsum(n_x);
+temp_2 = cumsum(prob.n_x);
 temp_2 = [[1,temp_2(1:(end-1))+1];temp_2];
 
 for i=1:prod(m_t)
