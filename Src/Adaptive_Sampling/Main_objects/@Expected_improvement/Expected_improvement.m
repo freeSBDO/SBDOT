@@ -66,9 +66,7 @@ classdef Expected_improvement < Adaptive_sampling
             end        
                         
             % Launch optimization sequence
-            obj.in_a_row = 0;
-            obj.Opt();
-            
+            obj.in_a_row = 0;        
             
         end
         

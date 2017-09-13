@@ -21,6 +21,8 @@ prob.Get_design( 20 ,'LHS' )
 EGO = Expected_improvement( prob, 1, 1, @Kriging, ...
     'corr', 'corrmatern52', 'iter_max',50 );
 
+EGO.Opt();
+
 EGO.meta_y.Plot( [1,2], [] )
 hold on
 plot3(EGO.x_min(:,1),EGO.x_min(:,2),EGO.y_min,'ro','MarkerFaceColor','r')

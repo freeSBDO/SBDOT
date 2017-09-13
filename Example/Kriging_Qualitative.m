@@ -73,7 +73,7 @@ hyp_sigma2 = 307.5534471;
 hyp_corr = 0.38737;
 hyp_tau = [3.128146,0.01114024,3.1414815148];
 
-q_krig = Q_kriging( prob, 2, [], 'tau_type', 'heteroskedastic', 'hyp_dchol', hyp_dchol, 'hyp_sigma2', hyp_sigma2, 'hyp_corr', hyp_corr, 'hyp_tau', hyp_tau);
+q_krig = Q_kriging( prob, 1, [], 'tau_type', 'heteroskedastic', 'hyp_dchol', hyp_dchol, 'hyp_sigma2', hyp_sigma2, 'hyp_corr', hyp_corr, 'hyp_tau', hyp_tau);
 
 x_eval = cell2mat(prob.x');
 q = x_eval(:,2);
@@ -88,7 +88,7 @@ lb_hyp_dchol = [0.1, 0.1, 0.1];
 ub_hyp_dchol = [0.8, 0.8, 0.8];
 hyp_dchol_0 = [0.7, 0.7, 0.7];
 
-q_krig = Q_kriging( prob, 2, [], 'tau_type', 'heteroskedastic', 'hyp_dchol_0', hyp_dchol_0, 'lb_hyp_dchol', lb_hyp_dchol, 'ub_hyp_dchol', ub_hyp_dchol);
+q_krig = Q_kriging( prob, 1, [], 'tau_type', 'heteroskedastic', 'hyp_dchol_0', hyp_dchol_0, 'lb_hyp_dchol', lb_hyp_dchol, 'ub_hyp_dchol', ub_hyp_dchol);
 
 x_eval = cell2mat(prob.x');
 q = x_eval(:,2);
@@ -100,14 +100,14 @@ q_krig.Plot(1,[],1);
 
 %% 2D
 % Define problem structure
-t = {[1;2],[0.5;1.5;2.5],[0.6;1.2],[0.7;1.4;2.1]};
-m_t = [2, 3, 2, 3];
+t = {[1;2],[0.5;1.5],[0.6;1.2],[0.7;1.4]};
+m_t = [2, 2, 2, 2];
 m_x = 2;
 m_g = 0;
 m_y = 1;
 lb = -1*ones(1,m_x);
 ub = ones(1,m_x);
-n_x = 15;
+n_x = 10;
 func_str = 'Q_sin_cos';
 
 % Create Problem object with optionnal parallel input as true

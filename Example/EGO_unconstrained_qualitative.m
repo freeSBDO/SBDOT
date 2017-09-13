@@ -23,3 +23,4 @@ prob = Q_problem( func_str, t, m_x, m_y, m_g, m_t, lb, ub , 'parallel', true );
 prob.Get_design( n_x ,'SLHS', 'maximin_type', 'Monte_Carlo', 'n_iter', 1000 );
 
 EGO = Q_expected_improvement( prob, 1, [], @Q_kriging, 'corr', 'Q_Gauss', 'iter_max', 50 );
+EGO.Opt();
