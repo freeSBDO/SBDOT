@@ -56,7 +56,7 @@ function [] = Plot( obj, inputs_ind, cut_values, comb_ind, n_eval )
             % 1D
             
             if isempty(n_eval)
-                n_eval = 1000
+                n_eval = 1000;
             end
             
             X_plot = linspace( obj.prob.lb(inputs_ind), ...

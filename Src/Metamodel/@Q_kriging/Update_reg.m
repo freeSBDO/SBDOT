@@ -50,8 +50,8 @@ function [obj, err] = Update_reg( obj, F, hp )
         obj.hyp_sigma2 = 10.^hp{:,obj.SIGMA2};
         
     else 
-        
-        obj.hyp_sigma2 = sum(residual.^2) ./ size(mat, 1);
+
+            obj.hyp_sigma2 = sum(residual.^2) ./ size(mat, 1);       
         
         if obj.reinterpolation
             

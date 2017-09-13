@@ -1,4 +1,4 @@
-function [] = Plot( obj, inputs_ind, cut_values )
+function [Y_plot,X_plot] = Plot( obj, inputs_ind, cut_values )
     % PLOT Plot the metamodel using cut planes if necessary 
     %   *inputs_ind is the index of parameters to plot
     %   *cut_values is row vector with cut values to apply to other parameters, sorted by parameter index

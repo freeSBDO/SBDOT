@@ -77,7 +77,7 @@ classdef Metamodel < handle
         
         x_eval_scaled = Predict( obj, x_eval );
         
-        [] = Plot( obj, inputs_index, cut_values );
+        [Y,X] = Plot( obj, inputs_index, cut_values );
         
         [] = Plot_error( obj, x, y );
         

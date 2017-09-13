@@ -108,7 +108,7 @@ classdef Q_kriging < Metamodel
             %   'lb_hyp_sigma2'                 [-8]    
             %   'ub_hyp_sigma2'                 [Auto calibrate with training dataset]
             %   'reinterpolation'               [false], true
-            %   'tau_type'                      ['cholesk'], 'isotropic', 'heteroskedastic'
+            %   'tau_type'                      ['choleski'], 'isotropic', 'heteroskedastic'
             %   'marginal_likelihood'           ['Marginal_likelihood']
             %   'optim_method'                  ['interior-point'], 'active-set', 'sqp', 'cmaes'
             
@@ -242,6 +242,8 @@ classdef Q_kriging < Metamodel
         [] = Plot( obj, inputs_ind, cut_values, comb_ind );
         
         [] = Clean( obj, type );
+        
+        [T_corr] = Info_display( obj )
         
     end
     
