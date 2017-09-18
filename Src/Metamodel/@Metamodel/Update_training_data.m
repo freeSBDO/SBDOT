@@ -13,8 +13,8 @@ function [] = Update_training_data( obj )
                 obj.prob.g(:,obj.g_ind) ];
             % If a shift is asked :
             if ~isempty( obj.shift_output )
-                obj.f_train = obj.f_train .* obj.shift_output(1)...
-                    + obj.shift_output(2);
+                obj.f_train = obj.f_train .* obj.shift_output(:,1)...
+                    + obj.shift_output(:,2);
             end
 
         case 'Problem_multifi'
@@ -31,10 +31,10 @@ function [] = Update_training_data( obj )
             
             % If a shift is asked :
             if ~isempty( obj.shift_output )
-                obj.f_train{1} = obj.f_train{1} .* obj.shift_output(1)...
-                    + obj.shift_output(2);
-                obj.f_train{2} = obj.f_train{2} .* obj.shift_output(1)...
-                    + obj.shift_output(2);
+                obj.f_train{1} = obj.f_train{1} .* obj.shift_output(:,1)...
+                    + obj.shift_output(:,2);
+                obj.f_train{2} = obj.f_train{2} .* obj.shift_output(:,1)...
+                    + obj.shift_output(:,2);
             end            
             
         case 'Q_problem'

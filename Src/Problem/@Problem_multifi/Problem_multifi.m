@@ -43,6 +43,8 @@ classdef Problem_multifi < handle
             obj.Check_pb();
             
             obj.display = obj.prob_HF.display;
+            obj.prob_LF.display = false;
+            obj.prob_HF.display = false;
             
             % Display
             if obj.display
