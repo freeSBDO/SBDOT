@@ -39,9 +39,9 @@ for i=1:length(type)
             
         case 'rho'
             
-            obj.rho{1} = [];
-            obj.lb_rho{1} = [];
-            obj.ub_rho{1} = [];
+            obj.rho = [];
+            obj.lb_rho = [];
+            obj.ub_rho = [];
             
     end
     
