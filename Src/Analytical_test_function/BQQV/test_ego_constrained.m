@@ -1,12 +1,12 @@
 function [y, g] = test_ego_constrained(x)
-    %emse_2
+    %test_ego_constrained
     % x is a ... by 2 matrix of input points
     %   variable 1 (in column 1) is set between [0 1] or [-1 1] usually
     %	variable 2 (in column 2) is qualitative; levels : [1, 2, 3]
     %
     % y is a ... by 1 matrix of objective values
-    %   emse_2 has 1 objective function
-    %   objective 1 (in column 1) is the objective function from Esperan Padonou
+    %
+    % g is a ... by 1 matrix of constraint values
     
     q=x(:,2);
     x=x(:,1);

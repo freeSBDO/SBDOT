@@ -5,7 +5,7 @@ function f = Q_sin_cos(x)
     %	variable 3 and 5 (in column 3 and 5) are qualitative; frequencies
     %	variable 4 and 6 (in column 4 and 6) are qualitative; amplitudes
     %
-    % y is a ... by 1 matrix of objective values
+    % f is a ... by 1 matrix of objective values
     %   Q_sin_cos has 1 objective function
     
     x1 = x(:,1);

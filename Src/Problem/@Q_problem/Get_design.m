@@ -1,8 +1,17 @@
 function [] = Get_design( obj, num_x, varargin)
     % GET_DESIGN Create a sampling plan and evaluates it
-    %   *num_x is the number of sampling points to create
-    %   *type is the type of the sampling. Allowed list :
-    %   ['LHS'], 'OLHS', 'Sobol', 'Halton'.
+    %
+    %   Inputs (Required):
+    %       obj the object of class Q_problem
+    %       num_x the number of points per slices (should be the same)
+    %
+    %   Inputs (Optional):
+    %       type the type of design desired
+    %       [default = 'SLHS', 'LHS', 'OLHS', 'Halton', 'Sobol']
+    %       maximin_type selects the optimization method
+    %       [default = 'Threshold', 'Monte_Carlo']
+    %       n_iter number of iterations (Monte_Carlo or Threshold)
+    %       n_threshold number of thresholds (Threshold)
     %
     % Syntax :
     % obj.Get_design( num_x );

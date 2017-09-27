@@ -1,5 +1,10 @@
 function [mean, variance] = Predict_comp( obj, x_eval, q_eval )
-
+    % PREDICT_COMP Predict the mean prediction and its variance
+    % at new input points (see PREDICT)
+    %
+    % Syntax:
+    %   [mean, variance]=obj.Predict_comp(x_eval, q_eval);
+    
     n_eval = size(x_eval, 1);
 	m_x = obj.prob.m_x;
     Q_var = x_eval(:,(m_x+1):end);

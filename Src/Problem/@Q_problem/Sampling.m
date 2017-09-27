@@ -1,13 +1,24 @@
 function x_sampling = Sampling( obj, num_x, type, maximin_type, n_iter, n_threshold )
-    % SAMPLING Create a sampling plan per qualitative combination:
-    % (if m_t = [2, 3] then it will apply @Problem.Sampling 6 times) 
-    %   *num_x is the number of sampling points to create
-    %   *type is the type of the sampling. Allowed list :
-    %   ['LHS'], 'OLHS', 'Sobol', 'Halton'.
+    % Sampling contructs the desired design of experiments for qualitative
+    % problems
+    %
+    %   Inputs:
+    %       obj the object of class Q_problem
+    %       num_x the number of points per slices (should be the same)
+    %       type (optional) the type of design desired
+    %       [default = 'SLHS', 'LHS', 'OLHS', 'Halton', 'Sobol']
+    %       maximin_type (optional) select the optimization method
+    %       [default = 'Threshold', 'Monte_Carlo']
+    %       n_iter (optional) number of iterations (Monte_Carlo or Threshold)
+    %       n_threshold (optional) number of thresholds (Threshold)
+    %
+    %   Output:
+    %       x_sampling the design
     %
     % Syntax :
-    % obj.Sampling( num_x );
-    % obj.Sampling( num_x, type );
+    % x_sampling = Sampling( obj, num_x );
+    % x_sampling = Sampling( obj, num_x, ''Monte_Carlo', n_iter );
+    % x_sampling = Sampling( obj, num_x, 'Threshold', n_iter, n_threshold  );
     
     % Sample building
     if strcmpi(type, 'SLHS')

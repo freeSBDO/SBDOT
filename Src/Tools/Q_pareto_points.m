@@ -1,4 +1,12 @@
-function [y_pareto,y_pareto_temp] = Q_pareto_points( Q_krig )
+function [y_pareto,pareto_index] = Q_pareto_points( Q_krig )
+%% Q_pareto_points : select pareto optimal first front objectives values and their indices
+%   Q_krig : Q_kriging class object containing the points on which the
+%   pareto front is computed
+%
+%   y_pareto are the pareto optimal points (objectives values) that are in
+%   the admissible space (constraints fullfiled)
+%
+%   pareto_index are the index of the pareto optimal points in y
 
     x_pareto = cell2mat(Q_krig.prob.x');
     ind = cumsum(Q_krig.prob.n_x);
@@ -17,6 +25,6 @@ function [y_pareto,y_pareto_temp] = Q_pareto_points( Q_krig )
 
     end
 
-    y_pareto = Pareto_points(y_pareto_temp);
+    [y_pareto,pareto_index] = Pareto_points(y_pareto_temp);
 
 end

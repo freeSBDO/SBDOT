@@ -1,5 +1,10 @@
 function [ grad_mean, grad_variance] = Predict_deriv( obj, x_eval, q_eval )
-
+    % PREDICT_DERIV Predict the gradients for the mean prediction and its variance
+    % at new input points (see PREDICT)
+    %
+    % Syntax:
+    %   [Grad_mean, Grad_variance]=obj.Predict_deriv(x_eval, q_eval);
+    
 	assert( size(x_eval, 1) == 1,...
         'SBDOT:Q_kriging.Predict_deriv:Eval_number',...
         'Prediction of derivatives supports only one evaluation at a time' );

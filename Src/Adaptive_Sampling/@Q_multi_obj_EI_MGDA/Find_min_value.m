@@ -4,7 +4,7 @@ function [] = Find_min_value( obj )
 
     
 % min_y is directly the min value
-[~,y_mat] = Q_pareto_points( obj.meta_y );
+y_mat = Q_pareto_points( obj.meta_y );
 [obj.y_min, obj.loc_min] = min( max( y_mat( :, obj.y_ind ), [], 2) );
     
 % x value of the minimum

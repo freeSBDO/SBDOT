@@ -1,11 +1,22 @@
 function [ mean, variance, grad_mean, grad_variance ] = Predict( obj, x_eval, q_eval )
     % PREDICT Predict the output value at new input points
     %
+    %   Inputs:
+    %   obj the object of class Q_kriging
+    %   x_eval a matrix containing the continuous values
+    %   q_eval a vector containing the qualitative index or a matrix containing the qualitative subscripts
+    %
+    %   Outputs:
+    %   mean the mean prediction
+    %   variance the variance of the prediction
+    %   grad_mean the gradient of the mean prediction curve
+    %   grad_variance the gradient of the curve of the variance of the prediction
+    %
     % Syntax :
-    % Mean=obj.Predict(x_eval);
-    % [Mean,Variance]=obj.Predict(x_eval);
-    % [Mean, Variance, Grad_mean]=obj.Predict(x_eval);
-    % [Mean, Variance, Grad_mean, Grad_variance]=obj.Predict(x_eval);
+    % Mean=obj.Predict(x_eval, q_eval);
+    % [Mean,Variance]=obj.Predict(x_eval, q_eval);
+    % [Mean, Variance, Grad_mean]=obj.Predict(x_eval, q_eval);
+    % [Mean, Variance, Grad_mean, Grad_variance]=obj.Predict(x_eval, q_eval);
 
     % Constants
     m_x = obj.prob.m_x;

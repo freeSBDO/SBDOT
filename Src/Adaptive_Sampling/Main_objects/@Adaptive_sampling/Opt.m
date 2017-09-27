@@ -23,7 +23,6 @@ function [] = Opt( obj )
                 obj.Conv_check(); % Check convergence
             end
             
-
         catch ME
             
             obj.failed = true;

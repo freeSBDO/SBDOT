@@ -4,7 +4,7 @@ function f = emse_1(x)
     %   variable 1 (in column 1) is set between [0 1] or [-1 1] usually
     %	variable 2 (in column 2) is qualitative; levels : [1, 2, 3]
     %
-    % y is a ... by 1 matrix of objective values
+    % f is a ... by 1 matrix of objective values
     %   emse_1 has 1 objective function
     %
     % Ref : 2012, Zhou et al.

@@ -23,7 +23,6 @@ classdef Q_kriging < Metamodel
         hyp_reg                    % Kriging regression parameter
         hyp_tau                    % Intra-modality correlation parameter 
         hyp_dchol                  % Heteroskedasticity parameter
-        hyp_sigma2                 % Global variance parameter
         hyp_corr_0                 % Correlation length parameter initial value
         hyp_reg_0                  % Kriging regression parameter initial value
         hyp_tau_0                  % Intra-modality correlation parameter initial value
@@ -45,6 +44,7 @@ classdef Q_kriging < Metamodel
         optim_method               % Method for Likelihhod Optimization
         
         % Computed variables
+        hyp_sigma2 = []            % Global variance parameter
         regression_max_order = []; % Regression maximum order
         samples = [];              % Reduced and centered input_scaling (only continuous var)
         values = [];               % Reduced and centered output_scaling
@@ -84,14 +84,13 @@ classdef Q_kriging < Metamodel
             % Optionnal inputs [default value] :
             %   'regpoly'                       ['regpoly0'], 'regpoly1', 'regpoly2', 'regpoly3'
             %   'reg_max_level_interactions'    [2]
-            %   'corr'                          ['Q_Matern5_2'], 'Q_Matern3_2', 'Q_gauss'
+            %   'corr'                          ['Q_Matern5_2'], 'Q_Matern3_2', 'Q_Gauss', 'Q_Exp
             %   'reg'                           [false], true
             %   'var_opti'                      [false], true
             %   'hyp_corr'                      [Optimized]    
             %   'hyp_reg'                       [reg = true -> optimized, reg = false -> []]
             %   'hyp_tau'                       [Optimized, depend on tau_type]
             %   'hyp_dchol'                     [tau_type = 'heteroskedastic' -> optimized, else -> []]
-            %   'hyp_sigma2'                    [var_opti = true -> Optimized, else -> Auto Calibrate]
             %   'hyp_corr_0'                    [Auto calibrate with training dataset]       
             %   'hyp_reg_0'                     [reg = true -> Auto Calibrate, else -> []]
             %   'hyp_tau_0'                     [Auto calibrate (if hyp_tau not provided)]
@@ -126,7 +125,7 @@ classdef Q_kriging < Metamodel
             p.addOptional('reg_max_level_interactions',2,@(x)(isscalar(x)&&isinteger(x)&&x>=0));
             % Multiple choice char
             p.addOptional('regpoly','regpoly0',@(x) any(validatestring(x, {'regpoly0','regpoly1','regpoly2'})));
-            p.addOptional('corr','Q_Matern5_2',@(x) any(validatestring(x, {'Q_Matern5_2','Q_Matern3_2','Q_Gauss'})));
+            p.addOptional('corr','Q_Matern5_2',@(x) any(validatestring(x, {'Q_Matern5_2','Q_Matern3_2','Q_Gauss','Q_Exp'})));
             p.addOptional('tau_type','choleski',@(x) any(validatestring(x, {'choleski','isotropic','heteroskedastic'})));
             p.addOptional('optim_method','interior-point',@(x) any(validatestring(x, {'interior-point','active-set','sqp','cmaes'})));
             % Boolean
@@ -138,7 +137,6 @@ classdef Q_kriging < Metamodel
             p.addOptional('lb_hyp_reg'      ,[],hyp_scalar);
             p.addOptional('ub_hyp_reg'      ,[],hyp_scalar);
             p.addOptional('hyp_reg_0'       ,[],hyp_scalar);
-            p.addOptional('hyp_sigma2'      ,[],hyp_scalar);
             p.addOptional('lb_hyp_sigma2'   ,[],hyp_scalar);
             p.addOptional('ub_hyp_sigma2'   ,[],hyp_scalar);
             p.addOptional('hyp_sigma2_0'    ,[],hyp_scalar);
@@ -173,7 +171,6 @@ classdef Q_kriging < Metamodel
             obj.hyp_reg = in.hyp_reg;
             obj.hyp_tau = in.hyp_tau;
             obj.hyp_dchol = in.hyp_dchol;
-            obj.hyp_sigma2 = in.hyp_sigma2;
             obj.hyp_corr_0 = in.hyp_corr_0;
             obj.hyp_reg_0 = in.hyp_reg_0;
             obj.hyp_tau_0 = in.hyp_tau_0;
@@ -201,7 +198,7 @@ classdef Q_kriging < Metamodel
         
         obj = Train( obj );
         
-        varargout = Predict( obj, x_eval, q_eval ); % Comments to be added
+        varargout = Predict( obj, x_eval, q_eval );
         
         Tau = Init_tau_id( obj );
         
@@ -223,7 +220,7 @@ classdef Q_kriging < Metamodel
         
         Tau = Tau_wrap( obj, Tau_0, m_t, type, D_chol);
         
-        [psi, dpsi] = Ext_corr ( obj, points1,  q1, points2, q2 ); % Comments to be changed
+        [psi, dpsi] = Ext_corr ( obj, points1,  q1, points2, q2 );
         
         Sigma = Int_cov ( obj );
         
@@ -235,9 +232,9 @@ classdef Q_kriging < Metamodel
         
         Tau = Build_tau( obj, HS_Coord, m, type, D_chol );
         
-        [mean, variance] = Predict_comp( obj, x_eval, q_eval ); % Comments to be added
+        [mean, variance] = Predict_comp( obj, x_eval, q_eval );
         
-        [grad_mean, grad_variance] = Predict_deriv( obj, x_eval, q_eval ); % Comments to be added
+        [grad_mean, grad_variance] = Predict_deriv( obj, x_eval, q_eval );
         
         [] = Plot( obj, inputs_ind, cut_values, comb_ind );
         

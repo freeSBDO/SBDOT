@@ -1,10 +1,18 @@
 function [ y_eval, g_eval, x_eval ] = Eval( obj, num_x, x_eval )
     % EVAL Evaluates the problem function at x_eval
-    %   *x_eval is a n_eval by m_x matrix
-    %   *y_eval is objectives evaluated at x_eval
+    %   
+    %   Inputs:
+    %   obj the object of class Q_problem
+    %   num_x number of points per level-combination [number of level-combinations: prod(obj.m_t)]
+    %   x_eval is a matrix or a cell containg the quantitative and qualitative VALUES [qualitative values in: obj.t]
+    %
+    %   Outputs:
+    %   y_eval Evaluation of the response(s) on x_eval
+    %   g_eval Evaluation of the constraint(s) on x_eval
+    %   x_eval
     %
     % Syntax :
-    % [ y_eval, g_eval ]=obj.Eval(x_eval);
+    % [ y_eval, g_eval ]=obj.Eval(num_x, x_eval);
     
     validateattributes( num_x, {'numeric'}, {'nonempty','row','nonnegative'})
     

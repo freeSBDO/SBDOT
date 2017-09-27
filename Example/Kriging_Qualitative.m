@@ -13,7 +13,7 @@ m_x = 1;
 m_g = 0;
 m_y = 1;
 lb = 0; ub = 1;
-n_x = 5; n_eval = 1000;
+n_x = [5,5,5]; n_eval = 1000;
 func_str = 'emse_2';
 
 % Create Problem object with optionnal parallel input as true
@@ -69,11 +69,10 @@ end
 
 % fixing hyp_inputs
 hyp_dchol = [0.004446,8.3388,3.17262];
-hyp_sigma2 = 307.5534471;
 hyp_corr = 0.38737;
 hyp_tau = [3.128146,0.01114024,3.1414815148];
 
-q_krig = Q_kriging( prob, 1, [], 'tau_type', 'heteroskedastic', 'hyp_dchol', hyp_dchol, 'hyp_sigma2', hyp_sigma2, 'hyp_corr', hyp_corr, 'hyp_tau', hyp_tau);
+q_krig = Q_kriging( prob, 1, [], 'tau_type', 'heteroskedastic', 'hyp_dchol', hyp_dchol, 'hyp_corr', hyp_corr, 'hyp_tau', hyp_tau);
 
 x_eval = cell2mat(prob.x');
 q = x_eval(:,2);
@@ -129,8 +128,6 @@ for i = 1:prod(m_t)
 end
 
 [p_mean, p_variance] = q_krig.Predict( x_eval, q );
-
-test_mean = cell2mat(prob.y') - p_mean;
 
 % Plot Method
 q_krig.Plot([1 2], [], 1);

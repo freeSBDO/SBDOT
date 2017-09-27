@@ -19,7 +19,7 @@ function [] = Opt_crit( obj )
             % Find the point that maximize EI times Pf in the Pareto front
             prod_fitness = prod( nsga.y ,2 );
             prod_fitness_best = find( prod_fitness == max( prod_fitness ), 1 );
-
+            
             if obj.QV_val == 1
 
                 obj.x_new = [nsga.x( prod_fitness_best, : ), obj.QV_val];
