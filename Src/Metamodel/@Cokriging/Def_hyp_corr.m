@@ -23,7 +23,7 @@ if isempty(obj.hyp_corr{i_var})
         end
         
         % Bounds based on inter-distances of training points
-        [ hyp_corr0_temp, lb_hyperp_temp, ub_hyperp_temp ] = Theta_bound( obj.x_train{i_var} );
+        [ hyp_corr0_temp, lb_hyperp_temp, ub_hyperp_temp ] = Theta_bound_normal( obj.x_train{i_var} );
         obj.lb_hyp_corr{i_var} = log10( ( 1./(sqrt(2)*ub_hyperp_temp) ).^2 );
         obj.ub_hyp_corr{i_var} = log10( ( 1./(sqrt(2)*lb_hyperp_temp) ).^2 );
         

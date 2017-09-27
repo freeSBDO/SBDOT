@@ -33,12 +33,10 @@ if isempty(obj.rho)
             obj.rho0 = abs(max(obj.f_train{1})-min(obj.f_train{2}));        
         else
             
-            assert( size(obj.rho0,2) == 2 ,...
+            assert( size(obj.rho0,2) == 1 ,...
             'SBDOT:Cokriging:rho0_size',...
-            'rho0 must be of size 1-by-2');
-            
-            obj.hyp_corr0{i_var} = log10( obj.hyp_corr0{i_var} );
-            
+            'rho0 must be of size 1-by-1');
+                        
         end
         
     else
@@ -77,8 +75,10 @@ obj.ck_oodace = obj.ck_oodace.fit(obj.x_train,obj.f_train);
 
 if obj.prob.display, corr_name=func2str(obj.corr{2}); fprintf(['\nCokriging with ',corr_name(22:end),'HF correlation function is created.\n\n']);end
 
-obj.hyp_corr = 10.^obj.ck_oodace.getHyperparameters;
-obj.rho = obj.ck_oodace.getRho;
+hyp_corr_temp = 10.^obj.ck_oodace.getHyperparameters;
+obj.hyp_corr{1} = hyp_corr_temp(1,:);
+obj.hyp_corr{2} = hyp_corr_temp(2,:);
+obj.rho = cell2mat(obj.ck_oodace.getRho);
 
 hyp_reg_temp = obj.ck_oodace.getSigma;
 obj.hyp_reg{1} = hyp_reg_temp(1,1);

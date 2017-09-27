@@ -40,7 +40,7 @@ classdef Metamodel < handle
             p.addRequired('prob', @(x)isa(x,'Problem') || isa(x,'Problem_multifi') || isa(x,'Q_problem'));
             p.addRequired('y_ind', @(x)isnumeric(x) && (isscalar(x) || isempty(x)))
             p.addRequired('g_ind', @(x)isnumeric(x) && (isscalar(x) || isempty(x)))
-            p.addOptional('shift_output', [], @(x)isnumeric(x) && (isempty(x) || isrow(x)));
+            p.addOptional('shift_output', [], @(x)isnumeric(x));
             p.parse( prob, y_ind, g_ind, varargin{:} )
             in = p.Results;
                         

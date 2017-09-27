@@ -66,7 +66,7 @@ classdef Adaptive_sampling < handle
             p = inputParser;
             p.KeepUnmatched = true;
             p.PartialMatching = false;
-            p.addRequired('prob',@(x)isa(x,'Problem') || @(x)isa(x,'Problem_multifi'));
+            p.addRequired('prob',@(x)isa(x,'Problem') || isa(x,'Problem_multifi'));
             p.addRequired('y_ind',@(x)isnumeric(x) && isrow(x))
             p.addRequired('g_ind',@(x)isnumeric(x) && (isrow(x) || isempty(x)))
             p.addOptional('iter_max',50,@(x)(x == floor(x))&&(isempty(x)||isscalar(x)));

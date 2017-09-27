@@ -12,7 +12,7 @@ switch obj.tau_type
         
         T_corr = arrayfun( @(k)vect2full( ...
             obj.prob.m_t(k),...
-            obj.Build_tau( obj.hyp_tau',obj.prob.m_t(k),'isotropic', []),...
+            obj.Build_tau( obj.hyp_tau(k),obj.prob.m_t(k),'isotropic', []),...
             0 ) , 1:length(obj.prob.m_t), 'UniformOutput', false );
         
     case {'choleski','heteroskedastic'}
@@ -52,6 +52,7 @@ for i = 1:length(obj.prob.m_t)
     set(gca,'YTick',1:obj.prob.m_t(i),'YDir' ,'reverse')
     colormap('hot')      
     caxis([-1,1])
+    axis square
 end
 hold off   
 
