@@ -59,7 +59,7 @@ classdef Q_kriging < Metamodel
         alpha = [];                % Regression coefficients
         gamma = [];                % Correlation part coefficients
         C = [];                    % Choleski Decomposition of extrinsic + intrinsic matrices
-        Sigma = [];                % Intrinsic covariance matrix
+        Sigma = [];                % Intrinsic covariance matrix (i.e. Nugget)
         Ft = [];                   % Decorrelated model matrix
         R = [];                    % From QR Decomposition during Regression Fitting
         sigma2_reinterp = [];      % Reinterpolation version of sigma2
@@ -241,6 +241,8 @@ classdef Q_kriging < Metamodel
         [] = Clean( obj, type );
         
         [T_corr] = Info_display( obj )
+        
+        err = Nrmse( obj, x_test, y_test )
         
     end
     

@@ -5,7 +5,7 @@ function [] = Plot( obj, inputs_ind, cut_values, comb_ind, n_eval )
     %   *comb_ind is either the index or the row subscript indicating the combination of categorical levels desired for the plot
     %
     % Syntax :
-    % []=obj.plot([1 5],[0.024 0.1 0.003],[2 3 2]);
+    % []=obj.Plot([1 5],[0.024 0.1 0.003],[2 3 2]);
     
     p = inputParser;
     p.KeepUnmatched=true;

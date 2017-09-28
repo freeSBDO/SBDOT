@@ -79,7 +79,7 @@ classdef Metamodel < handle
         
         [Y,X] = Plot( obj, inputs_index, cut_values );
         
-        [] = Plot_error( obj, x, y );
+        [] = Plot_error( obj, x, y, q );
         
         stat = Rmse( obj, x, y );
         stat = Nmse( obj, x, y );

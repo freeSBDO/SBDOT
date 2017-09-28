@@ -1,3 +1,4 @@
+%% Clear workspace
 clear all
 close all
 clc
@@ -5,129 +6,142 @@ clc
 % Set random seed for reproductibility
 rng(1)
 
-% 1D
+%% 1D
 % Define problem structure
-t = {[1;2;3]};
-m_t = 3;
-m_x = 1;
-m_g = 0;
-m_y = 1;
-lb = 0; ub = 1;
-n_x = [5,5,5]; n_eval = 1000;
-func_str = 'emse_2';
+% 1 quantitative variable
+% 1 qualitative variable (3 levels)
+% 1 objective
+% 0 constraint
+
+t = {[1;2;3]};              % Qualitative values (cell structure)
+m_t = 3;                    % Number of levels per qualitative variable (row vector)
+m_x = 1;                    % Number of quantitative variables        
+m_g = 0;                    % Number of constraints
+m_y = 1;                    % Number of objectives
+lb = 0; ub = 1;             % Lower and Upper bounds for the quantitative variable
+n_x = 10;                   % Number of points per level-combinations (row vector of length prod(m_t) or scalar -> n_x*ones(1,prod(m_t)))
+func_str = 'emse_2';        % Response to surrogate
 
 % Create Problem object with optionnal parallel input as true
 prob = Q_problem( func_str, t, m_x, m_y, m_g, m_t, lb, ub , 'parallel', true );
 
-% Evaluate the model on 5 points per level created with LHS
+% Evaluate the model on 5 points per level created with OSLHS optimized
+% with Monte Carlo method with 1000 random generations
 prob.Get_design( n_x ,'SLHS', 'maximin_type', 'Monte_Carlo', 'n_iter', 1000 );
 
-% Construct kriging metamodel
+% Construct kriging metamodel on first objective with Gaussian kernel
 q_krig = Q_kriging( prob, 1, [], 'corr', 'Q_Gauss');
 
-% Prediction
-temp = ind2subVect(m_t,1:prod(m_t));
+% Prediction at 0.5 on level 1
+pred = q_krig.Predict( 0.5, 1 );
 
-x_eval = repmat(linspace(lb,ub,n_eval)',prod(m_t),1);
-q = zeros(prod(m_t)*n_eval,length(m_t));
+% Prediction and variance on 100 linearly spaced points on level 1
+n_eval = 100;
+x_eval = linspace(lb,ub,n_eval)';
+q = ones(100,1);
 
-for i = 1:prod(m_t)
-    q((1+n_eval*(i-1)):(n_eval*i),:) = repmat(temp(i,:),n_eval,1);
-end
+[p_mean, p_variance] = q_krig.Predict( x_eval, q );
+
+% Prediction and variance on 100 linearly spaced points on level 1, 2 and 3
+n_eval = 100;
+x_eval = repmat(linspace(lb,ub,n_eval)',3,1);
+q = [ ones(100,1); 2*ones(100,1); 3*ones(100,1) ];
 
 [p_mean, p_variance] = q_krig.Predict( x_eval, q );
 
 % Plot with Q_kriging Method for input 1 output 1 level 1
 q_krig.Plot(1,[],1);
 
-% More sophisticated plot for input 1 output 1 all levels
+% Displaying correlation lengths (stored in log_10)
+disp(horzcat('Correlation lengths: ', mat2str(10.^q_krig.hyp_corr)));
 
-fh = str2func(func_str);
-x_sample = cell2mat(prob.x');
+% Displaying the inter-levels correlations
+T = q_krig.Info_display();
 
-temp_2 = cumsum(prob.n_x);
-temp_2 = [[1,temp_2(1:(end-1))+1];temp_2];
+% Displaying the normalized root mean square error
 
-for i=1:prod(m_t)
-    ind_eval = (1+n_eval*(i-1)):(n_eval*i);
-    ind_samp = temp_2(1,i):temp_2(2,i);
-    figure();
-    hold on;
-    temp = fh([x_eval(ind_eval,1),q(ind_eval,:)]);
-    plot(x_eval(ind_eval,1),temp(:,1),'Color','g');
-    plot(x_eval(ind_eval,1),p_mean(ind_eval)+1.96.*p_variance(ind_eval),':','Color','b');
-    plot(x_eval(ind_eval,1),p_mean(ind_eval)-1.96.*p_variance(ind_eval),':','Color','b');
-    plot(x_eval(ind_eval,1),p_mean(ind_eval),'--','Color','r');
-    temp = fh(x_sample(ind_samp,:));
-    plot(x_sample(ind_samp,1), temp(:,1),'*','MarkerSize',20);
-    legend('obj. func.', 'upper conf. int.', 'lower conf. int.', 'mean pred.', 'DoE');
-    title('Kriging Example');
-    xlabel('x');
-    ylabel('y');
-    hold off;
-end
+    % Evaluating the response and converting to cells
+    y_eval = emse_2( [x_eval,q] );
+    x_eval = mat2cell( x_eval, [100,100,100] )';
+    y_eval = mat2cell( y_eval, [100,100,100] )';
 
-% fixing hyp_inputs
-hyp_dchol = [0.004446,8.3388,3.17262];
-hyp_corr = 0.38737;
-hyp_tau = [3.128146,0.01114024,3.1414815148];
+    % NRMSE
+    disp(horzcat('NRMSE: ', num2str(q_krig.Nrmse( x_eval, y_eval ))));
 
-q_krig = Q_kriging( prob, 1, [], 'tau_type', 'heteroskedastic', 'hyp_dchol', hyp_dchol, 'hyp_corr', hyp_corr, 'hyp_tau', hyp_tau);
+% Error plot (Real values against Predicted values) for the first level
+q_krig.Plot_error( x_eval{1}, y_eval{1}, 1);
 
-x_eval = cell2mat(prob.x');
-q = x_eval(:,2);
-x_eval = x_eval(:,1);
+%% Clear workspace
+clear all
+close all
+clc
 
-[p_mean, p_variance] = q_krig.Predict( x_eval, q );
-
-q_krig.Plot(1,[],1);
-
-% Fixing hyp_dchol_bounds and hyp_dchol_0 for optimization
-lb_hyp_dchol = [0.1, 0.1, 0.1];
-ub_hyp_dchol = [0.8, 0.8, 0.8];
-hyp_dchol_0 = [0.7, 0.7, 0.7];
-
-q_krig = Q_kriging( prob, 1, [], 'tau_type', 'heteroskedastic', 'hyp_dchol_0', hyp_dchol_0, 'lb_hyp_dchol', lb_hyp_dchol, 'ub_hyp_dchol', ub_hyp_dchol);
-
-x_eval = cell2mat(prob.x');
-q = x_eval(:,2);
-x_eval = x_eval(:,1);
-
-[p_mean, p_variance] = q_krig.Predict( x_eval, q );
-
-q_krig.Plot(1,[],1);
+% Set random seed for reproductibility
+rng(1)
 
 %% 2D
 % Define problem structure
-t = {[1;2],[0.5;1.5],[0.6;1.2],[0.7;1.4]};
-m_t = [2, 2, 2, 2];
-m_x = 2;
-m_g = 0;
-m_y = 1;
-lb = -1*ones(1,m_x);
-ub = ones(1,m_x);
-n_x = 10;
-func_str = 'Q_sin_cos';
+% 2 quantitative variable
+% 4 qualitative variable (of respectively 2, 3, 2 and 3 levels)
+% 1 objective
+% 0 constraint
+
+t = {[1;2],[0.5;0.85;1.5],[0.6;1.2],[0.7;0.95;1.4]};    % Qualitative values (cell structure)
+m_t = [2, 3, 2, 3];                                     % Number of levels per qualitative variable (row vector)
+m_x = 2;                                                % Number of quantitative variables  
+m_g = 0;                                                % Number of constraints
+m_y = 1;                                                % Number of objectives
+lb = -1*ones(1,m_x); ub = ones(1,m_x);                  % Lower and Upper bounds for the quantitative variable
+n_x = 20;                                               % Number of points per level-combinations
+func_str = 'Q_sin_cos';                                 % Response to surrogate
 
 % Create Problem object with optionnal parallel input as true
 prob = Q_problem( func_str, t, m_x, m_y, m_g, m_t, lb, ub , 'parallel', true );
 
-% Evaluate the model on 7 points per level combinations (here 36 combination, i.e. 252 points) created with SLHS
+% Evaluate the model on 20 points per level combinations (here 36 combination, i.e. 720 points) created with OSLHS
+% optimized with Monte Carlo method with 500 random generations
 prob.Get_design( n_x , 'type', 'SLHS', 'maximin_type', 'Monte_Carlo', 'n_iter', 500);
 
-% Construct kriging metamodel
-q_krig = Q_kriging( prob, 1, [], 'tau_type', 'isotropic', 'optim_method', 'active-set');
+% Construct kriging metamodel on first objective with active-set optimizer
+q_krig = Q_kriging( prob, 1, [], 'optim_method', 'active-set');
 
-% Test on DoE points
-x_eval = cell2mat(prob.x');
-x_eval = x_eval(:,1:m_x);
-
-q = zeros(n_x*prod(m_t),1);
-for i = 1:prod(m_t)
-    q((n_x*(i-1)+1):n_x*i) = i.*ones(n_x,1);
-end
-
-[p_mean, p_variance] = q_krig.Predict( x_eval, q );
-
-% Plot Method
+% Plot with Q_kriging Method for input 1 and 2 output 1 level 1
 q_krig.Plot([1 2], [], 1);
+
+% Prediction and variance on 5 points on each level-combination following a sobol sequence
+
+    % Continuous values
+    seq = stk_sampling_sobol(5*prod(m_t),2,[lb;ub],true);
+    x_eval = seq.data;
+
+    % Qualitative index: corresponding to the indexation of the subscripts
+    % of the level-combinations as described in the matlab documentation on
+    % ind2sub or sub2ind.
+    % (Example in matrices q_sub and q_ind computed below : [1 1 1 1] -> 1, [2 1 1 1] -> 2, ... , [2 3 2 3] -> 36)
+    
+    q_ind = [];
+    for i = 1:prod(m_t)
+        q_ind = [q_ind; i*ones(5,1)];
+    end
+
+    % Evaluation (with qualitative indexes)
+    [p_mean, p_variance] = q_krig.Predict( x_eval, q_ind );
+
+    % Works also with qualitative subscripts
+    q_sub = ind2subVect( m_t, q_ind' );
+    [p_mean, p_variance] = q_krig.Predict( x_eval, q_sub );
+
+% Evaluation to add points in the problem, adding the points previously predicted
+
+    % Qualitative values
+    q_val = q2qval( t, m_t, q_ind );
+
+    % Evaluation
+    q_krig.prob.Eval( 5*ones(1,prod(m_t)), [x_eval, q_val] );
+    disp(horzcat('Number of points in the design: ', mat2str(q_krig.prob.n_x)));
+    
+% Displaying correlation lengths (stored in log_10)
+disp(horzcat('Correlation lengths: ', mat2str(10.^q_krig.hyp_corr)));
+
+% Displaying the inter-levels correlations
+T = q_krig.Info_display();
