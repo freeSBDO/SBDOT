@@ -6,7 +6,7 @@ clc
 rng(1)
 
 % Define problem structure
-n_x = 2;
+m_x = 2;
 m_y = 1;
 m_g = 1;
 lb = [-5 0];
@@ -23,7 +23,7 @@ EGO = Expected_improvement( prob, 1, [], @Kriging, ...
 
 EGO.Opt();
 
-EGO.meta_y.Plot( [1,2], [] )
+EGO.meta_y.Plot( [1,2], [] );
 hold on
 plot3(EGO.x_min(:,1),EGO.x_min(:,2),EGO.y_min,'ro','MarkerFaceColor','r')
 

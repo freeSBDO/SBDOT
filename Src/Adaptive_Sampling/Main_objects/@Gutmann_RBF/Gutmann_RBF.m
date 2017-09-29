@@ -68,7 +68,6 @@ classdef Gutmann_RBF < Adaptive_sampling
             
             % Launch optimization sequence
             obj.in_a_row = 0;
-            obj.Opt();
             
             
         end

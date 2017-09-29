@@ -20,6 +20,7 @@ prob.Get_design( 20 ,'LHS' )
 
 % Optimizaion
 obj = Gutmann_RBF(prob, 1, 1, @RBF, 'fcall_max', 20);
+obj.Opt();
 
 obj.meta_y.Plot( [1,2], [] );
 hold on

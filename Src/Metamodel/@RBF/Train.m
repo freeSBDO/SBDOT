@@ -58,8 +58,11 @@ if isempty(obj.hyp_corr)
             opt.TolFun = 1e-4;
             opt.DispModulo = 0;
             
+            warning('off','MATLAB:singularMatrix')
+            warning('off','MATLAB:nearlySingularMatrix')
             obj.hyp_corr = cmaes( @obj.Loo_error, obj.hyp_corr0, [], opt );
-            
+            warning('on','MATLAB:singularMatrix')
+            warning('on','MATLAB:nearlySingularMatrix')
         case 'fmincon'
             
             opt.Display = 'off';
