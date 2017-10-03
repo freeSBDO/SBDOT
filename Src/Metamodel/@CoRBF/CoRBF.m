@@ -94,6 +94,12 @@ classdef CoRBF < Metamodel
             
         end
         
+        [] = Clean( obj , type )
+        [] = Def_hyp_corr( obj )
+        [ LOO ] = Obj_diff_opt( obj, x , yc_e)
+        [ y_pred, power] = Predict( obj, x_eval )
+        [] = Train( obj )
+        
     end
     
 end

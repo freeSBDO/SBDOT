@@ -84,9 +84,9 @@ if isempty(obj.rho)
             obj.rho0 = abs(max(obj.f_train{1})-min(obj.f_train{2}));        
         else
             
-            assert( size(obj.rho0,2) == 2 ,...
+            assert( size(obj.rho0,2) == 1 ,...
             'SBDOT:CoRBF:rho0_size',...
-            'rho0 must be of size 1-by-2');
+            'rho0 must be of size 1-by-1');
             
             obj.hyp_corr0{i_var} = log10( obj.hyp_corr0{i_var} );
             
