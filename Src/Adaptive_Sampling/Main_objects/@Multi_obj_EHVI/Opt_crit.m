@@ -22,7 +22,7 @@ end
 
 x_start = Kmeans_SBDO( x_pareto, k_opt );
 
-% EI multiobjective optimization using MGDA from x_start
+% EHVI local optimization using fmincon from x_start
 
 for i = 1 : size(x_start,1)
     

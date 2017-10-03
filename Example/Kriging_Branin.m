@@ -6,14 +6,14 @@ clc
 rng(1)
 
 % Define problem structure
-m_x = 2;
-m_y = 1;
-m_g = 1;
-lb = [-5 0];
-ub = [10 15];
+n_x = 2;      % Number of parameters
+m_y = 1;      % Number of objectives
+m_g = 1;      % Number of constraint
+lb = [-5 0];  % Lower bound 
+ub = [10 15]; % Upper bound 
 
 % Create Problem object with optionnal parallel input as true
-prob = Problem( 'Branin', m_x, m_y, m_g, lb, ub , 'parallel', true);
+prob = Problem( 'Branin', n_x, m_y, m_g, lb, ub , 'parallel', true);
 
 % Evaluate the model on 20 points created with LHS
 prob.Get_design( 20 ,'LHS' )
@@ -23,11 +23,12 @@ prob.Get_design( 20 ,'LHS' )
 krig = Kriging ( prob , 1 , [] );
 
 % Plot output depending on the input_1 and input_2
-krig.Plot( [1,2], [] )
+krig.Plot( [1,2], [] );
 
 % Plot output depending on the input_1 , with input_2 = 5
-krig.Plot( 1, 5 )
+krig.Plot( 1, 5 );
 
+% Compute RMSE with test points
 x_test = stk_sampling_maximinlhs( 100, 2, [lb; ub], 200);
 x_test = x_test.data;
 y_test = Branin( x_test );
@@ -38,11 +39,11 @@ rmse = krig.Rmse( x_test, y_test );
 krig_reg = Kriging ( prob , 1 , [] ,'reg', true );
 
 % Plot output depending on the input_1 and input_2
-krig_reg.Plot( [1,2], [] )
+krig_reg.Plot( [1,2], [] );
 
 %%
 % Create Kriging for regression with hyperparameters user defined
 krig_reg_set = Kriging ( prob , 1 , [] ,'reg', true , 'hyp_reg', 1e-1 ,'hyp_corr', [10 0.1] );
 
 % Plot output depending on the input_1 and input_2
-krig_reg_set.Plot( [1,2], [] )
+krig_reg_set.Plot( [1,2], [] );

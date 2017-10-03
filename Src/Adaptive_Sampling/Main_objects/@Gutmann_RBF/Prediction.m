@@ -1,6 +1,6 @@
 function [ y_pred ] = Prediction( obj, x )
 % PREDICTION
-% 
+% use for min_current search
 
 y_pred = obj.meta_y.Predict(x);
 

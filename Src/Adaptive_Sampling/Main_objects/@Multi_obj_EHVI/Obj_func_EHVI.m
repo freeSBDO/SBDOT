@@ -1,6 +1,6 @@
 function [ EHVI ] = Obj_func_EHVI( obj, x_test )
-%OBJ_FUNC_EHVI Summary of this function goes here
-%   Detailed explanation goes here
+%OBJ_FUNC_EHVI 
+%   Objective function for local optimization of EHVI
 
 for i = 1 : obj.m_y
     

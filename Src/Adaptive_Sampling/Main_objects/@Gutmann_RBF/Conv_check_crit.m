@@ -1,6 +1,6 @@
 function [] = Conv_check_crit( obj )
 % CONV_CHECK_CRIT Checks for convergence criterion
-%
+% None here
 
 obj.Find_min_value();
 

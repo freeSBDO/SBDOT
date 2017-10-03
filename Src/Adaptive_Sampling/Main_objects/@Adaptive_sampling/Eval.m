@@ -6,7 +6,7 @@ function [] = Eval( obj )
 
     try
         
-        % Trim x_new before evaluation
+        % Trim number of x_new before evaluation depending on fcalls available
         if ~isempty(obj.fcall_max)
             
             fcall_left = obj.fcall_max - obj.fcall_num;

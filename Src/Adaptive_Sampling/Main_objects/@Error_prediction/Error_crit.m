@@ -38,17 +38,18 @@ switch obj.crit_type
                 case 1
                     
                     if obj.m_y >= 1
-                        
+                       
+                       % Example with trapz
                        % x_intgr = linspace(obj.prob.lb(1),obj.prob.ub(1),200);
                        % y_intgr = obj.Meta_int1(x_intgr);
-                        
                        % error_value = trapz(y_intgr);
                         
                         error_value = integral(@(x)obj.Meta_int1(x),...
                             obj.prob.lb(1), obj.prob.ub(1),...
                             'AbsTol',1e-5,'RelTol',1e-7);
-                        
-                       %error_value = obj.meta_y.k_oodace.imse;
+                       
+                       % Included in oodace
+                       % error_value = obj.meta_y.k_oodace.imse;
                         
                     end
                     if obj.m_g >= 1

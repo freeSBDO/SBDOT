@@ -2,10 +2,11 @@ function X_filter = K_filtering( obj, x_new )
 % K_FILTERING
 % Method for gaussian process classes
 % Select before evaluation relevent points by looking at reduction of MSE
-
+% See Jonathan Guerra thesis p.147 Algorithme 6.1
 
 if isa(obj.meta_y,'Kriging')
     
+    % Get variance at points
     for i = 1 : obj.m_y
         
         [ ~, mse_pred_temp(:,i) ] = obj.meta_y(i).Predict(x_new);
@@ -17,18 +18,22 @@ if isa(obj.meta_y,'Kriging')
     X_filter = Scale_data( x_new(1,:), obj.prob.lb, obj.prob.ub);
     Y_filter = 1;
     
+    % Update kriging with the first new point added with a fake value y_new=1=Y_filter
     for i= 1 : obj.m_y
         krig_var_updated(i,:) = obj.meta_y(i,:).k_oodace.fit( ...
             [ obj.meta_y(i).x_train ; X_filter ], [ obj.prob.y(:,obj.y_ind(i)) ; Y_filter]);
     end
     
+    % Loop on the number of points to evaluate
     for j = 2 : size(x_new,1)
         
+        % Compute variance with kriging updated
         for i = 1 : obj.m_y
             [ ~, mse_current(:,i) ] = krig_var_updated(i).predict( x_new(j,:) );
         end
         mse_current = sum( mse_current, 2 );
         
+        % Criterion for filtering process
         if ( mse_current / mse_pred_init(j) ) > 0.1
             
             X_filter = [ X_filter ; Scale_data(x_new(j,:), obj.prob.lb, obj.prob.ub) ];

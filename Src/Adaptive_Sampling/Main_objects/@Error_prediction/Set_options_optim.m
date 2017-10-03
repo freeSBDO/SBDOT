@@ -26,8 +26,6 @@ else
         obj.options_optim.EvalParallel = 'no'; end
 end
 
-%int_val = 0.10 * (obj.prob.ub - obj.prob.lb);
-
 obj.options_optim.LBounds = obj.prob.lb;
 obj.options_optim.UBounds = obj.prob.ub;
 

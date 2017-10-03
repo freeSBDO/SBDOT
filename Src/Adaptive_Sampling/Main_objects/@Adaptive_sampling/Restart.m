@@ -3,7 +3,17 @@ function [] = Restart( obj, iter_sup, fcall_sup )
 % Syntax :
 %   obj.Restart()
 %   obj.restart(iter_sup,fcall_sup)
+% 
+% if not specified, iter_sup and fcall_sup are set to 50.
 
+% parser
+p = inputParser;
+p.KeepUnmatched = true;
+p.PartialMatching = false;
+p.addOptional('iter_sup',50,@(x)(x == floor(x))&&(isempty(x)||isscalar(x)));
+p.addOptional('fcall_sup',50,@(x)(x == floor(x))&&(isempty(x)||isscalar(x)));
+p.parse(iter_sup, fcall_sup)
+in = p.Results;
 
 obj.display_temp = obj.prob.display;
 obj.prob.display = false;
@@ -15,18 +25,10 @@ if isa( obj.prob , 'Problem_multifi')
     
 end
 
-if nargin == 0
-    
-    obj.iter_max = 50 + obj.iter_num;
-    obj.fcall_max = 50 + obj.fcall_num;
-    
-else
-    
-    obj.iter_max = obj.iter_num + iter_sup;
-    obj.fcall_max = obj.fcall + fcall_sup;
-    
-end
+obj.iter_max = obj.iter_num + in.iter_sup;
+obj.fcall_max = obj.fcall + in.fcall_sup;
 
+% Reset flags
 objEGO.failed=false;
 objEGO.opt_stop=false;
 objEGO.crit_stop=false;

@@ -1,6 +1,6 @@
 function func_val = Meta_int3(obj, x, y, z )
-%META_INT2 Summary of this function goes here
-%   Detailed explanation goes here
+%META_INT3 Summary of this function goes here
+% Use for 3D integration with @integral
 
 [n1,n2]=size(x);
 

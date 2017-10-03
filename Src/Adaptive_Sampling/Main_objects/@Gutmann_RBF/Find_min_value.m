@@ -33,6 +33,7 @@ if obj.m_g >= 1
     
 end
     
+% Update history
 obj.hist.y_min = [ obj.hist.y_min ; obj.y_min ];
 obj.hist.x_min = [ obj.hist.x_min ; obj.x_min ];
 if obj.m_g>=1

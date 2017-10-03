@@ -4,7 +4,7 @@ function [] = Conv_check( obj )
     % Syntax :
     %   obj.Conv_check()
 
-    
+    % iter max check
     if ~isempty(obj.iter_num) && ( obj.iter_num == obj.iter_max )
         
         obj.opt_stop = true;
@@ -12,6 +12,7 @@ function [] = Conv_check( obj )
         
     end
     
+    % fcall max check
     if obj.fcall_num >= obj.fcall_max
         
         obj.opt_stop = true;

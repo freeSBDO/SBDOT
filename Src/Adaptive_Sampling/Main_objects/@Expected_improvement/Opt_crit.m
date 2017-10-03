@@ -1,5 +1,5 @@
 function [] = Opt_crit( obj )
-%OPT_CRIT Main method
+% OPT_CRIT
 % Select the new point to evaluate
 
 obj.Find_min_value(); % Find actual minimum value

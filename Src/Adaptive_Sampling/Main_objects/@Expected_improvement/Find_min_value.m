@@ -32,7 +32,8 @@ if obj.m_g >= 1
     obj.g_min = obj.prob.g( obj.loc_min , obj.g_ind ); 
     
 end
-    
+
+% Update history
 obj.hist.y_min = [ obj.hist.y_min ; obj.y_min ];
 obj.hist.x_min = [ obj.hist.x_min ; obj.x_min ];
 if obj.m_g>=1

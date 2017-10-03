@@ -1,19 +1,40 @@
 classdef Multi_obj_EHVI < Adaptive_sampling
-    %MULTI_OBJ_EHVI Summary of this class goes here
-    %   Detailed explanation goes here
+    %MULTI_OBJ_EHVI 
+    % Expected hypervolume improvement algorithm.
+    % Multi-objective kriging based optimization method.
+    % Unconstrained problems.
+    %
+    % obj = Multi_obj_EHVI(prob, y_ind, g_ind, meta_type, N_eval, varargin)
+    %
+    % Mandatory inputs :
+    %   - prob is a Problem/Problem_multifi object, created with the appropriate class constructor
+    %   - y_ind is the index of the objective to optimize
+    %   - g_ind is the index of the constraint(s) to take into account
+    %   - meta_type is the type of metamodel to use (@Kriging or @Cokriging)
+    %   - N_eval is the number of points to evaluate at each iterations
+    %   (set to Inf for automatic good calibration)
+    %
+    % Optional inputs [default value]:
+    %   - 'options_optim' is a structure for optimization of EI criterion
+    %   see Set_options_optim for example of parameters structure
+    %   * Optional inputs for Kriging apply
+    %   * Optional inputs for Adaptive_sampling apply
+    %
     
     properties
         
-        meta_type
-        options_optim  % Structure of user optimization options
+        % Mandatory inputs
+        meta_type      % Type of metamodel
         N_eval         % Number of points to evaluate at each iteration.
-        % Set N_eval to Inf for a good calibration
         
+        % Optional inputs
+        options_optim  % Structure of user optimization options
+
+        % Computed variables
         conv_crit      % Adpative sampling criterion value
-        in_a_row       % Number of valid criterion value in a row
-        
-        y_pareto_temp % Pareto front from problem values
-        y_ref_temp    % Reference point for hypervolume computation
+        in_a_row       % Number of valid criterion value in a row        
+        y_pareto_temp  % Pareto front from problem values
+        y_ref_temp     % Reference point for hypervolume computation
         
     end
     
@@ -24,7 +45,7 @@ classdef Multi_obj_EHVI < Adaptive_sampling
     methods
         
         function obj = Multi_obj_EHVI(prob, y_ind, g_ind, meta_type, N_eval ,varargin)
-           
+            
             p = inputParser;
             p.KeepUnmatched = true;
             p.PartialMatching = false;
@@ -66,9 +87,17 @@ classdef Multi_obj_EHVI < Adaptive_sampling
             obj.in_a_row = 0;
             obj.Opt();
             
-        end  
-    end
+        end
         
+        [] = Conv_check_crit( obj );
+        [] = Find_min_value( obj );
+        [ EHVI ] = Obj_func_EHVI( obj, x_test );
+        [ y_obj ] = Obj_func_nsga( obj, x_test );
+        [] = Opt_crit( obj );
+        [] = Set_options_optim( obj, user_opt )
+        
+    end
+    
     
 end
 

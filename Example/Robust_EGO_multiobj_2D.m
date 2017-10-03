@@ -6,11 +6,11 @@ clc
 rng(1)
 
 % Define problem structure
-m_x = 2;
-m_y = 2;
-m_g = 0;
-lb = [0 0];
-ub = [2 2];
+n_x = 2;    % Number of parameters
+m_y = 2;    % Number of objectives
+m_g = 0;    % Number of constraint
+lb = [0 0]; % Lower bound 
+ub = [2 2]; % Upper bound  
 
 % Create Problem object with optionnal parallel input as true
 prob = Problem( 'MO_convex', m_x, m_y, m_g, lb, ub , 'parallel', true);
@@ -19,13 +19,21 @@ prob = Problem( 'MO_convex', m_x, m_y, m_g, lb, ub , 'parallel', true);
 prob.Get_design( 10 ,'LHS' )
 
 % Robust EGO
+
+% Define variables are environmental or not
 robust_def.env_lab = [ 0 0 ];
+% Define variables are correlated or not
 robust_def.cor_lab = [ 0 0 ];
+% Define variables are for photonic design or not
 robust_def.phot_lab = [ 0 0 ];
+% Define variables probability law
 robust_def.unc_type = {'det','det'};
+% Define variables variance
 robust_def.unc_var=[ 0 0 ];
+% Define robustness measure on objective
 robust_def.meas_type_y = 'Worstcase_meas';
 
+% Optimization
 EGO = Robust_EGO_multiobj( prob, [1 2], [], @Kriging, robust_def, 2, ...
     'corr', 'corrmatern52', 'iter_max',50 );
 

@@ -1,18 +1,39 @@
 classdef Gutmann_RBF < Adaptive_sampling
     % GUTMANN_RBF 
+    % Gutmann optimization algorithm with RBF
+    % Single objective RBF (or co-RBF) based optimization method.
+    % unconstrained or constrained problems.
+    % 
+    % obj = Gutmann_RBF(prob, y_ind, g_ind,varargin)
+    %    
+    % Mandatory inputs :
+    %   - problem is a Problem/Problem_multifi object, created with the appropriate class constructor
+    %   - y_ind is the index of the objective to optimize
+    %   - g_ind is the index of the constraint(s) to take into account
+    %   - meta_type is the type of metamodel to use (@RBF or @CoRBF)
+    %
+    % Optional inputs [default value]:
+    %   - 'cycle_length' parameter for the trade of between exploration and explotation 
+    %   [5]
+    %   - 'options_optim' is a structure for optimization of Gutmann criterion
+    %   see Set_options_optim for example of parameters structure
+    %   * Optional inputs for RBF or CoRBF apply
+    %   * Optional inputs for Adaptive_sampling apply
     %
     
     properties
         
-        meta_type
+        % Mandatory inputs
+        meta_type      % Type of metamodel 
+        
+        % Optional inputs
         options_optim  % Structure of user optimization options
         cycle_length   % Cycle length for W_n
         
+        % Computed variables        
         n0             % Number of initial points in the DOE
         k_n            % Used in min target computation
-        Gutmann_val    % Expected improvement value at current iteration
-        conv_crit      % Adpative sampling criterion value
-        in_a_row       % Number of valid criterion value in a row
+        Gutmann_val    % Optimization criterion value at current iteration
         
     end
     
@@ -65,11 +86,7 @@ classdef Gutmann_RBF < Adaptive_sampling
                 end
                 obj.meta_g = metamodel_int_g;
             end
-            
-            % Launch optimization sequence
-            obj.in_a_row = 0;
-            
-            
+                       
         end
         
         [] = Set_options_optim( obj, user_opt );

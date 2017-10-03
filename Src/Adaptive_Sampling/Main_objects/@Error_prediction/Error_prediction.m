@@ -1,12 +1,34 @@
 classdef Error_prediction < Adaptive_sampling
-    %ERROR_PREDICTION Metamodel prediction error reduction algorithm
+    %ERROR_PREDICTION 
+    % Metamodel prediction error reduction algorithm
+    %
+    % obj = Error_prediction(prob, y_ind, g_ind, meta_type, varargin)
+    %
+    % Mandatory inputs :
+    %   - prob is a Problem/Problem_multifi object, created with the appropriate class constructor
+    %   - y_ind is the index of the objective to optimize
+    %   - g_ind is the index of the constraint(s) to take into account
+    %   - meta_type is the type of metamodel to use (@Kriging or @Cokriging)
+    %
+    % Optional inputs [default value]:
+    %   - 'crit_type' criterion for optimization.
+    %   ['MSE'], 'IMSE'(kriging only)
+    %   - 'options_optim' is a structure for optimization of EI criterion
+    %   see Set_options_optim for example of parameters structure
+    %   * Optional inputs for Kriging or Cokriging or RBF or CoRBF apply
+    %   * Optional inputs for Adaptive_sampling apply
     
     properties
         
-        meta_type
-        crit_type
-        error_value        
-        options_optim
+        % Mandatory inputs
+        meta_type      % Type of metamodel 
+        
+        % Optional inputs
+        crit_type      % Error optimization criterion 
+        options_optim  % Structure of user optimization options
+        
+        % Computed variables        
+        error_value    % criterion value        
         
     end
     
@@ -18,7 +40,7 @@ classdef Error_prediction < Adaptive_sampling
             p = inputParser;
             p.KeepUnmatched = true;
             p.PartialMatching = false;
-            p.addRequired('meta_type',@(x)isequal(x,@Kriging)||isequal(x,@RBF)||isequal(x,@Cokriging));
+            p.addRequired('meta_type',@(x)isequal(x,@Kriging)||isequal(x,@RBF)||isequal(x,@Cokriging)||isequal(x,@CoRBF));
             p.addOptional('crit_type','MSE',@(x)(isa(x,'char'))&&(strcmpi(x,'MSE')||strcmpi(x,'IMSE')));
             p.addOptional('options_optim',[],@(x)isstruct(x));
             p.parse(meta_type,varargin{:})

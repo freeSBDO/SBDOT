@@ -1,6 +1,6 @@
 function func_val = Meta_int2(obj, x, y )
 %META_INT2 Summary of this function goes here
-%   Detailed explanation goes here
+% Use for 2D integration with @integral
 
 [n1,n2]=size(x);
 

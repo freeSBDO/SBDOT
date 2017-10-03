@@ -1,6 +1,43 @@
 classdef Robust_EGO < Adaptive_sampling
     % ROBUST_EGO 
-    % EGO for robust optimization
+    % Efficient Global Robust Optimization algorithm.
+    % Single objective kriging based optimization method.
+    % Constrained or unconstrained problems.
+    %
+    % obj = Robust_EGO(prob, y_ind, g_ind, meta_type, robust_def, CRN_samples, varargin)
+    %
+    % Mandatory inputs :
+    %   - prob is a Problem/Problem_multifi object, created with the appropriate class constructor
+    %   - y_ind is the index of the objective to optimize
+    %   - g_ind is the index of the constraint(s) to take into account
+    %   - meta_type is the type of metamodel to use (@Kriging or @Cokriging)
+    %   - robust_def is a structure composed of maximum 7 elements
+    %   * env_lab, cor_lab, phot_lab, unc_type, unc_var, meas_type_y, meas_type_g
+    %   - CRN_samples is the number of Common Random Numbers Monte Carlo samples (500 is a good first value)
+    %   
+    % More information for robust_def :
+    %   * env_lab is a boolean row vector of size m_x which is true when
+    %   the parameter is environmental 
+    %   * cor_lab is a boolean row vector of size m_x which is true when
+    %   the parameter is directly correlated to another parameter 
+    %   * phot_lab is a boolean row vector of size m_x which is true when
+    %   the parameter is "a photonic variable". it means that the
+    %   uncertainty interval correspond to 10% of the nominal value
+    %   * unc_type is a cell row vector of size m_x with the type of
+    %   uncertainty of the parameter ( 'det' for deterministic, 'uni' for
+    %   uniform, 'gauss' for gaussian )
+    %   * meas_type_y is the robustness measure for the objective ('Mean_meas',
+    %   'Var_meas', 'Worstcase_meas', 'Mixed_meas')
+    %   * meas_type_y (optional) is the robustness measure for the
+    %   constraints
+    %
+    % Optional inputs [default value]:
+    %   - 'options_optim' is a structure for optimization of EI criterion
+    %   see Set_options_optim for example of parameters structure
+    %   * Optional inputs for Kriging apply
+    %   * Optional inputs for Adaptive_sampling apply
+    %
+    
     
     properties
         CRN_samples % Number of samples to estimate robustness measure

@@ -2,21 +2,27 @@ classdef Adaptive_sampling < handle
     %ADAPTIVE_SAMPLING Class
     % Define basics features of all adaptive sampling algorithms. 
     % Use as superclass, do not instantiate directly.
+    %
+    % Optionnal inputs [default value] :
+    %	'iter_max' maximum number of iterations
+    %   [50]
+    %	'fcall_max' maximum number of function calls  
+    %   [50]
     
     properties ( Access = public )
         
         % Mandatory inputs 
-        prob % object of the whole conception problem        
-        y_ind %labels number of problem objectives selected
-        g_ind %labels number of problem constraints selected
+        prob  % object of the whole conception problem        
+        y_ind % labels number of problem objectives selected
+        g_ind % labels number of problem constraints selected
                 
         % Optional inputs (varargin) 
-        iter_max % Maximum number of iterations
+        iter_max  % Maximum number of iterations
         fcall_max % Maximum number of functions calls
         
         % Computed variables        
-        m_y % number of objective
-        m_g % number of constraint
+        m_y    % number of objective
+        m_g    % number of constraint
         meta_y % objective metamodel information
         meta_g % contraint metamodel information 
         
@@ -24,19 +30,19 @@ classdef Adaptive_sampling < handle
         
         x_new % new point to evaluate        
         
-        y_min % objective value of the actual minimum
-        g_min % contraint value of the actual minimum
-        x_min % input value of the actual minimum
+        y_min   % objective value of the actual minimum
+        g_min   % contraint value of the actual minimum
+        x_min   % input value of the actual minimum
         loc_min % location in the dataset of the minimum                
         
-        failed % Logical value for failing mode
-        opt_stop % Logical value for stoping flag
+        failed    % Logical value for failing mode
+        opt_stop  % Logical value for stoping flag
         crit_stop % Logical value for crit stoping flag
-        iter_num % Current iteration
+        iter_num  % Current iteration
         fcall_num % Current number of function calls
         
-        error % Structure of error info
-        hist % History structure
+        error            % Structure of error info
+        hist             % History structure
         unmatched_params % unmatched_params
         
     end
@@ -60,7 +66,7 @@ classdef Adaptive_sampling < handle
             %   obj=Adaptive_sampling(prob,y_ind,g_ind,'iter_max',10)
             %
             % Optionnal inputs [default value] :
-            %	'iter_max'    []
+            %	'iter_max'    [50]
             %	'fcall_max'   [50]
             
             p = inputParser;
@@ -70,7 +76,7 @@ classdef Adaptive_sampling < handle
             p.addRequired('y_ind',@(x)isnumeric(x) && isrow(x))
             p.addRequired('g_ind',@(x)isnumeric(x) && (isrow(x) || isempty(x)))
             p.addOptional('iter_max',50,@(x)(x == floor(x))&&(isempty(x)||isscalar(x)));
-            p.addOptional('fcall_max',[],@(x)(x == floor(x))&&(isempty(x)||isscalar(x)));
+            p.addOptional('fcall_max',50,@(x)(x == floor(x))&&(isempty(x)||isscalar(x)));
             p.parse(prob,y_ind,g_ind,varargin{:})
             in = p.Results;
             unmatched = [fieldnames(p.Unmatched),struct2cell(p.Unmatched)];

@@ -27,11 +27,8 @@ EI1 = stk_sampcrit_ei_eval(y_pred, sqrt(abs( MSE_pred )), obj.y_min);
 EI2 = stk_distrib_normal_cdf ( 0 , g_pred , sqrt(abs( MSE_g_pred )));
 EI2 = prod( EI2, 2);
 
-
 EI_val = [-EI1, -EI2];
 cons=[]; 
-
-
 
 end
 

@@ -6,11 +6,11 @@ clc
 rng(1)
 
 % Define problem structure
-n_x = 2;
-m_y = 1;
-m_g = 1;
-lb = [-5 0];
-ub = [10 15];
+n_x = 2;      % Number of parameters
+m_y = 1;      % Number of objectives
+m_g = 1;      % Number of constraint
+lb = [-5 0];  % Lower bound 
+ub = [10 15]; % Upper bound 
 
 % Create Problem object with optionnal parallel input as true
 prob = Problem( 'Branin', n_x, m_y, m_g, lb, ub , 'parallel', true);
@@ -18,10 +18,17 @@ prob = Problem( 'Branin', n_x, m_y, m_g, lb, ub , 'parallel', true);
 % Evaluate the model on 20 points created with LHS
 prob.Get_design( 20 ,'LHS' )
 
-obj = Gutmann_RBF_cheap_constraint(prob, 1, 1, @RBF, 'Cheap_cons_branin', 'fcall_max', 20);
+% Instantiate optimization object
+obj = Gutmann_RBF_cheap_constraint(prob, 1, 1, @RBF, 'Cheap_cons_branin', [10 15], ...
+    'fcall_max', 20);
+
+% Launch optimization object
 obj.Opt();
 
+% Plot kriging at end with constraint 
 [Y,X]=obj.meta_y.Plot( [1,2], [] );
+
+% Plot contour values and optimum
 g1 = Cheap_cons_branin(X);
 [~,g2] = Branin(X);
 
@@ -37,4 +44,7 @@ contour(X1,X2,Y1,30)
 contour(X1,X2,G1,[0 0],'r-')
 contour(X1,X2,G2,[0 0],'r-')
 plot(obj.x_min(:,1),obj.x_min(:,2),'ko','MarkerFaceColor','r')
+xlabel('$x_1$','interpreter','latex')
+ylabel('$x_2$','interpreter','latex')
+title('Optimum and constraints','interpreter','latex')
 hold off
