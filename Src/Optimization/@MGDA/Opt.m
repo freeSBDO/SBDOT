@@ -1,6 +1,6 @@
 function [] = Opt( obj )
 % OPT
-% Run the MGDA algorithm at x_start
+%   Run the MGDA algorithm at x_start
 
 if obj.display
     fprintf('[iter]    y\n')

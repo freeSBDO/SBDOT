@@ -1,12 +1,40 @@
 classdef MGDA < handle
     % MGDA
     % Multiple Gradient Descent Algorithm for Multipoint problem
+    %
+    % obj = MGDA( function_name, x_start, lb, ub, varargin)
+    %
+    % Mandatory inputs :
+    %   - function_name is a string or function handle of numerical model to call for evaluation
+    %   - x_start is the starting point of the algorithm (1 by m_x)
+    %   - lb is the lower bound of input space (row vector 1 by m_x)
+    %   - ub is the upper bound of input space (row vector 1 by m_x)
+    %
+    % Optional inputs [default value]:
+    %   - parallel is a boolean for parallel evaluation of function_name (true = allowed)
+    %   [false]
+    %   - display is a boolean for displaying information (true = allowed)
+    %   [true]
+    %   - TOL is the tolerance parameter for descent direction
+    %   [0]
+    %   - iter_max is the maximum number of iterations
+    %   [100]
+    %   - grad_available is a boolean to indicate if gradient is evaluated by the function file
+    %   If true, the function file has a second output with the gradient,
+    %   otherwise it is estimated by finite difference
+    %   [false]
+    %   - finite_diff_step is a row vector of finite difference step value per parameter
+    %   [1e-6, ... ,1e-6]
     
     properties
+        
+        % Mandatory inputs 
         function_name    % String or function handle for numerical model evaluation
         x_start          % Point to start the optimization
         lb               % Lower bound of the input space
         ub               % upper bound of the input space
+        
+        % Optional inputs (varargin) 
         display          % Logical value for displaying information during optimization
         parallel         % Logical value for allowing parallel evaluation of the function file
         TOL              % The tolerance value for descent direction condition
@@ -14,6 +42,7 @@ classdef MGDA < handle
         grad_available   % Logcical value to indicate if gradient is evaluated by the function file
         finite_diff_step % Vector of finite difference step value per parameter
         
+        % Computed variables
         m_x              % Dimension of the input space
         x_iter           % Inputs value at the current iteration
         y_iter           % Objectives values at the current iteration
@@ -76,7 +105,7 @@ classdef MGDA < handle
             obj.grad_available = in.grad_available;
             obj.iter_max = in.iter_max;
             obj.finite_diff_step = in.finite_diff_step;
-            if obj.display                
+            if obj.display
                 if isa(obj.function_name,'function_handle'), f_text=func2str(obj.function_name);else f_text=obj.function_name; end
                 fprintf(['MGDA initialized on ',f_text,' at ',num2str(x_start),'.\n'])
                 if obj.grad_available, fprintf(['Gradient is given by ',f_text,'.\n']); else fprintf('Gradient is evaluated by finite difference.\n'); end

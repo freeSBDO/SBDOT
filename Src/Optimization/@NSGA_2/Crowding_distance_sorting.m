@@ -1,5 +1,6 @@
 function [ Front_population ] = Crowding_distance_sorting( obj, int_Front_population, int_rank_pop )
 % CROWDING_DISTANCE_SORTING
+%   Sort population based on front number and the crowding distance
 
 N=0;
 iter=1;

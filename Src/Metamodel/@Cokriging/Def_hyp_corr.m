@@ -1,8 +1,9 @@
-function opts = Def_hyp_corr( obj , type, opts , clean )
-% DEF_HYP set the hyperparameter variables before training
+function opts = Def_hyp_corr( obj , type, opts )
+% DEF_HYP 
+%   set the hyperparameter variables before training
+%   - type : 'HF' or 'LF'
+%   - opts is the structure of options asked by ooDACE (and instanced previously in Train)
 %
-% Syntax :
-% []=obj.Def_hyp_corr(type);
 
 switch type    
     case 'HF'

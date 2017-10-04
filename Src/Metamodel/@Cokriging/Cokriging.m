@@ -1,10 +1,55 @@
 classdef Cokriging < Metamodel
     % COKRIGING class
     % Gaussian process based multifidelity metamodel using ooDACE lib
-    
+    %
+    % obj = Cokriging( prob, y_ind, g_ind, varargin)
+    %
+    % Mandatory inputs :
+    %   - prob is a Problem_multifi object, created with the appropriate class constructor
+    %   - y_ind is the index of the objective to optimize
+    %   - g_ind is the index of the constraint(s) to take into account
+    %
+    % Optional inputs [default value], 
+    % * has to be replaced by HF or LF depending on the option applies to 
+    % high fidelity model or low fidelity model :
+    %
+    %   - 'regpoly_*' is the regression order of Kriging
+    %   ['regpoly0'], 'regpoly1', 'regpoly2', 'regpoly3'
+    %	- 'corr_*' if the correlation function to use
+    %   ['corrmatern52'], 'correxp', 'corrgauss', 'corrmatern32'
+    %	- 'reg_*' is a boolean to activate regression (if true)
+    %   [false]
+    %	- 'hyp_corr_*' is the correlation length parameter (if set, it is not optimized)
+    %   []
+    %	- 'hyp_reg_*' is the Kriging regression parameter (if set, it is not optimized)
+    %   []
+    %   - 'rho' is the scaling factor between models (if set, it is not optimized)        
+    %   []
+    %	- 'hyp_corr0_*' is the initial correlation length for optimization
+    %   [Auto calibrate with training dataset]
+    %   - 'rho0' is the scaling factor between models (if set, it is not optimized)        
+    %   []
+    %	- 'lb_hyp_corr_*' is the lower bound of correlation length
+    %   [Auto calibrate with training dataset]
+    %	- 'ub_hyp_corr_*' is the upper bound of correlation length
+    %   [Auto calibrate with training dataset]
+    %	- 'lb_reg_*' is the lower bound of regression parameter
+    %   [Auto calibrate with training dataset]
+    %	- 'ub_reg_*' is the upper bound of regression parameter
+    %   [Auto calibrate with training dataset]
+    %   - 'lb_rho'is the lower bound of scaling factor  
+    %   [Auto calibrate with training dataset]   
+    %   - 'ub_rho'is the upper bound of scaling factor  
+    %   [Auto calibrate with training dataset]    
+    %	- 'estim_hyp_*' is the method for hyperparameter estimation
+    %   [@marginalLikelihood], @pseudoLikelihood
+    %	- 'go_opt_*' is a boolean to activate Global Optimization of hyp, local by default
+    %   [false], true 
+    %
     properties ( Access = public )
         
         % Optional inputs (varargin) 
+        % If its a cell, first value corresponds to LF model, second to HF.
         regpoly         % Regression order of Coriging
         corr            % Correlation function
         reg             % Boolean to activate regression
@@ -50,8 +95,8 @@ classdef Cokriging < Metamodel
             %   'rho'         []
             %   'hyp_corr0_*' [Auto calibrate with training dataset]
             %   'rho0'        [Auto calibrate with training dataset]
-            %   'lb_hyperp_*' [Auto calibrate with training dataset]     
-            %   'ub_hyperp_*' [Auto calibrate with training dataset]          
+            %   'lb_hyp_corr_*' [Auto calibrate with training dataset]     
+            %   'lb_hyp_corr_*' [Auto calibrate with training dataset]          
             %   'lb_reg_*'    [Auto calibrate with training dataset]           
             %   'ub_reg_*'    [Auto calibrate with training dataset] 
             %   'lb_rho'      [Auto calibrate with training dataset]           

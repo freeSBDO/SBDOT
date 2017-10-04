@@ -1,6 +1,6 @@
 function [ y ] = Robust_1D( x )
 % ROBUST_1D
-%
+%   For example script
 
 y = 5 - ...
     0.7 * exp( -(x-0.2).^2 ./ 0.04 ) - ...

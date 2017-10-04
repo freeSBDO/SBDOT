@@ -1,6 +1,6 @@
 function [ int_Front_population,int_rank_pop ] = Fast_non_dominated_sort( obj, y, pop_number )
 % FAST_NON_DOMINATED_SORT
-% fast_non_dominated_sort : Sort data based on the front rank
+%   Sort data based on the front rank
 
 y_comparaison = permute( y, [3 2 1] );
 

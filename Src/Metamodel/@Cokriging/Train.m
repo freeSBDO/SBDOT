@@ -8,7 +8,7 @@ function [] = Train( obj )
 obj.Train@Metamodel();
 
 if obj.prob.display, fprintf('\nTraining starting...');end
-
+% Define ooDace options for HF and LF models
 opts = ooDACE.CoKriging.getDefaultOptions();
 opts = obj.Def_hyp_corr('LF',opts);
 opts = obj.Def_hyp_corr('HF',opts);
@@ -16,6 +16,7 @@ opts = obj.Def_hyp_corr('HF',opts);
 opts.hpBounds = {[obj.lb_hyp_corr{1} ; obj.ub_hyp_corr{1}],...
     [obj.lb_hyp_corr{2} ; obj.ub_hyp_corr{2}]};
 
+% Rho
 if isempty(obj.rho) 
     if isempty( obj.lb_rho ) || isempty( obj.ub_rho )
         
@@ -69,12 +70,12 @@ end
 
 opts.rhoBounds = [obj.lb_rho ; obj.ub_rho];
 opts.rho0 = obj.rho0; 
-
+% Optimize hyperparameters
 obj.ck_oodace = ooDACE.CoKriging( opts, obj.hyp_corr0, obj.regpoly, obj.corr);
 obj.ck_oodace = obj.ck_oodace.fit(obj.x_train,obj.f_train);
 
 if obj.prob.display, corr_name=func2str(obj.corr{2}); fprintf(['\nCokriging with ',corr_name(22:end),'HF correlation function is created.\n\n']);end
-
+% Extract parameters with input space scaling
 hyp_corr_temp = 10.^obj.ck_oodace.getHyperparameters;
 obj.hyp_corr{1} = hyp_corr_temp(1,:);
 obj.hyp_corr{2} = hyp_corr_temp(2,:);

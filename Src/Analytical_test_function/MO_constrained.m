@@ -1,5 +1,6 @@
 function [ y, g ] = MO_constrained( x )
 % MO_CONSTRAINED 
+%   For example script
 
 y1=x(:,1);
 y2=(1+x(:,2))./x(:,1);

@@ -1,6 +1,6 @@
 function g = Cheap_cons_branin( x )
-%CHEAP_CONS_BRANIN Summary of this function goes here
-%   Detailed explanation goes here
+% CHEAP_CONS_BRANIN 
+%   An analytical constraint that is "cheap" to compute for example script
 
 
 X1 = (( x(:,1) + 5 ) ./ 15);

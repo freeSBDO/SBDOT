@@ -1,12 +1,11 @@
 function [] = Def_hyp_corr( obj )
-% DEF_HYP set the hyperparameter variables before training
+% DEF_HYP 
+%   Set the hyperparameter variables before training
 %
-% Syntax :
-% []=obj.Def_hyp_corr();
-
 
 i_var = 2; % HF def only for CoRBF 
 
+% Correlation length
 if isempty(obj.hyp_corr{i_var})
     
     % Default bounds
@@ -67,6 +66,7 @@ else
         
 end
 
+% Scaling factor
 if isempty(obj.rho) 
     if isempty( obj.lb_rho ) || isempty( obj.ub_rho )
         

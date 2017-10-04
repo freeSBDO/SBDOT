@@ -7,13 +7,16 @@ obj.Train@Metamodel();
 
 if obj.prob.display, fprintf('\nTraining starting...');end
 
+% Train LF model
 obj.RBF_c = RBF(obj.prob.prob_LF, obj.y_ind, obj.g_ind, ...
     'corr', obj.corr{1} ,'hyp_corr', obj.hyp_corr{1}, 'lb_hyp_corr', obj.lb_hyp_corr{1}, ...
     'ub_hyp_corr', obj.ub_hyp_corr{1}, ...
     'estimator', obj.estimator{1}, 'optimizer', obj.optimizer{1});
 
+% Get prediction on HF datapoints
 yc_e = obj.RBF_c.Predict(obj.prob.prob_HF.x);
 
+% Hyperparameters settings and optimization of difference model
 if isempty(obj.hyp_corr{2}) || isempty(obj.rho)
     
     obj.Def_hyp_corr(); % Auto calibrate with training dataset if needed
@@ -71,6 +74,7 @@ if isempty(obj.hyp_corr{2}) || isempty(obj.rho)
     
 end
 
+% Build difference model from previous hyperparameters obtained
 obj.RBF_d = RBF(obj.prob.prob_HF, obj.y_ind, obj.g_ind, ...
     'corr', obj.corr{2} ,'hyp_corr', obj.hyp_corr{2}, ...
     'shift_output',[ones(size(yc_e,1),1) -obj.rho*yc_e]);

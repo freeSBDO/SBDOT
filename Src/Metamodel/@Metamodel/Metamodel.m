@@ -1,8 +1,15 @@
 classdef Metamodel < handle
     % METAMODEL class
-    % Define basics features of all metamodel. 
+    % Define basics features of all metamodel.
     % Use as superclass, do not instantiate directly.
-    
+    %
+    % Optionnal inputs [default value] :
+    %	'shift_output' is a vector with 2 values for scaling the output [a b]
+    %   First value [a] is a scaling factor, second value [b] is sum to the scaled output
+    %   output_shifted = a * output + b
+    %   If empty, output not shifted.
+    %	[]
+    %
     properties ( Access = public )
         
         % Mandatory inputs
@@ -10,7 +17,7 @@ classdef Metamodel < handle
         y_ind          % Index of the  objective to surrogate
         g_ind          % Index of the contraint to surrogate
         
-        % Optional inputs (varargin) 
+        % Optional inputs (varargin)
         shift_output   % Vector with 2 values for scaling the output
         % First value is a scaling factor, second value is sum to the scaled output
         
@@ -43,11 +50,11 @@ classdef Metamodel < handle
             p.addOptional('shift_output', [], @(x)isnumeric(x));
             p.parse( prob, y_ind, g_ind, varargin{:} )
             in = p.Results;
-                        
-            % Checks 
+            
+            % Checks
             unmatched_params = fieldnames( p.Unmatched );
             for i = 1:length(unmatched_params)
-                warning('SBDOT:Metamodel:unmatched', ... 
+                warning('SBDOT:Metamodel:unmatched', ...
                     ['Options ''' unmatched_params{i} ''' was not recognized']);
             end
             assert(~(isempty(y_ind)&&isempty(g_ind)),...
@@ -58,13 +65,13 @@ classdef Metamodel < handle
                 'y_ind ou g_ind could not be both nonempty');
             if ~isempty(in.shift_output)
                 assert( size(in.shift_output, 2) == 2,....
-                'SBDOT:Metamodel:shift_output_size',...
-                ['shift_output is a numeric vector of size 1-by-2. ',...
-                '[product factor , sum factor]']);
+                    'SBDOT:Metamodel:shift_output_size',...
+                    ['shift_output is a numeric vector of size 1-by-2. ',...
+                    '[product factor , sum factor]']);
             end
             
             % Store
-            obj.prob = in.prob; 
+            obj.prob = in.prob;
             obj.y_ind = in.y_ind;
             obj.g_ind = in.g_ind;
             obj.shift_output = in.shift_output;

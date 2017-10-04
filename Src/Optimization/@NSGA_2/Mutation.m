@@ -1,6 +1,6 @@
 function [ x_mutated ] = Mutation( obj, x_crossed )
 % MUTATION 
-% Mutate parameters values using gaussian mutation
+%   Mutate parameters values using gaussian mutation
 
 mutation_flag = rand( obj.n_pop, obj.n_var ); % rand for mutation selection
 

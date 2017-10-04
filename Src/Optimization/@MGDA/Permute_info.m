@@ -1,4 +1,4 @@
-function [ g, i_permute, C ] = permute_info( ~, i_perm1, i_perm2, i_permute, g, C )
+function [ g, i_permute, C ] = Permute_info( ~, i_perm1, i_perm2, i_permute, g, C )
 % PERMUTE_INFO : Permutation for MGDA multipoint algorithm
 %
 %   g is the gradient matrix to permute

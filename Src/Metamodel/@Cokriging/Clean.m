@@ -1,9 +1,16 @@
 function [] = Clean( obj , type )
-%CLEAN Delete some parameter variables for re-estimation
-% type is a cell of string
+% CLEAN
+%   Delete some parameter variables for re-estimation
+%   - type is a cell of string depending on variables to clean
+%   'all', 'corr_HF', 'corr_LF', 'reg_HF', 'reg_LF', 'rho'
+%
+%   Syntax examples :
+%       obj.Clean({'all'});
+%       obj.Clean({'corr_HF','corr_LF'});
+
 
 if strcmp(type{1},'all')
-    type = {'corr_HF','corr_LF','reg_HF','reg_LF','rho'};
+    type = {'corr_HF','corr_HF','reg_HF','reg_LF','rho'};
 end
 
 

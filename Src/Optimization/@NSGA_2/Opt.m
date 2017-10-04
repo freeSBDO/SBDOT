@@ -1,5 +1,6 @@
 function [] = Opt( obj )
 % OPT 
+%   Launch NSGA-II algorithm
 
 if obj.display
     fprintf(sprintf('NSGA-II current generation : %3.0i / %3.0i',obj.n_gen,obj.max_gen))

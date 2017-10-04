@@ -2,25 +2,56 @@ classdef NSGA_2 < handle
     % NSGA_2 
     % Nondominated Sorting Genetic Algorithm II
     % For contrained and unconstrained problems
+    %
+    % obj = NSGA_2( function_name, lb, ub, n_var, varargin)
+    %
+    % Mandatory inputs :
+    %   - function_name is a string or function handle of numerical model to call for evaluation
+    %   - lb is the lower bound of input space (row vector 1 by m_x)
+    %   - ub is the upper bound of input space (row vector 1 by m_x)
+    %   - n_var is the number of parameters (corresponds to m_x)
+    %
+    % Optional inputs [default value]:
+    %   - n_pop is the population size
+    %   [100]
+    %   - max_gen is the maximum number of generation
+    %   [100]
+    %   - fraction_croisement is the probability of crossing
+    %   [2/n_var]
+    %   - ratio_croisement is the ratio for crossing individuals
+    %   [1.2 ]
+    %   - fraction_mutation is the probability of mutation
+    %   [2/n_var]
+    %   - scale_mutation is a scaling parameter of mutation
+    %   [0.1]
+    %   - shrink_mutation is the deviation of gaussian mutation
+    %   [0.5]
+    %   - display is a boolean for displaying information (true = allowed)
+    %   [true]
     
     properties
+        
+        % Mandatory inputs
         function_name       % String or function handle for numerical model evaluation
         lb                  % dimension of the input space (scalar value, positive integer)
-        ub                  % number of objectives (scalar value, positive integer)        
-        n_pop               % population number(=100 by default)
+        ub                  % number of objectives (scalar value, positive integer)  
+        n_var               % number of parameters of objective function
+        
+        % Optional inputs (varargin) 
+        n_pop               % population number(=100 by default) 
+        
         max_gen             % maximal number of generations (=100 by default)
         fraction_croisement % probability of crossing (=2/n_var by default)
         ratio_croisement    % parameter for crossing (=1.2 by default)
         fraction_mutation   % probability of mutation (=2/n_var by default)
         scale_mutation      % scale parameter of mutation (=0.1 by default)
         shrink_mutation     % deviation of gaussian mutation (=0.5 by default)
-        display             % display informations (=0 by default)
-        n_var               % number of parameters of objective function
+        display             % display informations (=0 by default)     
         
-        n_gen             % Actual generation number
-        crowding_distance % Crowding distance of individuals
-        rank_pop          % Front rank of individuals
-        
+        % Computed variables
+        n_gen               % Actual generation number
+        crowding_distance   % Crowding distance of individuals
+        rank_pop            % Front rank of individuals        
         x                  % resulting input
         y                  % resulting output
         g                  % resulting constraint

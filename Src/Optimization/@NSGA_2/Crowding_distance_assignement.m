@@ -1,6 +1,6 @@
 function [ crowding_distance ] = Crowding_distance_assignement( obj, I, y )
 % CROWDING_DISTANCE_ASSIGNEMENT
-% crowding_distance_assignement : Calculate crowding distance
+% 	Calculate crowding distance
 
 n = length(I);
 max_y = max( y (I,:) );
