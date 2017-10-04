@@ -1,6 +1,6 @@
 function [ crit ] = Gutmann_crit( obj, x ,min_target )
 % GUTMANN_CRIT
-% 
+%   Evaluate the Gutmann criterion
 
 [ y_pred, power ] = obj.meta_y.Predict(x);
 

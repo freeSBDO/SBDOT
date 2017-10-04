@@ -13,7 +13,7 @@ if obj.m_g >= 1
     
     % Find the point that maximize EI times Pf in the Pareto front
     prod_fitness = prod( nsga.y ,2 );
-    cons_tol = all(nsga.g <= 0, 2);
+    cons_tol = all(nsga.g <= 0, 2); % for cheap constraint
     prod_fitness_best = find( prod_fitness == max( prod_fitness ) & cons_tol ...
         , 1 );
     

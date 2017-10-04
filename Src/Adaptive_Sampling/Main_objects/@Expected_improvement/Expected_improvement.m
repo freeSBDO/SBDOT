@@ -1,7 +1,7 @@
 classdef Expected_improvement < Adaptive_sampling
     % EXPECTED_IMPROVEMENT
     % Efficient Global Optimization algorithm.
-    % Single objective kriging (or cokriging) based optimization method.
+    % Single objective kriging based optimization method.
     % Constrained or unconstrained problems.
     %
     % obj = Expected_improvement(prob, y_ind, g_ind, meta_type, varargin)
@@ -10,12 +10,12 @@ classdef Expected_improvement < Adaptive_sampling
     %   - prob is a Problem/Problem_multifi object, created with the appropriate class constructor
     %   - y_ind is the index of the objective to optimize
     %   - g_ind is the index of the constraint(s) to take into account
-    %   - meta_type is the type of metamodel to use (@Kriging or @Cokriging)
+    %   - meta_type is the type of metamodel to use @Kriging 
     %
     % Optional inputs [default value]:
     %   - 'options_optim' is a structure for optimization of EI criterion
     %   see Set_options_optim for example of parameters structure
-    %   * Optional inputs for Kriging or Cokriging apply
+    %   * Optional inputs for Kriging apply
     %   * Optional inputs for Adaptive_sampling apply
     %
     

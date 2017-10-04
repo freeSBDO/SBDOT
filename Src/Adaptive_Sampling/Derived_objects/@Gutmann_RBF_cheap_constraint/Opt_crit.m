@@ -12,7 +12,7 @@ else
     n_x = obj.prob.prob_HF.n_x;   
     
 end
-
+% See Gutmann algorithm for setting target value
 [ ~, alpha ] = sort( y );  
 
 W_n = ( mod( obj.cycle_length - n_x + obj.n0, obj.cycle_length + 1 ) ...
@@ -37,8 +37,10 @@ end
 
 [ ~, min_current ] = cmaes(@obj.Obj_predict, Initial_point, [],obj.options_optim); 
 
+% Set target value
 min_target = min_current - W_n *( y(alpha(obj.k_n(end,:))) - min_current ) - 10*eps;
 
+% Optimize criterion
 [ obj.x_new , obj.Gutmann_val ] = cmaes( @obj.Gutmann_crit, ...
     Initial_point, [], obj.options_optim, min_target);
 

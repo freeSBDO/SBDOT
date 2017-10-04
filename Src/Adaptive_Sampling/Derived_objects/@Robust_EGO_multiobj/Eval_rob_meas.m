@@ -1,5 +1,6 @@
 function [ y_rob, mse_y_rob, g_rob, mse_g_rob ] = Eval_rob_meas( obj, x_test )
 % EVAL_ROB_MEAS
+%   Use the m_y objectives prediction to compute the robustness measure
 
 nb_points = size(x_test,1);
 

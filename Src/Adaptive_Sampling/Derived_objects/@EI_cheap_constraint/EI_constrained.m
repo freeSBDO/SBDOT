@@ -29,6 +29,7 @@ EI2 = prod( EI2, 2);
 
 
 EI_val = [-EI1, -EI2];
+% cheap constraint
 cons = feval( obj.func_cheap, x_test ); 
 
 end

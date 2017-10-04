@@ -12,7 +12,7 @@ else
     [ y_pred, MSE_pred ] = obj.meta_y.Predict( x_test );
 end
 EI_val = -stk_sampcrit_ei_eval(y_pred, sqrt(abs( MSE_pred )), obj.y_min);
-
+% Cheap constraint
 EI_val( any( cheap_cons > 0, 2 ) , : ) = nan( size( sum( any(cheap_cons<0,2) , 1 ) ) );
 end
 

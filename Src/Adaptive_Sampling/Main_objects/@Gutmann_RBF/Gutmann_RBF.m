@@ -4,7 +4,7 @@ classdef Gutmann_RBF < Adaptive_sampling
     % Single objective RBF (or co-RBF) based optimization method.
     % unconstrained or constrained problems.
     % 
-    % obj = Gutmann_RBF(prob, y_ind, g_ind,varargin)
+    % obj = Gutmann_RBF(prob, y_ind, g_ind, meta_type, varargin)
     %    
     % Mandatory inputs :
     %   - problem is a Problem/Problem_multifi object, created with the appropriate class constructor

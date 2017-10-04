@@ -1,11 +1,25 @@
 classdef Gutmann_RBF_cheap_constraint < Gutmann_RBF
-    % EI_CHEAP_CONSTRAINT
+    % GUTMANN_RBF_CHEAP_CONSTRAINT 
+    % Gutmann optimization algorithm with RBF
+    % Single objective RBF based optimization method.
+    % When cheap to call constraint function is available
+    % 
+    % obj = Gutmann_RBF(prob, y_ind, g_ind, meta_type, func_cheap, feas_point, varargin)
+    %    
+    % Mandatory inputs :
+    %   * see Gutmann_RBF help
+    %   - func_cheap is a string or function handle of numerical model to call for 
+    %   cheap constraint evaluation.
+    %   - feas_point is a feasible point regarding the cheap constraint in
+    %   order to have a good starting point for the optimization
     %
-    
+    % Optional inputs [default value]:
+    %   * see Gutmann_RBF help
+    %
     properties
         
-        func_cheap
-        feas_point
+        func_cheap % String or function handle of cheap constraint model
+        feas_point % Good starting point for optimization in feasible area
         
     end
     
