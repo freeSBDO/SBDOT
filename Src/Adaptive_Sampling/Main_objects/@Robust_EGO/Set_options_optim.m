@@ -1,6 +1,8 @@
 function [] = Set_options_optim( obj, user_opt )
 %SET_OPTIONS_OPTIM Set options for optimization
 %   User defined or basic options
+%   options_optim1 is for EI optimization
+%   options_optim2 is for environmental parameters selection before evaluation
 
 if isempty(obj.g_ind)
     

@@ -1,6 +1,6 @@
 function [ obj_val ] = Optim_meas( obj, x )
 % OPTIM_MEAS
-%
+%   Objective function for optimization of robustness measure on prediction
 
 [ obj_val, ~, g_rob ] = obj.Eval_rob_meas(x);
 

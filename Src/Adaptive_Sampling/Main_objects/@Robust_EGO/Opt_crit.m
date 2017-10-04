@@ -1,11 +1,11 @@
 function [] = Opt_crit( obj )
 %OPT_CRIT Main method
-% Select the new point to evaluate
+% Select the new point to evaluate for adaptive sampling sequence
 
 % Build CRN matrix
 obj.Compute_CRN();
-obj.Find_min_value_opt(); % Find actual minimum value
-obj.Find_min_value_prob();
+obj.Find_min_value_opt(); % Find actual minimum value on prediction
+obj.Find_min_value_prob(); % Find actual minimum value on "training data"
 
 if obj.m_g >= 1
     
@@ -34,6 +34,7 @@ else
 
 end
 
+% Select the value of environmental variable to evaluate
 if any(obj.env_lab)
     
     Initial_point2 = Unscale_data( rand( 1, nnz(obj.env_lab) ), ...

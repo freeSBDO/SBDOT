@@ -1,11 +1,12 @@
 function [ mean, variance, grad_mean, grad_variance ] = Predict( obj, x_eval )
-    % PREDICT Predict the output value at new input points
-    %
-    % Syntax :
-    % Mean=obj.Predict(x_eval);
-    % [Mean,Variance]=obj.Predict(x_eval);
-    % [Mean, Variance, Grad_mean]=obj.Predict(x_eval);
-    % [Mean, Variance, Grad_mean, Grad_variance]=obj.Predict(x_eval);
+% PREDICT 
+%   Predict the output value at new input points
+%
+%   Syntax examples :
+%       Mean=obj.Predict(x_eval);
+%       [Mean,Variance]=obj.Predict(x_eval);
+%       [Mean, Variance, Grad_mean]=obj.Predict(x_eval);
+%       [Mean, Variance, Grad_mean, Grad_variance]=obj.Predict(x_eval);
 
     % Superclass method
     x_eval_scaled = obj.Predict@Metamodel( x_eval );

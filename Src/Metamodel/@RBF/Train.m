@@ -1,8 +1,9 @@
 function [] = Train( obj )
-% TRAIN learn the statistical relationship of the data
+% TRAIN 
+%   Learn the statistical relationship of the data
 %
-% Syntax :
-% []=obj.train();
+% Syntax examples :
+%   []=obj.train();
 
 % Superclass method
 obj.Train@Metamodel();
@@ -89,9 +90,11 @@ end
 
 obj.corr_mat = corr_mat_temp + eye( size(corr_mat_temp,1) )*10000*eps;
 
+% Solve the system
 param = [ obj.corr_mat obj.f_mat; obj.f_mat' obj.zero_mat ] \ ...
     [ obj.f_train ; zeros( size( obj.f_mat , 2 ) , 1 ) ];
 
+% Extract parameters
 obj.beta = param( 1:obj.prob.n_x , 1 );
 
 obj.alpha = param( obj.prob.n_x+1 : end , 1 );

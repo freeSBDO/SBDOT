@@ -1,6 +1,7 @@
 function [ x_rob ] = X_to_rob( obj, x)
 % X_TO_ROB
-% for mse evaluation at current point
+% Prepare x for mse evaluation
+% Environmental variables are set to their nominal values
 
 for i = 1:obj.prob.m_x
     

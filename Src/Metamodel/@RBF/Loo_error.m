@@ -1,7 +1,7 @@
 function LOO = Loo_error( obj, theta )
-% LOO_ERROR Estimates LOO error for a given theta (Rippa formula)
-%
-% theta is the hyperparameter vector (in 10^ scale)
+% LOO_ERROR 
+%   Estimates LOO error for a given theta (Rippa formula)
+%   - theta is the hyperparameter vector (in 10^ scale)
 
 [corr_mat, f_mat, zero_mat] = feval( obj.corr, obj, obj.diff_squared, theta);
 

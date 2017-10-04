@@ -15,7 +15,7 @@ classdef Robust_EGO < Adaptive_sampling
     %   * env_lab, cor_lab, phot_lab, unc_type, unc_var, meas_type_y, meas_type_g
     %   - CRN_samples is the number of Common Random Numbers Monte Carlo samples (500 is a good first value)
     %   
-    % More information for robust_def :
+    % More information for robust_def (see also Compute_CRN method help) :
     %   * env_lab is a boolean row vector of size m_x which is true when
     %   the parameter is environmental 
     %   * cor_lab is a boolean row vector of size m_x which is true when
@@ -26,6 +26,9 @@ classdef Robust_EGO < Adaptive_sampling
     %   * unc_type is a cell row vector of size m_x with the type of
     %   uncertainty of the parameter ( 'det' for deterministic, 'uni' for
     %   uniform, 'gauss' for gaussian )
+    %   * unc_var is a row vector of size m_x which corresponds to the
+    %   maximum realization of the random variable. For example, for the
+    %   gaussian uncertainty type, it corresponds to the famous "3 sigma".    %   
     %   * meas_type_y is the robustness measure for the objective ('Mean_meas',
     %   'Var_meas', 'Worstcase_meas', 'Mixed_meas')
     %   * meas_type_y (optional) is the robustness measure for the

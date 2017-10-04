@@ -2,6 +2,31 @@ classdef Problem < handle
     % PROBLEM class
     % Define the features of the model to later use for metamodeling or
     % optimization purpose.
+    %
+    % obj = Problem( function_name, m_x, m_y, m_g, lb, ub, varargin )
+    %
+    % Mandatory inputs :
+    %   - function_name is a string or function handle of numerical model to call for evaluation
+    %   - m_x is the dimension of the input space
+    %   - m_y is the number of objectives
+    %   - m_g is the number of contraints
+    %   - lb is the lower bound of input space (row vector 1 by m_x)
+    %   - ub is the upper bound of input space (row vector 1 by m_x)
+    %
+    % Optional inputs [default value]:
+    %   - parallel is a boolean for parallel evaluation of function_name (true = allowed)
+    %   [false]
+    %   - display is a boolean for displaying information (true = allowed)
+    %   [true]
+    %   - round is a boolean for rounding input values before evaluation (true = to round)
+    %   [false] 
+    %   - round_range is the rounding range for input values (only if round is true)
+    %   [] see Round_data in Tools for settings
+    %   - tol_eval is the tolerance value on distance between already evaluated points and new one.
+    %   [1e-4]
+    %   - save_file is the filename for .mat save of evaluations (save only if not empty)
+    %   []
+    %
         
     properties ( Access = public )
         

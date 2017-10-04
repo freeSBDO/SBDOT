@@ -2,7 +2,14 @@ classdef Problem_multifi < handle
     % PROBLEM_MULTIFI class
     % Define the features of the model to later use for multifidelity 
     % metamodeling or optimization purpose.
-    
+    %
+    % obj = Problem_multifi( prob_LF, prob_HF )
+    %
+    % Mandatory inputs :
+    %   - prob_LF is a Problem object of the low fidelity model
+    %   - prob_HF is a Problem object of the high fidelity model
+    %
+        
     properties
         
         % Mandatory inputs

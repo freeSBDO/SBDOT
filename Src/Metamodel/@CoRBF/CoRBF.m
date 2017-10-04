@@ -1,9 +1,45 @@
 classdef CoRBF < Metamodel
-    %CORBF Summary of this class goes here
-    %   Detailed explanation goes here
+    % CoRBF Class
+    % Radial Basis Function metamodel for multifidelity problem
+    %
+    % obj = CoRBF( prob, y_ind, g_ind, varargin)
+    %
+    % Mandatory inputs :
+    %   - prob is a Problem_multifi object, created with the appropriate class constructor
+    %   - y_ind is the index of the objective to optimize
+    %   - g_ind is the index of the constraint(s) to take into account
+    %
+    % Optional inputs [default value], 
+    % * has to be replaced by HF or LF depending on the option applies to 
+    % high fidelity model or low fidelity model :
+    %
+    %   'corr_*' is the correlation function to use     
+    %   ['Corrmatern52'], 'Corrgauss', 'Corrlinear' , 'Corrthinplatespline' , 'Corrmultiquadric' , 'Corrcubic', 'Corrinvmultiquadric', 'Corrmatern32'
+    %   'hyp_corr_*' is the correlation length parameter (if set, it is not optimized)
+    %   []
+    %   'rho' is the scaling factor between models (if set, it is not optimized)        
+    %   []
+    %   'hyp_corr0_*' is the initial correlation length for optimization
+    %   [Auto calibrate with training dataset]
+    %   'rho0' is the initial scaling factor for optimization        
+    %   [Auto calibrate with training dataset]
+    %   'lb_hyperp_*' is the lower bound of correlation length
+    %   [Auto calibrate with training dataset]
+    %   'ub_hyperp_*' is the upper bound of correlation length
+    %   [Auto calibrate with training dataset]
+    %   'lb_rho' is the lower bound of scaling factor  
+    %   [Auto calibrate with training dataset]
+    %   'ub_rho' is the upper bound of scaling factor       
+    %   [Auto calibrate with training dataset]
+    %   'estimator_*' is the method for hyperparameter estimation 
+    %   ['LOO'] , 'CV'
+    %   'optimizer_*' is the optimizer algorithm to select 
+    %   ['CMAES'] , 'fmincon'
+    %
     
     properties
         
+        % Optional inputs 
         corr        % Correlation function of coRBF
         hyp_corr    % Correlation length paramete (log scale)
         lb_hyp_corr % Lower bound of correlation length
@@ -16,8 +52,9 @@ classdef CoRBF < Metamodel
         estimator   % Method for estimating parameters
         optimizer   % Optimization method for hyperparameters
                 
-        RBF_c % Low fidelity RBF (coarse)
-        RBF_d % Difference model RBF
+        % Computed variables
+        RBF_c       % Low fidelity RBF (coarse)
+        RBF_d       % Difference model RBF
                
     end
     

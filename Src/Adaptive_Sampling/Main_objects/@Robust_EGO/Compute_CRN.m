@@ -1,6 +1,22 @@
 function [] = Compute_CRN( obj )
 % COMPUTE_CRN
-%
+%   1) a variable type is either determinist, uniform or gaussian
+%   * determinist : the variable is not random (but still need to be optimized)
+%   * uniform : the random variable is uniform
+%   * gauss : the random variable is gaussian
+%   2) it can be at the same time correlated, photonic and environnemental
+%   * correlated mean that the random sampling used in monte carlo is the
+%   same for all correlated variables that share the same type
+%   * photonic means that the random variable interval is +-10% of its
+%   nominal value, unc_var parameter is not used here.
+%   * environnemental means that the bounds of the parameters is the random
+%   variable interval. unc_var and parameter bounds has to be set accordingly : 
+%   mean_value + unc_var = ub ; mean_value - unc_var = lb
+%   if it is also photonic : mean_value + 10% of mean_value = ub
+%   3) if the variable is not photonic or environnemental it is classic
+%   * the random interval is directly draw from the distribution
+%   4) bounds for robustness are automatically set (lb_rob and
+%   ub_rob)
 
 obj.CRN_matrix = ones( obj.CRN_samples, obj.prob.m_x );
 
@@ -34,8 +50,9 @@ for i = 1:obj.prob.m_x
                 obj.lb_rob(1,i) = 1.1 * obj.prob.lb(i);
                 obj.ub_rob(1,i) = 0.9 * obj.prob.ub(i);
                 
-            else                
-                rand_uni2 = ( rand_uni1*obj.unc_var(i) ) - (obj.unc_var(i)/2);
+            else
+                % min and max =  -+obj.unc_var
+                rand_uni2 = ( rand_uni1*obj.unc_var(i) ) - (obj.unc_var(i));
             end
             
             % Environnemental
@@ -50,8 +67,9 @@ for i = 1:obj.prob.m_x
             if test_classic == 0 
                 
                 obj.classic_lab(i) = 1;
-                obj.lb_rob(1,i) = obj.prob.lb(i) + obj.unc_var(i)/2;
-                obj.ub_rob(1,i) = obj.prob.ub(i) - obj.unc_var(i)/2;
+                % min and max =  -+obj.unc_var
+                obj.lb_rob(1,i) = obj.prob.lb(i) + obj.unc_var(i);
+                obj.ub_rob(1,i) = obj.prob.ub(i) - obj.unc_var(i);
                 
             end
             
@@ -74,7 +92,7 @@ for i = 1:obj.prob.m_x
                 
             else
                 % min and max =  -+obj.unc_var
-                rand_gauss2 = rand_gauss1*5*obj.unc_var(i);                 
+                rand_gauss2 = rand_gauss1*10*obj.unc_var(i);                 
             end
             
             % Environnemental
@@ -89,8 +107,9 @@ for i = 1:obj.prob.m_x
             if test_classic == 0 
                 
                 obj.classic_lab(i) = 1;
-                obj.lb_rob(1,i)=obj.prob.lb(i) + obj.unc_var(i)/2;
-                obj.ub_rob(1,i)=obj.prob.ub(i) - obj.unc_var(i)/2;
+                % min and max =  -+obj.unc_var
+                obj.lb_rob(1,i)=obj.prob.lb(i) + obj.unc_var(i);
+                obj.ub_rob(1,i)=obj.prob.ub(i) - obj.unc_var(i);
                 
             end
             

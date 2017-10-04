@@ -1,6 +1,7 @@
 function [] = Conv_check_crit( obj )
 % CONV_CHECK_CRIT Checks for convergence criterion
 % EI  / y_min <= Tol_conv on Tol_inarow successive iterations
+% might not be relevant for variance measure ??
 
 % Convergence criterion update
 obj.conv_crit = abs( obj.EI_val / obj.y_min );

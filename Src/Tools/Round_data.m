@@ -1,8 +1,8 @@
 function [ x_round ] = Round_data( x, range )
     % ROUND_DATA Round input based on user scale
     %
-    %   *x_scaled (n by m_x matrix) is the scaled input matrix of the dataset
-    %   *range is a vector of value corresponding to the user precision needed.
+    %   *x (n by m_x matrix) is the scaled input matrix of the dataset
+    %   *range is a vector (1 by m_x) of value corresponding to the user precision needed.
     %
     % Syntax :
     % [x_round]=Round_data(x,range);

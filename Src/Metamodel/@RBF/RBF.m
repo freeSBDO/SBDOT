@@ -1,6 +1,28 @@
 classdef RBF < Metamodel
-    % RBF Classe
+    % RBF Class
     % Radial Basis Function metamodel
+    %
+    % obj = RBF( prob, y_ind, g_ind, varargin)
+    %
+    % Mandatory inputs :
+    %   - prob is a Problem object, created with the appropriate class constructor
+    %   - y_ind is the index of the objective to optimize
+    %   - g_ind is the index of the constraint(s) to take into account
+    %
+    % Optional inputs [default value]:
+    %	- corr is the correlation function to use
+    %   ['Corrmatern52'], 'Corrgauss', 'Corrlinear' , 'Corrthinplatespline' , 'Corrmultiquadric' , 'Corrcubic', 'Corrinvmultiquadric', 'Corrmatern32'
+    %	- hyp_corr is the correlation length parameter (if set, it is not optimized)
+    %   []
+    %	- lb_hyp_corr is the lower bound of correlation length
+    %   [Auto calibrate with training dataset]
+    %	- ub_hyp_corr is the upper bound of correlation length
+    %   [Auto calibrate with training dataset]
+    %	- estimator is the method for hyperparameter estimation
+    %   ['LOO'] , 'CV'
+    %	- optimizer is the optimizer algorithm to select
+    %   ['CMAES'] , 'fmincon'
+    %
     
     properties
         

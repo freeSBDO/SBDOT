@@ -1,20 +1,27 @@
 function [ y_rob, mse_y_rob, g_rob, mse_g_rob ] = Eval_rob_meas( obj, x_test )
 % EVAL_ROB_MEAS
+%   x_test are the nb_points to evaluate
+%   Robustness measure is then compute on their evaluations
 
 nb_points = size(x_test,1);
 
+% Apply uncertainties on relevant parameters
 x_CRN = obj.Update_CRN(x_test);
 
+% Get prediction on objectives
 if isequal(obj.meta_type,@Q_kriging)
     n_test = size(x_test,1);
-    [ y_pred, mse_y_pred ] = obj.meta_y.Predict( x_CRN,repmat(obj.QV_val,n_test,1) );
+    [ y_pred ] = obj.meta_y.Predict( x_CRN,repmat(obj.QV_val,n_test,1) );
+    [ ~, mse_y_rob ] = obj.meta_y.Predict( obj.X_to_rob(x_test),repmat(obj.QV_val,n_test,1) );
 else
-    [ y_pred, mse_y_pred ] = obj.meta_y.Predict( x_CRN );
+    [ y_pred ] = obj.meta_y.Predict( x_CRN );
+    [ ~, mse_y_rob ] = obj.meta_y.Predict( obj.X_to_rob(x_test) );
 end
 
-[ ~, mse_y_rob ] = obj.meta_y.Predict( obj.X_to_rob(x_test) );
+% Evaluate robustness measure 
 y_rob = feval( obj.meas_type_y, obj, y_pred, nb_points );
 
+% Same for constraints
 if obj.m_g > 0
     
     for i = 1 : obj.m_g

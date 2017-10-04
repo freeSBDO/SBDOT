@@ -1,5 +1,5 @@
 function [] = Find_min_value_prob( obj )
-% FIND_MIN_VALUE
+% FIND_MIN_VALUE_PROB
 % Find the actual minimum value of the optimization problem in the already evaluated points
 
 [y_prob,~,g_prob,~] = obj.Eval_rob_meas(obj.prob.x(:,~obj.env_lab));
@@ -15,9 +15,10 @@ else
     y_min_prob = min( y_prob );
     
 end
-    ind_min = find( y_prob == y_min_prob , 1 ); 
+% Minimum location
+ind_min = find( y_prob == y_min_prob , 1 );
 
-    x_min_prob = obj.prob.x( ind_min ,~obj.env_lab );
+x_min_prob = obj.prob.x( ind_min ,~obj.env_lab );
 
 obj.hist.y_min_prob = [ obj.hist.y_min_prob ; y_min_prob ];
 obj.hist.x_min_prob = [ obj.hist.x_min_prob ; x_min_prob ];

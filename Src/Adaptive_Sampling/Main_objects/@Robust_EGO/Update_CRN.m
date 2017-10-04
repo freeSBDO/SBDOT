@@ -1,9 +1,19 @@
 function [ x_CRN ] = Update_CRN( obj, x_test )
 % UPDATE_CRN
+%   (see also Compute_CRN help)
+%   * photonic variable :
+%   phot_int = CRN_mat * cd_min (which is the minimum values of photonic variables)
+%   x_CRN = phot_int + x_test (+-10% of minimum photonic parameters values)
+%   * environmental variable :
+%   x_CRN = CRN_mat 
+%   ** if a variable is photonic and environmental, the photonic sequence
+%   is used.
+%   * classic variable
+%   x_CRN = CRN_mat + x_test
 
 x_CRN = zeros( size(x_test,1) * obj.CRN_samples, obj.prob.m_x );
 
-% Minimum length of correlated variables
+% Minimum length of photonic variables
 cd_min = repmat( min(x_test(:,obj.phot_lab),[],2),1,nnz(obj.phot_lab)); 
 
 phot_int = bsxfun( @times,...

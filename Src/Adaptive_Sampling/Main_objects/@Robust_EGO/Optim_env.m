@@ -1,5 +1,10 @@
 function [ obj_val ] = Optim_env( obj, x_env, x_new_rob )
 % OPTIM_ENV
+%   Objective function for selection of environmental parameters values before evaluation
+%   The point with the maximum prediction error is selected
+%   
+%   * x_env are the environmental values to try
+%   * x_new_rob is the optimum of EI criterion obtained previously in Opt_crit
 %
 
 nbr_points = size(x_env,1);

@@ -1,7 +1,41 @@
 classdef Kriging < Metamodel
     % KRIGING class
     % Gaussian process based metamodel using ooDACE lib
-    
+    %
+    % obj = Kriging( prob, y_ind, g_ind, varargin)
+    %
+    % Mandatory inputs :
+    %   - prob is a Problem object, created with the appropriate class constructor
+    %   - y_ind is the index of the objective to optimize
+    %   - g_ind is the index of the constraint(s) to take into account
+    %
+    % Optional inputs [default value]:
+    %   - regpoly is the regression order of Kriging
+    %   ['regpoly0'], 'regpoly1', 'regpoly2', 'regpoly3'
+    %	- corr if the correlation function to use
+    %   ['corrmatern52'], 'correxp', 'corrgauss', 'corrmatern32'
+    %	- reg is a boolean to activate regression (if true)
+    %   [false]
+    %	- hyp_corr is the correlation length parameter (if set, it is not optimized)
+    %   []
+    %	- hyp_reg is the Kriging regression parameter (if set, it is not optimized)
+    %   []
+    %	- hyp_corr0 is the initial correlation length for optimization
+    %   [Auto calibrate with training dataset]
+    %	- lb_hyp_corr is the lower bound of correlation length
+    %   [Auto calibrate with training dataset]
+    %	- ub_hyp_corr is the upper bound of correlation length
+    %   [Auto calibrate with training dataset]
+    %	- lb_hyp_reg is the lower bound of regression parameter
+    %   [Auto calibrate with training dataset]
+    %	- ub_hyp_reg is the upper bound of regression parameter
+    %   [Auto calibrate with training dataset]
+    %	- estim_hyp          % Method for hyperparameter estimation
+    %   [@marginalLikelihood], @pseudoLikelihood
+    %	- go_opt is a boolean to activate Global Optimization of hyp, local by default
+    %   [false], true 
+    %
+        
     properties ( Access = public )
         
         % Optional inputs (varargin) 

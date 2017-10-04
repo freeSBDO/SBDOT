@@ -1,9 +1,11 @@
 function [ y_pred, power ] = Predict( obj, x_eval )
-% PREDICT Predict the output value at new input points
+% PREDICT 
+%   Predict the output value at new input points
+%   - power is a measure of prediction error (from Gutmann)
 %
-% Syntax :
-% y_pred=obj.Predict(x_eval);
-% [y_pred, power]=obj.Predict(x_eval);
+%   Syntax examples :
+%       y_pred=obj.Predict(x_eval);
+%       [y_pred, power]=obj.Predict(x_eval);
 
 % Superclass method
 x_eval_scaled = obj.Predict@Metamodel( x_eval );

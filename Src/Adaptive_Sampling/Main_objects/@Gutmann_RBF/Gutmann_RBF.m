@@ -13,7 +13,7 @@ classdef Gutmann_RBF < Adaptive_sampling
     %   - meta_type is the type of metamodel to use (@RBF or @CoRBF)
     %
     % Optional inputs [default value]:
-    %   - 'cycle_length' parameter for the trade of between exploration and explotation 
+    %   - 'cycle_length' parameter for the trade-off between exploration and explotation 
     %   [5]
     %   - 'options_optim' is a structure for optimization of Gutmann criterion
     %   see Set_options_optim for example of parameters structure

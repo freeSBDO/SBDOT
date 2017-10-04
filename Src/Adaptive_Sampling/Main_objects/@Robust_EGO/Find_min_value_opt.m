@@ -1,10 +1,11 @@
 function [] = Find_min_value_opt( obj )
-% FIND_MIN_VALUE
-% Find the actual minimum value of the optimization problem in the already evaluated points
+% FIND_MIN_VALUE_OPT
+% Find the actual minimum value of the optimization problem on predictions
 
 Initial_point = Unscale_data( rand( 1, nnz(~obj.env_lab) ), ...
     obj.options_optim3.LBounds, obj.options_optim3.UBounds);
 
+% Optimization of robustness measure on predictions
 [ obj.x_min, obj.y_min ] = cmaes(@obj.Optim_meas, Initial_point, [], obj.options_optim3);
 
 if obj.m_g >= 1
