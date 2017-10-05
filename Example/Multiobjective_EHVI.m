@@ -1,3 +1,6 @@
+%%% Optimize the multiple output of a numerical model at the same time.
+%%% The criterion used here is the Expected Hypervolume Improvement.
+
 clear all
 close all
 clc

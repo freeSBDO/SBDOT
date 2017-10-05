@@ -1,3 +1,5 @@
+%%% Build a Kriging model of the Branin function
+
 clear all
 close all
 clc

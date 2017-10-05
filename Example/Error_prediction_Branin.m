@@ -1,3 +1,5 @@
+%%% Reduce the Kriging prediction error with MSE criterion
+
 clear all
 close all
 clc

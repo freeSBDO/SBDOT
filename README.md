@@ -12,9 +12,22 @@ General informations
 
 Metamodeling features :
 
-* coming soon
+* Kriging (gaussian process based surrogate model)
+* Radial Basis Function
+* Co-kriging (multifidelity)
+* CoRBF (multifidelity)
+* BQQV Kriging (for qualitative variables)
 
 Optimization features :
 
-* coming soon 
+* CMAES (constrained single objective)
+* NSGA-II (constrained multiobjective)
+* MGDA (unconstrained multiobjective)
+
+Adaptive Sampling strategy :
+
+* Expected improvement (constrained global optimization)
+* Gutmann criterion (constrained global optimization)
+* Expected hypervolume improvement (multiobjective)
+* Robust efficient global optimization
 

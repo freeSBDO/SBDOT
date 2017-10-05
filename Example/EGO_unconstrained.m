@@ -1,3 +1,6 @@
+%%% Optimize the output of a numerical model with no constraints 
+%%% The criterion used here is the Expected Improvement
+
 clear all
 close all
 clc

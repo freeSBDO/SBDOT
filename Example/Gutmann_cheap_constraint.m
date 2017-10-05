@@ -1,3 +1,7 @@
+%%% Optimize the output of a numerical model when an analytical
+%%% constraint function is available.
+%%% The criterion used here is the Gutamnn criterion
+
 clear all
 close all
 clc

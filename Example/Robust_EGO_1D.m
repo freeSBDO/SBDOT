@@ -1,3 +1,6 @@
+%%% Optimize the output of a numerical model when inputs parameters have
+%%% some uncertainties
+
 clear all
 close all
 clc

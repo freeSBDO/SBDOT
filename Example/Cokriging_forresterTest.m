@@ -1,3 +1,7 @@
+%%% Build a mutlifidelity metamodel from two different numerical models
+%%% (high fidelity and low fidelity)
+%%% Here the surrogate is Cokriging
+
 clear all
 close all
 clc
