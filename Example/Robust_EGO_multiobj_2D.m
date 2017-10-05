@@ -6,7 +6,7 @@ clc
 rng(1)
 
 % Define problem structure
-n_x = 2;    % Number of parameters
+m_x = 2;    % Number of parameters
 m_y = 2;    % Number of objectives
 m_g = 0;    % Number of constraint
 lb = [0 0]; % Lower bound 
