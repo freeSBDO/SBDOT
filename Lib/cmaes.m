@@ -169,6 +169,8 @@ function [xmin, ...      % minimum search point of last iteration
 %       write dispcmaesdat for Matlab (and Octave)
 %       control savemodulo and plotmodulo via signals.par 
 
+% 2017/10/18 : within SBDO, cmaes is used with 4 compulsory arguments and
+% transposition is needed (CDu, adapted by agl) 
 
 cmaVersion = '3.62.beta'; 
 
@@ -280,11 +282,14 @@ defopts.UserData = 'for saving data/comments associated with the run';
 defopts.UserDat2 = ''; 'for saving data/comments associated with the run';
 
 % ---------------------- Handling Input Parameters ----------------------
-%modif
-xstart=xstart';
-inopts.LBounds=inopts.LBounds';
-inopts.UBounds=inopts.UBounds';
-%
+
+% modif CDu, adapted by agl
+if nargin >= 4
+  xstart=xstart';
+  inopts.LBounds=inopts.LBounds';
+  inopts.UBounds=inopts.UBounds';
+end
+% end modif
 
 if nargin < 1 || isequal(fitfun, 'defaults') % pass default options
   if nargin < 1
