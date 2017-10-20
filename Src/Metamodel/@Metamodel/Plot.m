@@ -1,22 +1,31 @@
-function [Y_plot,X_plot] = Plot( obj, inputs_ind, cut_values )
+function [X_plot,Y_plot] = Plot( obj, varargin )
 % PLOT
 % Plot the metamodel using cut planes if necessary
 %   *inputs_ind is the index of parameters to plot
 %   *cut_values is row vector with cut values to apply to other parameters, sorted by parameter index
 %
+% Optionnal inputs [default value] :
+%   'plot_type'	['surf'], 'contourf'
+%
 % Syntax :
-% []=obj.plot([1 5],[0.024 0.1 0.003]);
+% [x,y]=obj.plot([1 5],[0.024 0.1 0.003]);
+% [x,y]=obj.plot([1 5],[0.024 0.1 0.003], 'contourf');
+
+% 2017/20/10 : added contourf option, changed default colormap to jet,
+% reshaped 2D outputs, swapped outputs [x,y] (agl)
 
 p = inputParser;
 p.KeepUnmatched=true;
 p.PartialMatching=false;
 p.addRequired('inputs_ind',@(x)isnumeric(x)&& length(x)<=2);
 p.addRequired('cut_values',@(x)isnumeric(x) && (isrow(x)||isempty(x)));
-p.parse(inputs_ind,cut_values);
+p.addOptional('plot_type','surf',@(x)(isa(x,'char'))&&(strcmpi(x,'surf')||strcmpi(x,'contourf')));
+p.parse(varargin{:});
 in=p.Results;
 
 inputs_ind = in.inputs_ind;
 cut_values = in.cut_values;
+plot_type  = in.plot_type;
 
 % Checks
 assert( length(inputs_ind) + length(cut_values) == obj.prob.m_x,...
@@ -85,13 +94,40 @@ switch length(inputs_ind)
         end
         
         Y_plot = obj.Predict( X_test );
-        surf( X_plot1, X_plot2, reshape( Y_plot, reshape_size ), ...
-            'EdgeColor','none');
+        
+        % reshape outputs
+        X_plot = reshape( X_plot, [reshape_size 2] );
+        Y_plot = reshape( Y_plot, reshape_size );
+        
+        switch plot_type
+            
+            case 'surf'
+                
+                surf( X_plot(:,:,1), X_plot(:,:,2), Y_plot, 'EdgeColor','none' );
+                
+                xlabel(['Parameter ',num2str( inputs_ind(1) )])
+                ylabel(['Parameter ',num2str( inputs_ind(2) )])
+                zlabel('Response surface')
+                
+            case 'contourf'
+                
+                contourf( X_plot(:,:,1), X_plot(:,:,2), Y_plot, 21 );
+                
+                xlabel(['Parameter ',num2str( inputs_ind(1) )])
+                ylabel(['Parameter ',num2str( inputs_ind(2) )])
+                title('Response surface')
+                
+            otherwise
+                
+                error( 'SBDOT:Eval_multifi:which_pb',...
+                    ['You specified a wrong plot type, ',...
+                    'choose between ''surf'' or ''contourf''.'] )
+                
+        end
+        
         colorbar
+        colormap('jet')
         hold on
-        xlabel(['Parameter ',num2str( inputs_ind(1) )])
-        ylabel(['Parameter ',num2str( inputs_ind(2) )])
-        zlabel('Response surface')
         
     otherwise
         

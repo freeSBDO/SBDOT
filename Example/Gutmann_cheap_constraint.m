@@ -2,6 +2,8 @@
 %%% constraint function is available.
 %%% The criterion used here is the Gutamnn criterion
 
+% 2010/10/20 : swapped returned arguments X and Y in Plot (agl)
+
 clear all
 close all
 clc
@@ -30,7 +32,7 @@ obj = Gutmann_RBF_cheap_constraint(prob, 1, 1, @RBF, 'Cheap_cons_branin', [10 15
 obj.Opt();
 
 % Plot kriging at end with constraint 
-[Y,X]=obj.meta_y.Plot( [1,2], [] );
+[X,Y]=obj.meta_y.Plot( [1,2], [] );
 
 % Plot contour values and optimum
 g1 = Cheap_cons_branin(X);

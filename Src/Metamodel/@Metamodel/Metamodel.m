@@ -10,6 +10,9 @@ classdef Metamodel < handle
     %   If empty, output not shifted.
     %	[]
     %
+    
+    % 2017/10/20 : plot_type added in Plot method (agl)
+    
     properties ( Access = public )
         
         % Mandatory inputs
@@ -84,7 +87,7 @@ classdef Metamodel < handle
         
         x_eval_scaled = Predict( obj, x_eval );
         
-        [Y,X] = Plot( obj, inputs_index, cut_values );
+        [Y,X] = Plot( obj, inputs_index, cut_values, plot_type );
         
         [] = Plot_error( obj, x, y, q );
         
