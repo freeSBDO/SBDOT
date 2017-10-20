@@ -2,12 +2,15 @@ function x_sampling = Sampling( obj, num_x, type )
     % SAMPLING Create a sampling plan
     %   *num_x is the number of sampling points to create
     %   *type is the type of the sampling. Allowed list :
-    %   ['LHS'], 'OLHS', 'Sobol', 'Halton'.
+    %   ['LHS'], 'Sobol', 'Halton'.
     %   *x_sampling is the input matrix num_x-by-m_x.
     %
     % Syntax :
     % obj.Sampling( num_x );
     % obj.Sampling( num_x, type );
+    
+    % 2017/10/20 : 'OLHS' option not implemented thus suppressed from help
+    % and error message (agl)
 
     % Checks
     validateattributes( num_x, {'numeric'}, {'nonempty','scalar','integer','positive'} )
@@ -56,7 +59,7 @@ function x_sampling = Sampling( obj, num_x, type )
 
             error( 'SBDOT:Sampling:type',...
                 ['The type of sampling you specified is not correct, ',...
-                'choose between ''LHS'', ''OLHS'', ''Sobol'' and ''Halton''.'] )
+                'choose between ''LHS'', ''Sobol'' and ''Halton''.'] )
 
     end
 
