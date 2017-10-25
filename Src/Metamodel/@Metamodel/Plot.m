@@ -13,6 +13,7 @@ function [X_plot,Y_plot] = Plot( obj, varargin )
 
 % 2017/20/10 : added contourf option, changed default colormap to jet,
 % reshaped 2D outputs, swapped outputs [x,y] (agl)
+% 2017/25/10 : reverted outputs reshape (ag)
 
 p = inputParser;
 p.KeepUnmatched=true;
@@ -95,15 +96,12 @@ switch length(inputs_ind)
         
         Y_plot = obj.Predict( X_test );
         
-        % reshape outputs
-        X_plot = reshape( X_plot, [reshape_size 2] );
-        Y_plot = reshape( Y_plot, reshape_size );
-        
         switch plot_type
             
             case 'surf'
                 
-                surf( X_plot(:,:,1), X_plot(:,:,2), Y_plot, 'EdgeColor','none' );
+                surf( X_plot1, X_plot2, reshape( Y_plot, reshape_size ), ...
+                    'EdgeColor','none' );
                 
                 xlabel(['Parameter ',num2str( inputs_ind(1) )])
                 ylabel(['Parameter ',num2str( inputs_ind(2) )])
@@ -111,7 +109,7 @@ switch length(inputs_ind)
                 
             case 'contourf'
                 
-                contourf( X_plot(:,:,1), X_plot(:,:,2), Y_plot, 21 );
+                contourf( X_plot1, X_plot2, reshape( Y_plot, reshape_size ), 21 );
                 
                 xlabel(['Parameter ',num2str( inputs_ind(1) )])
                 ylabel(['Parameter ',num2str( inputs_ind(2) )])
