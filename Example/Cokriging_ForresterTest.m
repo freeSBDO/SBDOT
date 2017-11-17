@@ -1,4 +1,4 @@
-%%% Build a mutlifidelity metamodel from two different numerical models
+%%% Build a multifidelity metamodel from two different numerical models
 %%% (high fidelity and low fidelity)
 %%% Here the surrogate is Cokriging
 
@@ -33,7 +33,6 @@ cokrig1 = Cokriging(prob,1,[]);
 % Create Cokriging with regression on low fidelity model 
 cokrig2 = Cokriging(prob,1,[],'reg_LF',true,'hyp_corr_HF',0.1,'hyp_corr_LF',0.1);
 
-
 % Figure
 x_test = linspace(0,1,200)'; % x plot points
 
@@ -45,16 +44,21 @@ x_test = linspace(0,1,200)'; % x plot points
 confidence_interval1 = [mean1 - 1.96*sqrt(variance1) ; flipud(mean1 + 1.96*sqrt(variance1))];
 confidence_interval2 = [mean2 - 1.96*sqrt(variance2) ; flipud(mean2 + 1.96*sqrt(variance2))];
 
-% Plot cokriging that interpolates dataset
+%% Plot
+
+% Plot cokriging that interpolates dataset and true HF function 
 figure
 hold on
 plot( prob_HF.x, prob_HF.y, 'bo')
-plot( x_test, mean1, 'k-')
+plot( x_test, mean1, 'g')
 fill( [x_test ; flipud(x_test)], confidence_interval1, 'g','FaceAlpha',0.3,'EdgeColor','none')
+
+plot( x_test, Multifi_1D_HF(x_test), 'b')
+
 box on
 xlabel('$x$','interpreter','latex')
 ylabel('$\mathcal{M}$','interpreter','latex')
-legend({'Training data $\mathcal{D}$','$\hat y$','95\% confidence interval'},...
+legend({'Training data $\mathcal{D}$','$\hat y$','95\% confidence interval', 'y'},...
     'Interpreter','latex','Location','northwest')
 hold off
 
@@ -62,7 +66,7 @@ hold off
 figure
 hold on
 plot( prob_HF.x, prob_HF.y, 'bo')
-plot( x_test, mean2, 'k-')
+plot( x_test, mean2, 'g')
 fill( [x_test ; flipud(x_test)], confidence_interval2, 'g','FaceAlpha',0.3,'EdgeColor','none')
 box on
 xlabel('$x$','interpreter','latex')

@@ -1,5 +1,5 @@
-function [ y, g ] = Branin( x )
-% Modified Branin test function
+function [ y, g ] = Branin_LF( x )
+% Modified Branin test function for multifidelity : low fidelity version
 %
 % x is a ... by 2 matrix of input points
 %   variable 1 (in column 1) is set between [-5 10]
@@ -28,6 +28,8 @@ y = a .* ( X2 - b .* X1.^2 + c .* X1 - d ) .^ 2 + ...
     e .* ( 1 - ff ) .* cos( X1 ) +...
     e + ...
     5 .* ( ( X1 + 5 ) ./ 15 );
+
+y = (0.9 + 0.1*rand(size(y))) .* y; % low fidelity
 
 g = 0.2 - ( (( X1 + 5 ) ./ 15) .* (X2 ./15) );
 

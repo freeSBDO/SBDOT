@@ -6,8 +6,8 @@ function [ ] = Sampling( obj, num_x_LF, num_x_HF, type )
     %   ['Nested'], 'LHS'.
     %
     % Syntax :
-    % obj.LHS_sampling( num_x );
-    % obj.LHS_sampling( num_x, type );
+    % obj.LHS_sampling( num_x_LF, num_x_HF );
+    % obj.LHS_sampling( num_x_LF, num_x_HF, type );
 
     % Checks
     validateattributes( num_x_LF, {'numeric'}, {'nonempty','scalar','positive'} )
