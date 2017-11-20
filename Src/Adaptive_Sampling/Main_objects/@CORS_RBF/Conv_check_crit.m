@@ -7,11 +7,11 @@ obj.Find_min_value();
 if obj.display_temp
     fprintf( [sprintf(['[%3.0i]    %6.2e    %6.2e       (',...
         repmat('%.6g ',1,obj.prob.m_x),'\b)'],...
-        obj.iter_num, obj.y_min, obj.gutmann_val, obj.x_new), '\n'] )
+        obj.iter_num, obj.y_min, obj.cors_val, obj.x_new), '\n'] )
 end
 
 % History update
-obj.hist.crit = [ obj.hist.crit ; obj.gutmann_val ]; 
+obj.hist.crit = [ obj.hist.crit ; obj.cors_val ]; 
 
 end
 

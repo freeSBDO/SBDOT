@@ -22,7 +22,14 @@ else
     end
 end
 
-EI1 = stk_sampcrit_ei_eval(y_pred, sqrt(abs( MSE_pred )), obj.y_min);
+switch obj.criterion
+    case 'EI'
+        EI1 = stk_sampcrit_ei_eval(y_pred,...
+            sqrt(abs( MSE_pred )), obj.y_min);
+    case 'PI'
+        EI1 = stk_distrib_normal_cdf (obj.y_min ,...
+            y_pred , sqrt(abs( MSE_pred )));
+end
 
 EI2 = stk_distrib_normal_cdf ( 0 , g_pred , sqrt(abs( MSE_g_pred )));
 EI2 = prod( EI2, 2);

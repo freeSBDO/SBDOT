@@ -15,7 +15,7 @@ end
 % See Gutmann algorithm for setting target value
 [ ~, alpha ] = sort( y );  
 
-W_n = ( mod( obj.cycle_length - n_x + obj.n0, obj.cycle_length + 1 ) ...
+w_n = ( mod( obj.cycle_length - n_x + obj.n0, obj.cycle_length + 1 ) ...
     / obj.cycle_length ) ^2;    
 
 if mod( n_x - obj.n0, obj.cycle_length + 1 ) == 0
@@ -34,10 +34,10 @@ Initial_point = Unscale_data( rand( 1, obj.prob.m_x ),...
 [ ~, min_current ] = cmaes(@obj.Prediction, Initial_point, [],obj.options_optim); 
 
 % Set target value
-min_target = min_current - W_n *( y(alpha(obj.k_n(end,:))) - min_current ) - 10*eps;
+min_target = min_current - w_n *( y(alpha(obj.k_n(end,:))) - min_current ) - 10*eps;
 
 % Optimize criterion
-[ obj.x_new , obj.Gutmann_val ] = cmaes( @obj.Gutmann_crit, ...
+[ obj.x_new , obj.gutmann_val ] = cmaes( @obj.Gutmann_crit, ...
     Initial_point, [], obj.options_optim, min_target);
 
 end

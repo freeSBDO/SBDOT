@@ -15,6 +15,9 @@ classdef Expected_improvement < Adaptive_sampling
     % Optional inputs [default value]:
     %   - 'options_optim' is a structure for optimization of EI criterion
     %   see Set_options_optim for example of parameters structure
+    %   - 'criterion' is the criterion to use (expected improvement is
+    %   default, or probability improvement)
+    %   ['EI'], 'PI'
     %   * Optional inputs for Kriging apply
     %   * Optional inputs for Adaptive_sampling apply
     %
@@ -27,6 +30,7 @@ classdef Expected_improvement < Adaptive_sampling
         % Optional inputs
         options_optim  % Structure of user optimization options
         QV_val = [];   % Value of qualitative variable if needed (use Q_exptected_improvement)
+        criterion      % Criterion optimization (EI or PI)
         
         % Computed variables
         EI_val         % Expected improvement value at current iteration
@@ -48,6 +52,7 @@ classdef Expected_improvement < Adaptive_sampling
             p.PartialMatching = false;
             p.addRequired('meta_type',@(x)isequal(x,@Kriging)||isequal(x,@Cokriging)||isequal(x,@Q_kriging));
             p.addOptional('options_optim',[],@(x)isstruct(x));
+            p.addOptional('criterion','EI',@(x)(isa(x,'char'))&&(strcmpi(x,'EI')||strcmpi(x,'PI')));
             p.parse(meta_type,varargin{:})
             in = p.Results;
             unmatched = [fieldnames(p.Unmatched),struct2cell(p.Unmatched)];
@@ -58,13 +63,14 @@ classdef Expected_improvement < Adaptive_sampling
             
             % Store
             obj.options_optim = in.options_optim;
+            obj.criterion = in.criterion;
             obj.meta_type = in.meta_type;
             
             % Checks
             assert( obj.m_y == 1,...
                 'SBDOT:Error_prediction:y_index',...
                 'Only one objective can be used in Expected_improvement');
-            
+                        
             % Set optimization options
             obj.Set_options_optim( obj.options_optim );
             

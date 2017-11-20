@@ -26,14 +26,14 @@ if isa( obj.prob , 'Problem_multifi')
 end
 
 obj.iter_max = obj.iter_num + in.iter_sup;
-obj.fcall_max = obj.fcall + in.fcall_sup;
+obj.fcall_max = obj.fcall_max + in.fcall_sup;
 
 % Reset flags
-objEGO.failed=false;
-objEGO.opt_stop=false;
-objEGO.crit_stop=false;
+obj.failed=false;
+obj.opt_stop=false;
+obj.crit_stop=false;
 
-objEGO.opt();
+obj.Opt();
 
 end
 

@@ -14,7 +14,14 @@ else
     
 end
 
-EI_val = -stk_sampcrit_ei_eval(y_pred, sqrt(abs( MSE_pred )), obj.y_min);
+switch obj.criterion
+    case 'EI'
+        EI_val = -stk_sampcrit_ei_eval(y_pred,...
+            sqrt(abs( MSE_pred )), obj.y_min);
+    case 'PI'
+        EI_val = -stk_distrib_normal_cdf (obj.y_min ,...
+            y_pred , sqrt(abs( MSE_pred )));
+end
 
 end
 
