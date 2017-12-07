@@ -164,6 +164,53 @@ function [xmin, ...      % minimum search point of last iteration
 %
 % See also FMINSEARCH, FMINUNC, FMINBND.
 
+% ---------------------------------------------------------------
+% CMA-ES: Evolution Strategy with Covariance Matrix Adaptation for
+% nonlinear function minimization. To be used under the terms of
+% either  
+%   the GNU General Public License (http://www.gnu.org/copyleft/gpl.html).
+% or 
+%   the BSD 3-Clause License (see below). 
+%
+% Author (copyright): Nikolaus Hansen, 2001-2012. 
+% e-mail: nikolaus.hansen AT inria.fr
+%
+% References: See below. 
+% ---------------------------------------------------------------
+%
+% GENERAL PURPOSE: The CMA-ES (Evolution Strategy with Covariance
+% Matrix Adaptation) is a robust search method which should be
+% applied, if derivative based methods, e.g. quasi-Newton BFGS or
+% conjucate gradient, (supposably) fail due to a rugged search
+% landscape (e.g. noise, local optima, outlier, etc.). On smooth
+% landscapes CMA-ES is roughly ten times slower than BFGS. For up to
+% N=10 variables even the simplex direct search method (Nelder & Mead)
+% is often faster, but far less robust than CMA-ES.  To see the
+% advantage of the CMA, it will usually take at least 30*N and up to
+% 300*N function evaluations, where N is the search problem dimension.
+% On considerably hard problems the complete search (a single run) is
+% expected to take at least 30*N^2 and up to 300*N^2 function
+% evaluations.
+%
+% SOME MORE COMMENTS: 
+% The adaptation of the covariance matrix (e.g. by the CMA) is
+% equivalent to a general linear transformation of the problem
+% coding. Nevertheless every problem specific knowlegde about the best
+% linear transformation should be exploited before starting the
+% search. That is, an appropriate a priori transformation should be
+% applied to the problem. This also makes the identity matrix as
+% initial covariance matrix the best choice.
+%
+% The strategy parameter lambda (population size, opts.PopSize) is the
+% preferred strategy parameter to play with.  If results with the
+% default strategy are not satisfactory, increase the population
+% size. (Remark that the crucial parameter mu (opts.ParentNumber) is
+% increased proportionally to lambda). This will improve the
+% strategies capability of handling noise and local minima. We
+% recomment successively increasing lambda by a factor of about three,
+% starting with initial values between 5 and 20. Casually, population
+% sizes even beyond 1000+100*N can be sensible.
+%
 
 % TODO: 
 %       write dispcmaesdat for Matlab (and Octave)
@@ -3015,50 +3062,6 @@ function f=frand(x)
 % 04/03: Stopflag becomes cell-array. 
 
 % ---------------------------------------------------------------
-% CMA-ES: Evolution Strategy with Covariance Matrix Adaptation for
-% nonlinear function minimization. To be used under the terms of the
-% GNU General Public License (http://www.gnu.org/copyleft/gpl.html).
-% Author (copyright): Nikolaus Hansen, 2001-2008. 
-% e-mail: nikolaus.hansen AT inria.fr
-% URL:http://www.bionik.tu-berlin.de/user/niko
-% References: See below. 
-% ---------------------------------------------------------------
-%
-% GENERAL PURPOSE: The CMA-ES (Evolution Strategy with Covariance
-% Matrix Adaptation) is a robust search method which should be
-% applied, if derivative based methods, e.g. quasi-Newton BFGS or
-% conjucate gradient, (supposably) fail due to a rugged search
-% landscape (e.g. noise, local optima, outlier, etc.). On smooth
-% landscapes CMA-ES is roughly ten times slower than BFGS. For up to
-% N=10 variables even the simplex direct search method (Nelder & Mead)
-% is often faster, but far less robust than CMA-ES.  To see the
-% advantage of the CMA, it will usually take at least 30*N and up to
-% 300*N function evaluations, where N is the search problem dimension.
-% On considerably hard problems the complete search (a single run) is
-% expected to take at least 30*N^2 and up to 300*N^2 function
-% evaluations.
-%
-% SOME MORE COMMENTS: 
-% The adaptation of the covariance matrix (e.g. by the CMA) is
-% equivalent to a general linear transformation of the problem
-% coding. Nevertheless every problem specific knowlegde about the best
-% linear transformation should be exploited before starting the
-% search. That is, an appropriate a priori transformation should be
-% applied to the problem. This also makes the identity matrix as
-% initial covariance matrix the best choice.
-%
-% The strategy parameter lambda (population size, opts.PopSize) is the
-% preferred strategy parameter to play with.  If results with the
-% default strategy are not satisfactory, increase the population
-% size. (Remark that the crucial parameter mu (opts.ParentNumber) is
-% increased proportionally to lambda). This will improve the
-% strategies capability of handling noise and local minima. We
-% recomment successively increasing lambda by a factor of about three,
-% starting with initial values between 5 and 20. Casually, population
-% sizes even beyond 1000+100*N can be sensible.
-%
-%
-% ---------------------------------------------------------------
 %%% REFERENCES
 %
 % The equation numbers refer to 
@@ -3089,5 +3092,39 @@ function f=frand(x)
 % Optimization with an Application to Feedback Control of
 % Combustion. To appear in IEEE Transactions on Evolutionary
 % Computation.
+
+% ---------------------------------------------------------------
+%
+% The BSD 3-Clause License
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions
+% are met:
+%
+% 1. Redistributions of source code must retain the above copyright and
+%    authors notice, this list of conditions and the following disclaimer.
+%
+% 2. Redistributions in binary form must reproduce the above copyright
+%    and authors notice, this list of conditions and the following
+%    disclaimer in the documentation and/or other materials provided with
+%    the distribution.
+%
+% 3. Neither the name of the copyright holder nor the names of its
+%    contributors nor the authors names may be used to endorse or promote
+%    products derived from this software without specific prior written
+%    permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+% "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+% LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+% A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+% HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+% INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+% BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+% OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+% AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+% LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
+% WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+% POSSIBILITY OF SUCH DAMAGE.
 
 

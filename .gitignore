@@ -3,7 +3,7 @@
 *.asv
 
 # Data files MATLAB
-*.dat
+*.mat
 
 # PDF
 *.pdf

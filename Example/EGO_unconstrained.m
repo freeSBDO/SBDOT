@@ -1,7 +1,7 @@
 %%% Optimize the output of a numerical model with no constraints 
 %%% The criterion used here is the Expected Improvement
 
-% 2010/10/20 : changes in plots (agl)
+% 2017/10/20 : changes in plots (agl)
 
 clear all
 close all
