@@ -5,7 +5,7 @@
 MATLAB Toolbox for metamodeling and solving optimization problem. 
 The function to surrogate and optimize can be evaluated from an external numerical simulator.
 
-> Author : **Cédric Durantin**
+> SBDOT  Copyright (C) 2017  CEA - LETI, DOPT. Author: C. Durantin
 
 General informations
 --

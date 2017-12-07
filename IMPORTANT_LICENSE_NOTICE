@@ -1,0 +1,15 @@
+IMPORTANT LICENSE NOTICE
+------------------------
+
+SBDOT relies on the following packages or pieces of software :
+- cholincsp	http://theoval.cmp.uea.ac.uk/matlab/
+- cmaes		https://www.lri.fr/~hansen/cmaes.m
+- ipdm		https://fr.mathworks.com/matlabcentral/fileexchange/18937-ipdm--inter-point-distance-matrix?focused=5243203&tab=function 
+- ooDACE	http://www.sumo.intec.ugent.be/ooDACE
+- SQP Lab	https://who.rocq.inria.fr/Jean-Charles.Gilbert/modulopt/optimization-routines/sqplab/sqplab.html
+- STK		http://kriging.sourceforge.net/htmldoc/
+
+cmaes and ooDACE have been adapted to fit our needs.
+
+Please note that, due to the License Terms of the ooDACE toolbox, RESTRICTIONS APPLY to commercial use or funded academic research.
+Conditions can be found on the ooDACE toolbox website http://sumo.intec.ugent.be/ooDACE.
