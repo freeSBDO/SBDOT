@@ -30,8 +30,19 @@ for i = 1 : size(x_start,1)
     option.Display='off';
     warning('off','MATLAB:singularMatrix')
     warning('off','MATLAB:nearlySingularMatrix')
-    [x_eval(i,:),y_EI(i,:)] = fmincon (@(x)obj.Obj_func_EHVI(x), ...
+    switch obj.criterion
+    
+        case 'EHVI'
+            
+            [x_eval(i,:),y_EI(i,:)] = fmincon (@(x)obj.Obj_func_EHVI(x), ...
         x_start(i,:),[],[],[],[],obj.prob.lb,obj.prob.ub,[],option);
+        
+        case 'EI_euclid'
+            
+            [x_eval(i,:),y_EI(i,:)] = fmincon (@(x)obj.Obj_func_EI_euclid(x), ...
+        x_start(i,:),[],[],[],[],obj.prob.lb,obj.prob.ub,[],option);        
+            
+    end
     warning('on','MATLAB:singularMatrix')
     warning('on','MATLAB:nearlySingularMatrix')
     

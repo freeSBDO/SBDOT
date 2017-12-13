@@ -17,6 +17,7 @@ classdef Multi_obj_EHVI < Adaptive_sampling
     % Optional inputs [default value]:
     %   - 'options_optim' is a structure for optimization of EI criterion
     %   see Set_options_optim for example of parameters structure
+    %   - 'criterion' is either 'EHVI' or 'EI_euclid'
     %   * Optional inputs for Kriging apply
     %   * Optional inputs for Adaptive_sampling apply
     %
@@ -29,6 +30,7 @@ classdef Multi_obj_EHVI < Adaptive_sampling
         
         % Optional inputs
         options_optim  % Structure of user optimization options
+        criterion      % Criterion optimization (EHVI or EI_euclid)
 
         % Computed variables
         conv_crit      % Adpative sampling criterion value
@@ -52,6 +54,7 @@ classdef Multi_obj_EHVI < Adaptive_sampling
             p.addRequired('meta_type',@(x)isequal(x,@Kriging)||isequal(x,@Cokriging));
             p.addRequired('N_eval',@(x)isnumeric(x));
             p.addOptional('options_optim',[],@(x)isstruct(x));
+            p.addOptional('criterion','EHVI',@(x)(isa(x,'char'))&&(strcmpi(x,'EHVI')||strcmpi(x,'EI_euclid')));
             p.parse(meta_type,N_eval,varargin{:})
             in = p.Results;
             unmatched = [fieldnames(p.Unmatched),struct2cell(p.Unmatched)];
@@ -62,6 +65,7 @@ classdef Multi_obj_EHVI < Adaptive_sampling
             
             % Store
             obj.options_optim = in.options_optim;
+            obj.criterion = in.criterion;
             obj.meta_type = in.meta_type;
             obj.N_eval = in.N_eval;
             
@@ -92,6 +96,7 @@ classdef Multi_obj_EHVI < Adaptive_sampling
         [] = Conv_check_crit( obj );
         [] = Find_min_value( obj );
         [ EHVI ] = Obj_func_EHVI( obj, x_test );
+        [ EI ] = EI_euclid(obj,zp_mean, zp_std, zi, zr);
         [ y_obj ] = Obj_func_nsga( obj, x_test );
         [] = Opt_crit( obj );
         [] = Set_options_optim( obj, user_opt )
