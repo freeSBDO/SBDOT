@@ -1,4 +1,4 @@
-function [ ] = Sampling( obj, num_x_LF, num_x_HF, type )
+function [ ] = Get_design( obj, num_x_LF, num_x_HF, type )
     % SAMPLING Create a sampling plan and evaluates it
     %   *num_x_LF is the number of sampling points to create of LF problem
     %   *num_x_HF is the number of sampling points to create of HF problem

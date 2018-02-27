@@ -13,6 +13,10 @@ obj.RBF_c = RBF(obj.prob.prob_LF, obj.y_ind, obj.g_ind, ...
     'ub_hyp_corr', obj.ub_hyp_corr{1}, ...
     'estimator', obj.estimator{1}, 'optimizer', obj.optimizer{1});
 
+obj.hyp_corr{1} = obj.RBF_c.hyp_corr;
+obj.lb_hyp_corr{1} = 10.^obj.RBF_c.lb_hyp_corr;
+obj.ub_hyp_corr{1} = 10.^obj.RBF_c.ub_hyp_corr;
+
 % Get prediction on HF datapoints
 yc_e = obj.RBF_c.Predict(obj.prob.prob_HF.x);
 
@@ -66,7 +70,9 @@ if isempty(obj.hyp_corr{2}) || isempty(obj.rho)
     end
     
     if isempty(obj.hyp_corr{2})
-        obj.hyp_corr{2} = hyp_opt_temp(2:end);
+        obj.hyp_corr{2} = 10.^hyp_opt_temp(2:end);
+        obj.lb_hyp_corr{2} = 10.^obj.lb_hyp_corr{2};
+        obj.ub_hyp_corr{2} = 10.^obj.ub_hyp_corr{2};
     end
     if isempty(obj.rho)
     obj.rho = hyp_opt_temp(1);
