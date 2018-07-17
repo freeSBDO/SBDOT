@@ -1,4 +1,4 @@
-%%% Build a mutlifidelity metamodel from two different numerical models
+%%% Build a multifidelity metamodel from two different numerical models
 %%% (high fidelity and low fidelity)
 %%% Here the surrogate is CoRBF
 

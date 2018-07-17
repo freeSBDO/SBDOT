@@ -10,7 +10,7 @@ The function to surrogate and optimize can be evaluated from an external numeric
 General informations
 --
 
-Metamodeling features :
+Metamodeling features
 
 * Kriging (gaussian process based surrogate model)
 * Radial Basis Function
@@ -18,16 +18,21 @@ Metamodeling features :
 * CoRBF (multifidelity)
 * BQQV Kriging (for qualitative variables)
 
-Optimization features :
+Optimization features
 
 * CMAES (constrained single objective)
 * NSGA-II (constrained multiobjective)
 * MGDA (unconstrained multiobjective)
 
-Adaptive Sampling strategy :
+Adaptive Sampling strategy
 
 * Expected improvement (constrained global optimization)
 * Gutmann criterion (constrained global optimization)
 * Expected hypervolume improvement (multiobjective)
 * Robust efficient global optimization
 
+MATLAB toolboxes requirements
+--
+
+* Optimization toolbox
+* Statistics toolbox

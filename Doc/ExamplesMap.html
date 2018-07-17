@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+   <meta charset="UTF-8">
+   <title>Getting started:  how to find the relevant example</title>
+</head>
+
+<body>
+
+<h1>Getting started: how to find the relevant example</h1>
+
+<h2>Metamodeling features</h2>
+<ol>
+   <li>Kriging (gaussian process based surrogate model)</li>
+      <ul>
+         <li><A HREF="../Example/Kriging_Branin.m">Kriging_Branin.m</A>: build a Kriging metamodel of the Branin test function</li>
+         <li><A HREF="../Example/Error_prediction_Branin.m">Error_prediction_Branin.m</A>: reduce the Kriging prediction error on the Branin test function with MSE criterion</li>
+      </ul>
+   <p><li>Radial Basis Function (RBF-based surrogate model)</li>
+      <ul>
+         <li><A HREF="../Example/RBF_Branin.m">RBF_Branin.m</A>: build a RBF metamodel of the Branin test function</li>
+      </ul>
+   <p><li>Co-kriging (multifidelity metamodel based on Kriging)</li>
+      <ul>
+         <li><A HREF="../Example/Cokriging_ForresterTest.m">Cokriging_ForresterTest.m</A>: build a Kriging multifidelity metamodel of the Forrester test example from low and high fidelity numerical models</li>
+      </ul>
+   <p><li>Co-RBF (multifidelity metamodel based on RBF)</li>
+      <ul>
+         <li><A HREF="../Example/CoRBF_ForresterTest.m">CoRBF_ForresterTest.m</A>: build a RBF multifidelity metamodel of the Forrester test example from low and high fidelity numerical models</li>
+      </ul>
+   <p><li>Kriging for mixed problemes (BQQV, both quantitative and qualitative variables)</li>
+      <ul>
+         <li><A HREF="../Example/Kriging_Qualitative.m">Kriging_Qualitative.m</A>: build a metamodel with mixed parameters (example with 1 quantitative variable and 1 qualitative variable with 3 levels)</li>
+      </ul>
+</ol>
+
+
+<h2>Adaptive Sampling strategy</h2>
+<ol>
+   <p><li>Adaptive sampling using a Kriging metamodel (efficient global optimization of the Expected improvement)</li>
+      <ul>
+         <li><A HREF="../Example/EGO_unconstrained.m">EGO_unconstrained.m</A>: optimization of the Branin test problem with an adaptive sampling algorithm, no constraints</li>
+         <li><A HREF="../Example/EGO_constrained.m">EGO_constrained.m</A>: constrained optimization of the Branin test problem with an adaptive sampling algorithm</li>
+         <li><A HREF="../Example/EGO_cheap_constraint.m">EGO_cheap_constraint.m</A>: constrained optimization of the Branin test problem with an adaptive sampling algorithm, one additional constraint computed with an analytical expression</li>
+         <li><A HREF="../Example/EGO_unconstrained_qualitative.m">EGO_unconstrained_qualitative.m</A>: optimization of a mixed problem with an adaptive sampling algorithm, no constraints</li>
+         <li><A HREF="../Example/EGO_constrained_qualitative.m">EGO_constrained_qualitative.m</A>: constrained optimization of a mixed problem with an adaptive sampling algorithm</li>
+		<li><A HREF="../Example/EI_Cokriging_ForresterTest.m">EI_Cokriging_ForresterTest.m</A>: unconstrained optimization of a multifidelity problem (1D Forrester test function) with an adaptive sampling algorithm</li>
+        <li><A HREF="../Example/EI_Cokriging_Branin.m">EI_Cokriging_Branin.m</A>: unconstrained optimization of a multifidelity problem (2D Branin test function) with an adaptive sampling algorithm</li>
+   </ul>
+   <p><li>Adaptive sampling using a RBF-based metamodel</li>
+   <ul>
+         <li><A HREF="../Example/CORS_Branin_unconstrained.m">CORS_Branin_unconstrained.m</A>: optimization of the Branin test problem with an adaptive sampling algorithm and the CORS criterion</li>
+         <li><A HREF="../Example/Gutmann_Branin.m">Gutmann_Branin.m</A>: constrained optimization of the Branin test problem with an adaptive sampling algorithm and the Gutmann criterion</li>
+         <li><A HREF="../Example/Gutmann_cheap_constraint.m">Gutmann_cheap_constraint.m</A>: constrained optimization of the Branin test problem with an adaptive sampling algorithm and the Gutmann criterion, one additional constraint computed with an analytical expression</li>
+   </ul>
+   <p><li>Multiobjective optimization</li>
+   <ul>
+         <li><A HREF="../Example/Multiobjective_EHVI.m">Multiobjective_EHVI.m</A>: multi-objective optimization of a numerical model with the Expected Hypervolume Improvement.</li>
+         <li><A HREF="../Example/Multiobjective_EI_MGDA.m">Multiobjective_EI_MGDA.m</A>: multi-objective optimization of a numerical model with the MOEGO strategy (multi-gradient descent on the expected improvement)</li>
+         <li><A HREF="../Example/Multiobjective_EI_MGDA_qualitative.m">Multiobjective_EI_MGDA_qualitative.m</A>: multi-objective optimization of a mixed problem with the MOEGO strategy (multi-gradient descent on the expected improvement)</li>
+   </ul>
+   <p><li>Robust efficient global optimization</li>
+   <ul>
+         <li><A HREF="../Example/Robust_EGO_1D.m">Robust_EGO_1D.m</A>: optimization of the output of a 1D model when inputs parameters have some uncertainties</li>
+         <li><A HREF="../Example/Robust_EGO_2D_cons.m">Robust_EGO_2D_cons.m</A>: constrained optimization of the output of a 2D model when inputs parameters have some uncertainties</li>
+         <li><A HREF="../Example/Robust_EGO_multiobj_2D.m">Robust_EGO_multiobj_2D.m</A>: two-objective optimization of the output of a 2D model when inputs parameters have some uncertainties</li>
+   </ul>
+</ol>
+
+<h2>Optimization features and misc. tools</h2>
+<ol>
+   <li>Optimisation methods</li>
+   <ul>
+      <li><i>CMA-ES: evolutionnary algorithm for single objective optimization with CMA-ES (TODO)</i></li>
+      <li><A HREF="../Example/MGDA_prob_convex.m">MGDA_prob_convex.m</A>: optimize a multiobjective convex test function using MGDA (unconstrained multiobjective gradient-based algorithm)</li>
+      <li><A HREF="../Example/NSGA_2_constrained.m">NSGA_2_constrained.m</A>: optimize a multiobjective test function with constraints using NSGA-II (constrained multiobjective genetic algorithm)</li>
+   </ul>
+   <p><li>Sensivity analysis</li>
+   <ul>
+      <li><A HREF="../Example/Sobol_Branin.m">Sobol_Branin.m</A>: compute Sobol indices (on function and metamodel) for global sensitivity analysis of the Branin test problem</li>
+   </ul>
+   <p><li>Miscellaneous</li>
+   <ul>
+      <li><i>k-means: data clustering by the k-means method (TODO)</i></li>
+   </ul>
+</ol>
+
+</body>
